@@ -1,2 +1,4 @@
 # OOP_PROJECT
-Hellu baby em muốn ăn bún chả ko
+This is the repo for OOP project Hellu baby
+Test new branch MINH MINH MINH
+sao tôi ko đc nhỉ
