@@ -1,25 +1,26 @@
 package DictionaryManager;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 public class Dictionary {
-    private ArrayList<Word> WordsSaver;
+    static private final ArrayList<Word> dictionary = new ArrayList<Word>();
 
     public Dictionary() {
-        WordsSaver = new ArrayList<Word>();
     }
 
     /****
-     *
-     * @param word nhan vao mot tu kieu Word roi cho vao arr
+     * Function to add a word into dictionary.
+     * @param word the word to add.
      */
-    public void GetAllWords(Word word) {
-        WordsSaver.add(word);
+    public static void addWord(Word word) {
+        dictionary.add(word);
     }
 
-
-    public ArrayList<Word> ReturnWordSaver() {
-        return WordsSaver;
+    /***
+     * Function to get the dictionary.
+     * @return the dictionary.
+     */
+    public static ArrayList<Word> getDictionary() {
+        return dictionary;
     }
 }

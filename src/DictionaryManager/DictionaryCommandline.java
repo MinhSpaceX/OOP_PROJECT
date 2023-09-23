@@ -8,12 +8,12 @@ public class DictionaryCommandline {
     }
 
     /****
-     *
-     * @param WordsSaver nhan dau vao arr xong in ra
+     * Function to print all contents of a dictionary.
+     * @param dict dictionary to print out.
      */
-    public void ShowAllWords(ArrayList<Word> WordsSaver) {
-        for (Word w : WordsSaver) {
-            System.out.println("| " + w.GetWordTarget() + " | " + w.GetWordExplain());
+    public void ShowAllWords(ArrayList<Word> dict) {
+        for (Word w : dict) {
+            System.out.format("| %s | %s", w.GetWordTarget(), w.GetWordExplain());
         }
     }
 }

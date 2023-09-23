@@ -1,30 +1,37 @@
 package SystemMain;
 
 import DictionaryManager.*;
+import Input.Input;
 
 import java.util.Scanner;
 
-
 public class Main {
+    static Scanner sc = Input.getScanner();
+
     public static void main(String[] args) {
 
         //khai bao cac gia tri
-        Word newword = new Word();
-        DictionaryManagement DicMan = new DictionaryManagement();
-        DictionaryCommandline DicCom = new DictionaryCommandline();
-        Dictionary dic = new Dictionary();
-        Scanner sc = new Scanner(System.in);
+        Word newWord = new Word();
+        DictionaryCommandline dictCom = new DictionaryCommandline();
 
         // nhap so luong tu muon them
         System.out.println("Enter the number of words you want to add: ");
-        int num = sc.nextInt();
+        int num = Integer.parseInt(sc.nextLine());
 
         for (int i = 0; i < num; i++) {
-            newword = DicMan.insertFromCommandLine();
-            dic.GetAllWords(newword);
+            newWord = DictionaryManagement.insertFromCommandLine();
+            Dictionary.addWord(newWord);
         }
 
         //in cac tu trong tu dien
-        DicCom.ShowAllWords(dic.ReturnWordSaver());
+        dictCom.ShowAllWords(Dictionary.getDictionary());
+        terminate();
+    }
+
+    /***
+     * Call this to terminate all created utils.
+     */
+    static void terminate() {
+        Input.getScanner().close();
     }
 }
