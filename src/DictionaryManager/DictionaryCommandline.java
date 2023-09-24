@@ -11,9 +11,12 @@ public class DictionaryCommandline {
      * Function to print all contents of a dictionary.
      * @param dict dictionary to print out.
      */
-    public static void ShowAllWords(ArrayList<Word> dict) {
+    public void ShowAllWords(ArrayList<Word> dict) {
+        System.out.println("No | English | Vietnamese");
+        int a=1;
         for (Word w : dict) {
-            System.out.format("| %s | %s", w.GetWordTarget(), w.GetWordExplain());
+            System.out.format("%s | %s | %s\n", a, w.GetWordTarget(), w.GetWordExplain());
+            a++;
         }
     }
 
