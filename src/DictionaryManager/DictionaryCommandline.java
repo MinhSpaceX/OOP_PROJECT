@@ -12,11 +12,8 @@ public class DictionaryCommandline {
      * @param dict dictionary to print out.
      */
     public void ShowAllWords(ArrayList<Word> dict) {
-        System.out.println("No | English | Vietnamese");
-        int a=1;
         for (Word w : dict) {
-            System.out.format("%s | %s | %s\n", a, w.GetWordTarget(), w.GetWordExplain());
-            a++;
+            System.out.format("| %s | %s", w.GetWordTarget(), w.GetWordExplain());
         }
     }
 
