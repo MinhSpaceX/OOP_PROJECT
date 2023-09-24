@@ -11,20 +11,19 @@ public class Main {
     public static void main(String[] args) {
 
         //khai bao cac gia tri
-        Word newWord = new Word();
-        DictionaryCommandline dictCom = new DictionaryCommandline();
+        DictionaryManagement manager = new DictionaryManagement();
+        DictionaryCommandline dictCom = new DictionaryCommandline(manager);
 
         // nhap so luong tu muon them
         System.out.println("Enter the number of words you want to add: ");
         int num = Integer.parseInt(sc.nextLine());
 
         for (int i = 0; i < num; i++) {
-            newWord = DictionaryManagement.insertFromCommandLine();
-            Dictionary.addWord(newWord);
+            manager.insertFromCommandLine(sc, DictionaryID.ENGLISH_ENGLISH);
         }
 
         //in cac tu trong tu dien
-        dictCom.ShowAllWords(Dictionary.getDictionary());
+        dictCom.ShowAllWords(DictionaryID.ENGLISH_ENGLISH);
         terminate();
     }
 

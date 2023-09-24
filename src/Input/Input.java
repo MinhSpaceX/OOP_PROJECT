@@ -3,7 +3,7 @@ package Input;
 import java.util.Scanner;
 
 public class Input {
-    static Scanner sc = new Scanner(System.in);
+    static final Scanner sc = new Scanner(System.in);
 
     /**
      * Get the scanner instance.
@@ -16,7 +16,7 @@ public class Input {
     /***
      * Close the scanner.
      */
-    public static void closeScanner() {
+    public static synchronized void closeScanner() {
         sc.close();
     }
 }
