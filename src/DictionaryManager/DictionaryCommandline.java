@@ -1,5 +1,8 @@
 package DictionaryManager;
 
+import java.util.Scanner;
+import Input.Input;
+
 public class DictionaryCommandline {
     private DictionaryManagement manager;
     /**
@@ -31,8 +34,42 @@ public class DictionaryCommandline {
      * <p>
      * 1: One or many words found.
      */
-    public int dictionarySearcher(String key) {
-        
+    public int dictionarySearcher( DictionaryID id) {
+        System.out.println("Enter your key word: ");
+        String key = Input.getScanner().nextLine();
+        Dictionary dict = manager.getDictionary(id);
+        for (Word a : dict.getDictionary()) {
+            if (a.GetWordTarget().startsWith(key)) {
+                System.out.println(a.GetWordTarget());
+            }
+        }
         return 0;
+    }
+    /**
+     * function build interface of menu.
+     * @return STT of operation.
+     */
+    public int dictionaryAdvanced() {
+        System.out.println("Welcome to My Application");
+        System.out.println("[0] Exit");
+        System.out.println("[1] Add");
+        System.out.println("[2] Remove");
+        System.out.println("[3[ Update");
+        System.out.println("[4] Display");
+        System.out.println("[5] Loookup");
+        System.out.println("[6] Search");
+        System.out.println("[7] Game");
+        System.out.println("[8] Import from file");
+        System.out.println("[9] Export to file");
+        System.out.println("Your action: ");
+        
+        int a = Integer.parseInt(Input.getScanner().nextLine());
+        if (a >= 0 && a<=9) {
+            return a;
+        } else {
+            System.out.println("Action not support");
+            return a;
+        }
+        
     }
 }

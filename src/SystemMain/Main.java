@@ -22,8 +22,15 @@ public class Main {
             manager.insertFromCommandLine(sc, DictionaryID.ENGLISH_ENGLISH);
         }
 
-        //in cac tu trong tu dien
+        //in cac tu trong tu dien.
         dictCom.ShowAllWords(DictionaryID.ENGLISH_ENGLISH);
+        //in giao dien menu.
+        int inputOfCustomer = dictCom.dictionaryAdvanced();
+        //in ra các từ bắt đầu bằng key.
+        if (inputOfCustomer == 3) {
+            dictCom.dictionarySearcher( DictionaryID.ENGLISH_ENGLISH);
+        }
+        
         terminate();
     }
 

@@ -42,9 +42,10 @@ public class DictionaryManagement {
     Dictionary getDictionary(DictionaryID id) {
         return dictionaries.get(id);
     }
+    
     /**
      * Function to add word to a dictionary.
-     * @param word te word to add. 
+     * @param word the word to add. 
      * @param id the ID of the dictionary to add the word to.
      */
     public void addWordToDictionary(Word word, DictionaryID id) {
