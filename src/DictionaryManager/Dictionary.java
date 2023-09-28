@@ -3,10 +3,12 @@ package DictionaryManager;
 import java.util.ArrayList;
 
 public class Dictionary {
-    private ArrayList<Word> dictionary = new ArrayList<Word>();
-    private DictionaryID keyId;
+    private final ArrayList<Word> dictionary = new ArrayList<Word>();
+    private final DictionaryID keyId;
+
     /**
      * Constructor for dictionary.
+     *
      * @param id Unique ID to each dictionary.
      */
     Dictionary(DictionaryID id) {
@@ -15,6 +17,7 @@ public class Dictionary {
 
     /**
      * Function to add a word into dictionary.
+     *
      * @param word the word to add.
      */
     void addWord(Word word) {
@@ -23,6 +26,7 @@ public class Dictionary {
 
     /**
      * Get a dictionary ID.
+     *
      * @return unique ID.
      */
     DictionaryID getId() {
@@ -31,6 +35,7 @@ public class Dictionary {
 
     /**
      * Function to get the dictionary.
+     *
      * @return the dictionary.
      */
     ArrayList<Word> getDictionary() {

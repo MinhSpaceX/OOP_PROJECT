@@ -1,6 +1,8 @@
 package SystemMain;
 
-import DictionaryManager.*;
+import DictionaryManager.DictionaryCommandline;
+import DictionaryManager.DictionaryID;
+import DictionaryManager.DictionaryManagement;
 import Input.Input;
 
 import java.util.Scanner;
