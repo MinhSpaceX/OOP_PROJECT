@@ -1,0 +1,9 @@
+hello | xin chao
+hi | xin chao
+goodbye | tam biet
+train | dao tao
+translate | phien dich
+number | so
+name | ten
+see | nhin
+height | do cao

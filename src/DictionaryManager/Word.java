@@ -16,5 +16,13 @@ public class Word {
     String GetWordExplain() {
         return word_explain;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return String.format("%s | %s\n", word_target, word_explain);
+    }
 }

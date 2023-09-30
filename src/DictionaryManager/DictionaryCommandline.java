@@ -11,8 +11,14 @@ public class DictionaryCommandline {
     public DictionaryCommandline (DictionaryManagement manager) {
         this.manager = manager;
     }
-
-
+    
+    /**
+     * Function import value key of function SEARCH.
+     * @return KEY.
+     */
+    public String cinKey() {
+        return Input.getScanner().nextLine();
+    }
     /**
      * Function to print all contents of a dictionary.
      * @param dict dictionary to print out.
@@ -27,24 +33,6 @@ public class DictionaryCommandline {
         }
     }
 
-    /**
-     * Function to search for words start with the key value.
-     * @param key : value to pass in.
-     * @return 0: No word found.
-     * <p>
-     * 1: One or many words found.
-     */
-    public int dictionarySearcher( DictionaryID id) {
-        System.out.println("Enter your key word: ");
-        String key = Input.getScanner().nextLine();
-        Dictionary dict = manager.getDictionary(id);
-        for (Word a : dict.getDictionary()) {
-            if (a.GetWordTarget().startsWith(key)) {
-                System.out.println(a.GetWordTarget());
-            }
-        }
-        return 0;
-    }
     /**
      * function build interface of menu.
      * @return STT of operation.
