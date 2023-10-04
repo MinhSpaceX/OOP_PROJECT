@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Dictionary {
     private ArrayList<Word> dictionary = new ArrayList<Word>();
-    private DictionaryID keyId;
+    private DictionaryID dictId;
     /**
      * Constructor for dictionary.
      * @param id Unique ID to each dictionary.
      */
     Dictionary(DictionaryID id) {
-        keyId = id;
+        dictId = id;
     }
 
     /**
@@ -26,14 +26,14 @@ public class Dictionary {
      * @return unique ID.
      */
     DictionaryID getId() {
-        return keyId;
+        return dictId;
     }
 
     /**
      * Function to get the dictionary.
      * @return the dictionary.
      */
-    ArrayList<Word> getDictionary() {
+    public ArrayList<Word> getDictionary() {
         return dictionary;
     }
 }

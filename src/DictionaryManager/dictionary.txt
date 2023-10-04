@@ -1,9 +1,9 @@
 hello | xin chao
 hi | xin chao
 goodbye | tam biet
-run | chay
+train | dao tao
+translate | phien dich
+number | so
 name | ten
 see | nhin
 height | do cao
-cat | con meo
-runnable | co the chay

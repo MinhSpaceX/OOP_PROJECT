@@ -50,7 +50,7 @@ public class DictionaryManagement {
      * @param id the id of the dictionary.
      * @return the dictionary.
      */
-    Dictionary getDictionary(DictionaryID id) {
+    public Dictionary getDictionary(DictionaryID id) {
         return dictionaries.get(id);
     }
     
@@ -68,14 +68,13 @@ public class DictionaryManagement {
      * @param key : value to pass in.
      * @return list string 
      */
-    public String[] dictionarySearcher(String key, DictionaryID id) {
-        String[] pList = new String[5];
-        int i=0;
+    public ArrayList<String> dictionarySearcher(String word, DictionaryID id) {
+        ArrayList<String> pList = new ArrayList<>();
+        
+        //look up all the word with similar prefix
         for (Word a : dictionaries.get(id).getDictionary()) {
-            if (a.GetWordTarget().startsWith(key)) {
-                pList[i] = a.GetWordTarget();
-                i++;
-                //System.out.println(a.GetWordTarget());
+            if (a.GetWordTarget().startsWith(word)) {
+                pList.add(a.GetWordTarget());   
             }
         }
         return pList;
@@ -91,18 +90,50 @@ public class DictionaryManagement {
         String word_explain = sc.nextLine();
 
         Word word = new Word(word_target, word_explain);
-
+        
         addWordToDictionary(word, id);
     }
     
     /**
-     * function Import dictionary data from a text file.
+     * Function to remove word from dictionary
+     * Note*: This function will delete in both array and file
+     * @param word 
+     */
+    public void removeFromDictionary(int index, DictionaryID id) {
+    	
+    	ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
+    	//Search for the word
+    	dictionary.remove(index - 1);
+    		
+    }
+    
+    /**
+     * update new word to the desired position
+     * @param index
+     * @param id
+     */
+    public void updateDictionary(int index, DictionaryID id, Scanner sc) {
+    	
+    	ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
+    	System.out.println("Input the change: word_target <enter> word_explain");
+    	String word_target = sc.nextLine();
+        String word_explain = sc.nextLine();
+
+        Word word = new Word(word_target, word_explain);
+        
+        dictionary.set(index - 1, word);
+        
+        System.out.println("Your word has been update!");
+    }
+    
+    /**
+     * Function Import dictionary data from a text file.
      * @param id the DictionaryID.
      * @throws FileNotFoundException
      * @throws IOException 
      */
     public void insertFromFile(DictionaryID id) throws FileNotFoundException, IOException {
-        File f = new File("dictionary.txt");
+        File f = new File("src/dictionary.txt");
         FileReader fr = new FileReader(f);
         BufferedReader br = new BufferedReader(fr);
         
@@ -125,7 +156,7 @@ public class DictionaryManagement {
      * @throws IOException 
      */
     public void dictionaryExportToFile(DictionaryID id) throws IOException {
-        File f = new File("dictionary.txt");
+        File f = new File("src/dictionary.txt");
         FileWriter fw = new FileWriter(f);
         BufferedWriter bw = new BufferedWriter(fw);
         
