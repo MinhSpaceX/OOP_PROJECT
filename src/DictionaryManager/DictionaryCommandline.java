@@ -1,6 +1,6 @@
 package DictionaryManager;
 
-import java.util.Scanner;
+
 import Input.Input;
 
 public class DictionaryCommandline {
@@ -38,7 +38,6 @@ public class DictionaryCommandline {
      * @return the number of operation.
      */
     public int getInterface() {
-        
         System.out.println("[0] Exit");
         System.out.println("[1] Add");
         System.out.println("[2] Remove");
@@ -59,5 +58,24 @@ public class DictionaryCommandline {
             return input;
         }
         
+    }
+    /**
+     * Clear console.
+     */
+    public void clear() {
+        try {
+            String os = System.getProperty("os.name");
+            if (os.contains("Windows")) {
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            } else {
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            }
+        } catch(Exception e){
+            System.out.println(e);
+        }
     }
 }

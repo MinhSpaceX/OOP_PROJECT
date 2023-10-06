@@ -1,10 +1,6 @@
 package SystemMain;
 
-import DictionaryManager.*;
-import Input.Input;
 import java.io.IOException;
-
-import java.util.Scanner;
 
 public class Main {
     

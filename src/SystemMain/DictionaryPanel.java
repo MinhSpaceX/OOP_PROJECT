@@ -32,6 +32,7 @@ public class DictionaryPanel {
         //start the application
         while(app_state) {
 	        int inputOfCustomer = dictCom.getInterface();
+			clearScreen();
 	        switch (inputOfCustomer) {
 	        case 0:
 	        	app_state = false;
@@ -98,4 +99,7 @@ public class DictionaryPanel {
         Input.getScanner().close();
     }
 	
+	private void clearScreen() {
+		dictCom.clear();
+	}
 }
