@@ -5,8 +5,9 @@ import java.util.Scanner;
 public class Input {
     static final Scanner sc = new Scanner(System.in);
 
-    /***
+    /**
      * Get the scanner instance.
+     *
      * @return an instance of scanner class.
      */
     public static Scanner getScanner() {
@@ -16,7 +17,7 @@ public class Input {
     /***
      * Close the scanner.
      */
-    public static void closeScanner() {
+    public static synchronized void closeScanner() {
         sc.close();
     }
 }
