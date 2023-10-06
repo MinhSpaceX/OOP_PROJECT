@@ -7,6 +7,7 @@ public class Input {
 
     /**
      * Get the scanner instance.
+     *
      * @return an instance of scanner class.
      */
     public static Scanner getScanner() {

@@ -7,6 +7,7 @@ public class Dictionary {
     private DictionaryID dictId;
     /**
      * Constructor for dictionary.
+     *
      * @param id Unique ID to each dictionary.
      */
     Dictionary(DictionaryID id) {
@@ -15,6 +16,7 @@ public class Dictionary {
 
     /**
      * Function to add a word into dictionary.
+     *
      * @param word the word to add.
      */
     void addWord(Word word) {
@@ -23,6 +25,7 @@ public class Dictionary {
 
     /**
      * Get a dictionary ID.
+     *
      * @return unique ID.
      */
     DictionaryID getId() {
@@ -31,6 +34,7 @@ public class Dictionary {
 
     /**
      * Function to get the dictionary.
+     *
      * @return the dictionary.
      */
     public ArrayList<Word> getDictionary() {

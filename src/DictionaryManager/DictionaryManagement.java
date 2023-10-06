@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class DictionaryManagement {
-    private Map<DictionaryID, Dictionary> dictionaries;
+    private final Map<DictionaryID, Dictionary> dictionaries;
 
     /**
      * Constructor.
@@ -22,6 +22,7 @@ public class DictionaryManagement {
         dictionaries = new HashMap<DictionaryID, Dictionary>();
         createDictionary();
     }
+
     /**
      * Function to create all dictionary from the enum file.
      */
@@ -34,7 +35,8 @@ public class DictionaryManagement {
     
     /**
      * Function to create new word.
-     * @param word_target the word to create.
+     *
+     * @param word_target  the word to create.
      * @param word_explain definition of the word.
      * @return the word created.
      */
@@ -42,9 +44,10 @@ public class DictionaryManagement {
         Word word = new Word(word_target, word_explain);
         return word;
     }
-    
+
     /**
      * Function to get a dictionary from the provided ID.
+     *
      * @param id the id of the dictionary.
      * @return the dictionary.
      */
