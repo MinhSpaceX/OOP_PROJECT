@@ -9,12 +9,20 @@ public class Word {
         this.word_explain = word_explain;
     }
 
-    String GetWordTarget() {
+    public String GetWordTarget() {
         return word_target;
     }
 
-    String GetWordExplain() {
+    public String GetWordExplain() {
         return word_explain;
     }
-
+    
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return String.format("%s | %s\n", word_target, word_explain);
+    }
 }

@@ -1,5 +1,13 @@
 package DictionaryManager;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -22,10 +30,9 @@ public class DictionaryManagement {
         for (DictionaryID x : DictionaryID.values()) {
             Dictionary dict = new Dictionary(x);
             dictionaries.put(dict.getId(), dict);
-        }
-
+        } 
     }
-
+    
     /**
      * Function to create new word.
      *
@@ -44,21 +51,37 @@ public class DictionaryManagement {
      * @param id the id of the dictionary.
      * @return the dictionary.
      */
-    Dictionary getDictionary(DictionaryID id) {
+    public Dictionary getDictionary(DictionaryID id) {
         return dictionaries.get(id);
     }
-
+    
     /**
      * Function to add word to a dictionary.
-     *
-     * @param word te word to add.
-     * @param id   the ID of the dictionary to add the word to.
+     * @param word the word to add. 
+     * @param id the ID of the dictionary to add the word to.
      */
     public void addWordToDictionary(Word word, DictionaryID id) {
         dictionaries.get(id).addWord(word);
     }
+    
+    /**
+     * Function to search for words start with the key value.
+     * @param key : value to pass in.
+     * @return list string 
+     */
+    public ArrayList<String> dictionarySearcher(String word, DictionaryID id) {
+        ArrayList<String> pList = new ArrayList<>();
+        
+        //look up all the word with similar prefix
+        for (Word a : dictionaries.get(id).getDictionary()) {
+            if (a.GetWordTarget().startsWith(word)) {
+                pList.add(a.GetWordTarget());   
+            }
+        }
+        return pList;
+    }
 
-    /***
+    /**
      * Function to get input from terminal.
      * @return inserted word.
      */
@@ -68,7 +91,82 @@ public class DictionaryManagement {
         String word_explain = sc.nextLine();
 
         Word word = new Word(word_target, word_explain);
-
+        
         addWordToDictionary(word, id);
+    }
+    
+    /**
+     * Function to remove word from dictionary
+     * Note*: This function will delete in both array and file
+     * @param word 
+     */
+    public void removeFromDictionary(int index, DictionaryID id) {
+    	
+    	ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
+    	//Search for the word
+    	dictionary.remove(index - 1);
+    		
+    }
+    
+    /**
+     * update new word to the desired position
+     * @param index
+     * @param id
+     */
+    public void updateDictionary(int index, DictionaryID id, Scanner sc) {
+    	
+    	ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
+    	System.out.println("Input the change: word_target <enter> word_explain");
+    	String word_target = sc.nextLine();
+        String word_explain = sc.nextLine();
+
+        Word word = new Word(word_target, word_explain);
+        
+        dictionary.set(index - 1, word);
+        
+        System.out.println("Your word has been update!");
+    }
+    
+    /**
+     * Function Import dictionary data from a text file.
+     * @param id the DictionaryID.
+     * @throws FileNotFoundException
+     * @throws IOException 
+     */
+    public void insertFromFile(DictionaryID id) throws FileNotFoundException, IOException {
+        File f = new File("src/dictionary.txt");
+        FileReader fr = new FileReader(f);
+        BufferedReader br = new BufferedReader(fr);
+        
+        while (true) {
+            String line = br.readLine();
+            if (line == null) break;
+            String[] info = line.split("[|]");
+            String word_target = info[0].trim();
+            String word_explain = info[1].trim();
+            addWordToDictionary(new Word(word_target,word_explain), id);
+        }
+        
+        br.close();
+        fr.close();
+    }
+    
+    /**
+     * Function export existing dictionary data to a text file.
+     * @param id the DictionaryID.
+     * @throws IOException 
+     */
+    public void dictionaryExportToFile(DictionaryID id) throws IOException {
+        File f = new File("src/dictionary.txt");
+        FileWriter fw = new FileWriter(f);
+        BufferedWriter bw = new BufferedWriter(fw);
+        
+            for( Word a : dictionaries.get(id).getDictionary()) {
+                bw.write(a.toString());
+            } 
+            
+        bw.close();
+        fw.close();
+            
     }
 }
