@@ -1,16 +1,14 @@
 package SystemMain;
 
-import java.io.IOException;
-
 public class Main {
-    
 
-    public static void main(String[] args) throws IOException {
-    	
-    	//start the commandline version
-    	DictionaryPanel dictP = new DictionaryPanel();
-    	dictP.CommandLineManager();
-    	
+
+    public static void main(String[] args) {
+        //start the commandline version
+        Initializer init = new Initializer("src/dictionary.txt");
+        DictionaryPanel panel = init.getPanel();
+        panel.CommandLineManager();
+        init.terminate();
     }
-    
+
 }

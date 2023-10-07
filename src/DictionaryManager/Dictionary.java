@@ -3,8 +3,9 @@ package DictionaryManager;
 import java.util.ArrayList;
 
 public class Dictionary {
-    private ArrayList<Word> dictionary = new ArrayList<Word>();
-    private DictionaryID dictId;
+    private final ArrayList<Word> dictionary = new ArrayList<Word>();
+    private final DictionaryID dictId;
+
     /**
      * Constructor for dictionary.
      *
@@ -37,7 +38,7 @@ public class Dictionary {
      *
      * @return the dictionary.
      */
-    public ArrayList<Word> getDictionary() {
+    ArrayList<Word> getDictionary() {
         return dictionary;
     }
 }

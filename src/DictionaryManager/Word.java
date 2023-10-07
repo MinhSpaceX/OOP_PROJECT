@@ -16,10 +16,9 @@ public class Word {
     public String GetWordExplain() {
         return word_explain;
     }
-    
+
     /**
-     * 
-     * @return 
+     * @return
      */
     @Override
     public String toString() {
