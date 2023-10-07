@@ -1,14 +1,16 @@
 package SystemMain;
 
 public class Main {
-
-
     public static void main(String[] args) {
-        //start the commandline version
-        Initializer init = new Initializer("src/dictionary.txt");
-        DictionaryPanel panel = init.getPanel();
-        panel.CommandLineManager();
-        init.terminate();
+        // Shutdown function when the program end.
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            public void run() {
+                Initializer.terminate();
+            }
+        });
+
+        DictionaryPanel p = new DictionaryPanel();
+        p.CommandLineManager();
     }
 
 }

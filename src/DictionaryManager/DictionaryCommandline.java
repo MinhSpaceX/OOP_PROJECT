@@ -8,6 +8,7 @@ public class DictionaryCommandline {
      */
     public DictionaryCommandline(DictionaryManagement manager) {
         this.manager = manager;
+        System.out.printf("DictionaryCommandline created.\n");
     }
 
     /**

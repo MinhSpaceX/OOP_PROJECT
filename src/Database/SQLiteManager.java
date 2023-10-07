@@ -13,18 +13,15 @@ public class SQLiteManager {
      *
      * @param path path to the database file.
      */
-    SQLiteManager(String path) {
+    public SQLiteManager(String path) {
         pathToDatabase = path;
         init();
+        System.out.printf("SQLiteManager created.\n");
     }
 
     /**
-     * @param args the command line arguments
+     * Functions to execute when create a manager.
      */
-    public static void main(String[] args) {
-        SQLiteManager a = new SQLiteManager("src/Database/data/Dictionary.db");
-    }
-
     private void init() {
         checkExist();
     }
@@ -33,10 +30,10 @@ public class SQLiteManager {
         String url = "jdbc:sqlite:" + pathToDatabase;
 
         try (Connection conn = DriverManager.getConnection(url)) {
-            System.out.printf("LOG: Database status: EXIST. File path: '%s'.", pathToDatabase);
+            System.out.printf("Database status: EXIST. File path: '%s'.\n", pathToDatabase);
 
         } catch (SQLException e) {
-            System.out.printf("LOG: %s.", e.getMessage());
+            System.out.printf("ERROR: %s.\n", e.getMessage());
         }
     }
 
@@ -46,8 +43,8 @@ public class SQLiteManager {
         try (Connection conn = DriverManager.getConnection(url)) {
             if (conn != null) {
                 DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("LOG: The driver name is %s." + meta.getDriverName());
-                System.out.printf("LOG: Database created. Path: '%s'.", filePath);
+                System.out.println("ERROR: The driver name is %s.\n" + meta.getDriverName());
+                System.out.printf("ERROR: Database created. Path: '%s'.\n", filePath);
             }
 
         } catch (SQLException e) {

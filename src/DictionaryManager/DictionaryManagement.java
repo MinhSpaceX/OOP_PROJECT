@@ -16,6 +16,7 @@ public class DictionaryManagement {
     public DictionaryManagement() {
         dictionaries = new HashMap<DictionaryID, Dictionary>();
         createDictionary();
+        System.out.printf("DictionaryManagement created.\n");
     }
 
     /**

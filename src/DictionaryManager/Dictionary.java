@@ -13,6 +13,7 @@ public class Dictionary {
      */
     Dictionary(DictionaryID id) {
         dictId = id;
+        System.out.printf("Dictionary created. ID: %s.\n", id.toString());
     }
 
     /**

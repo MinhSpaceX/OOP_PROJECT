@@ -1,0 +1,2 @@
+Main-Class: SystemMain.Main
+Class-Path: lib/*

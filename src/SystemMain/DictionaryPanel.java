@@ -1,8 +1,6 @@
 package SystemMain;
 
-import DictionaryManager.DictionaryCommandline;
 import DictionaryManager.DictionaryID;
-import DictionaryManager.DictionaryManagement;
 import GameManager.GameManagement;
 import utils.Input.Input;
 
@@ -10,23 +8,18 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class DictionaryPanel {
-    private final DictionaryManagement manager;
-    private final DictionaryCommandline dictCom;
+public class DictionaryPanel extends Initializer {
     private boolean app_state = true;
     private GameManagement game_manager;
-    private final String filePath;
 
     /**
      * Contructor.
      *
      * @param filePath The path to txt data file.
      */
-    DictionaryPanel(DictionaryManagement manager, DictionaryCommandline dictCom, String filePath) {
-        this.manager = manager;
-        this.dictCom = dictCom;
-        this.filePath = filePath;
-        manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, filePath);
+    DictionaryPanel() {
+        manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+        System.out.printf("DictionaryPanel created.\n");
     }
 
     /**
@@ -97,19 +90,19 @@ public class DictionaryPanel {
                         manager.insertFromCommandLine(DictionaryID.ENGLISH_VIETNAMESE);
                     }
                     //override the current file
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, filePath);
+                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
                     break;
                 case 2: // delete word
                     System.out.println("Enter the word number that you want to remove: ");
                     int wordNum = Integer.parseInt(Input.getLine());
                     manager.removeFromDictionary(wordNum, DictionaryID.ENGLISH_VIETNAMESE);
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, filePath);
+                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
                     break;
                 case 3: // update word
                     System.out.println("Enter the word number that you want to update: ");
                     int wordNum2 = Integer.parseInt(Input.getLine());
                     manager.updateDictionary(wordNum2, DictionaryID.ENGLISH_VIETNAMESE);
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, filePath);
+                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
                     break;
                 case 4: // show word
                     dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
