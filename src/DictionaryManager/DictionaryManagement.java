@@ -114,7 +114,6 @@ public class DictionaryManagement {
         ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
         //Search for the word
         dictionary.remove(index - 1);
-
     }
 
     /**
