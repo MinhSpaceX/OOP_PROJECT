@@ -65,7 +65,7 @@ public class DictionaryPanel extends Initializer {
         System.out.println("[7] Game");
         System.out.println("[8] Import from file");
         System.out.println("[9] Export to file");
-        System.out.println("Your action: ");
+        System.out.printf("Your action: ");
 
         int input = Input.getInteger();
         clear();

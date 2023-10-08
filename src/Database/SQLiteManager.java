@@ -3,10 +3,18 @@ package Database;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import DictionaryManager.Dictionary;
+import DictionaryManager.DictionaryManagement;
+import DictionaryManager.Word;
+import SystemMain.Default;
+
 public class SQLiteManager {
-    private final String pathToDatabase;
+    private String pathToDatabase;
+    private String url;
 
     /**
      * Constructor for the class.
@@ -15,8 +23,29 @@ public class SQLiteManager {
      */
     public SQLiteManager(String path) {
         pathToDatabase = path;
+        url = "jdbc:sqlite:" + pathToDatabase;
         init();
         System.out.printf("SQLiteManager created.\n");
+    }
+
+    public void setDatabase(String path) {
+        this.pathToDatabase = path;
+        this.url = "jdbc:sqlite:" + this.pathToDatabase;
+    }
+
+    private int countRow() {
+        String query = "SELECT COUNT(*) FROM EN_VN";
+        try (Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            ResultSet result = pstmt.executeQuery();
+            if (result.next()) {
+                int rowCount = result.getInt(1);
+                return rowCount;
+            }
+        } catch (SQLException e) {
+            System.out.printf("ERROR: %s.\n", e.getMessage());
+        }
+        return -1;
     }
 
     /**
@@ -27,14 +56,46 @@ public class SQLiteManager {
     }
 
     private void checkExist() {
-        String url = "jdbc:sqlite:" + pathToDatabase;
-
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = this.connect()) {
             System.out.printf("Database status: EXIST. File path: '%s'.\n", pathToDatabase);
-
         } catch (SQLException e) {
             System.out.printf("ERROR: %s.\n", e.getMessage());
         }
+    }
+
+    private Connection connect() {        
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+            System.out.printf("Connection established.\n");
+        } catch (SQLException e) {
+            System.out.printf("ERROR: %s\n", e.getMessage());
+        }
+        return conn;
+    }
+
+    public void insert(Word word) {
+        int key = countRow() + 1;
+        String query = "INSERT INTO English(wordID, wordTarget, wordExplain, wordType) VALUES(?, ?, ?, ?)";
+        String wordEN = word.GetWordTarget();
+        String wordVN = word.GetWordExplain();
+        String wordType = word.GetWordType();
+        try (Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setInt(1, key);
+            pstmt.setString(2, wordEN);
+            pstmt.setString(3, wordEN);
+            pstmt.setString(4, wordType);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.printf("ERROR: %s\n", e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        SQLiteManager a = new SQLiteManager("resource/data/Dictionary.db");
+        DictionaryManagement b = new DictionaryManagement();
+        a.insert(b.createWord("GO", "chay", "noun"));
     }
 
     void createDatabase(String filePath) {

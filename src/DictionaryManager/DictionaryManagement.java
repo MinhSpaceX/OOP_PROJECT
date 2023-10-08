@@ -36,8 +36,8 @@ public class DictionaryManagement {
      * @param word_explain definition of the word.
      * @return the word created.
      */
-    public Word createWord(String word_target, String word_explain) {
-        Word word = new Word(word_target, word_explain);
+    public Word createWord(String word_target, String word_explain, String word_type) {
+        Word word = new Word(word_target, word_explain, word_type);
         return word;
     }
 
@@ -94,11 +94,12 @@ public class DictionaryManagement {
      * @return inserted word.
      */
     public void insertFromCommandLine(DictionaryID id) {
-        System.out.println("Enter your input with format: word_target <enter> word_explain");
+        System.out.println("Enter your input with format: word_target <enter> word_explain <enter> word_type");
         String word_target = Input.getLine();
         String word_explain = Input.getLine();
+        String word_type = Input.getLine();
 
-        Word word = new Word(word_target, word_explain);
+        Word word = new Word(word_target, word_explain, word_type);
 
         addWordToDictionary(word, id);
     }
@@ -124,11 +125,12 @@ public class DictionaryManagement {
      */
     public void updateDictionary(int index, DictionaryID id) {
         ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
-        System.out.println("Input the change: word_target <enter> word_explain");
+        System.out.println("Input the change: word_target <enter> word_explain <enter> word_type");
         String word_target = Input.getLine();
         String word_explain = Input.getLine();
+        String word_type = Input.getLine();
 
-        Word word = new Word(word_target, word_explain);
+        Word word = new Word(word_target, word_explain, word_type);
 
         dictionary.set(index - 1, word);
 
@@ -152,7 +154,7 @@ public class DictionaryManagement {
                 String[] info = line.split("[|]");
                 String word_target = info[0].trim();
                 String word_explain = info[1].trim();
-                addWordToDictionary(new Word(word_target, word_explain), id);
+                addWordToDictionary(new Word(word_target, word_explain, ""), id);
             }
 
         } catch (IOException e) {
