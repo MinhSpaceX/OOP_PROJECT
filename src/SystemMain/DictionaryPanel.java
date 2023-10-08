@@ -21,6 +21,17 @@ public class DictionaryPanel extends Initializer {
         manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
         System.out.printf("DictionaryPanel created.\n");
     }
+    /**
+     * delay time run code
+    */
+    private void delay() {
+        try {
+            long milliseconds = 1000;
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Clear console.
@@ -43,6 +54,7 @@ public class DictionaryPanel extends Initializer {
     }
 
     public int getInterface() {
+        System.out.println("Welcome to My Application");
         System.out.println("[0] Exit");
         System.out.println("[1] Add");
         System.out.println("[2] Remove");
@@ -58,12 +70,7 @@ public class DictionaryPanel extends Initializer {
         int input = Input.getInteger();
         clear();
 
-        if (input >= 0 && input <= 9) {
-            return input;
-        } else {
-            System.out.println("Action not supported!");
-            return input;
-        }
+        return input;
     }
 
     /**
@@ -73,69 +80,134 @@ public class DictionaryPanel extends Initializer {
      * @throws FileNotFoundException _Avoid exception from file input
      */
     public void CommandLineManager() {
-        System.out.println("Welcome to My Application");
 
         //start the application
         while (app_state) {
             int inputOfCustomer = getInterface();
+            boolean function_state = true;
             switch (inputOfCustomer) {
                 case 0:
                     app_state = false;
                     break;
                 case 1: // add word
-                    System.out.println("Enter the number of words you want to add: ");
-                    int num = Integer.parseInt(Input.getLine());
+                    while (function_state) {
+                        System.out.println("Enter the number of words you want to add: ");
+                        int num = Integer.parseInt(Input.getLine());
 
-                    for (int i = 0; i < num; i++) {
-                        manager.insertFromCommandLine(DictionaryID.ENGLISH_VIETNAMESE);
+                        for (int i = 0; i < num; i++) {
+                            manager.insertFromCommandLine(DictionaryID.ENGLISH_VIETNAMESE);
+                        }
+                        //override the current file
+                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+
+                        clear();
+                        System.out.println("Do you want to continue: Yes or No");
+                        System.out.println("Enter your option: ");
+                        String option = Input.getLine();
+                        if (option.equals("Yes")) clear();
+                        else {
+                            clear();
+                            break;
+                        }
                     }
-                    //override the current file
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
                     break;
                 case 2: // delete word
-                    System.out.println("Enter the word number that you want to remove: ");
-                    int wordNum = Integer.parseInt(Input.getLine());
-                    manager.removeFromDictionary(wordNum, DictionaryID.ENGLISH_VIETNAMESE);
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
-                    break;
-                case 3: // update word
-                    System.out.println("Enter the word number that you want to update: ");
-                    int wordNum2 = Integer.parseInt(Input.getLine());
-                    manager.updateDictionary(wordNum2, DictionaryID.ENGLISH_VIETNAMESE);
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
-                    break;
-                case 4: // show word
-                    dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
-                    break;
-                case 5: // look up
-                    System.out.println("Enter the word you want to look up: ");
-                    String word = Input.getLine();
-                    ArrayList<String> pList = manager.dictionarySearcher(word, DictionaryID.ENGLISH_VIETNAMESE);
-                    for (String i : pList) {
-                        System.out.println(i);
+                    while (function_state) {
+                        System.out.println("Enter the word number that you want to remove: ");
+                        int wordNum = Integer.parseInt(Input.getLine());
+                        manager.removeFromDictionary(wordNum, DictionaryID.ENGLISH_VIETNAMESE);
+                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+                        clear();
+                        System.out.println("Do you want to continue: Yes or No");
+                        System.out.println("Enter your option: ");
+                        String option = Input.getLine();
+                        if (option.equals("Yes")) clear();
+                        else {
+                            clear();
+                            break;
+                        }
                     }
                     break;
-                case 7:
-                    game_manager = new GameManagement(DictionaryID.ENGLISH_VIETNAMESE, manager);
-                    game_manager.StartGame();
+                    
+                case 3: // update word
+                    while (function_state) {
+                        System.out.println("Enter the word number that you want to update: ");
+                        int wordNum2 = Integer.parseInt(Input.getLine());
+                        manager.updateDictionary(wordNum2, DictionaryID.ENGLISH_VIETNAMESE);
+                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+                        clear();
+                        System.out.println("Do you want to continue: Yes or No");
+                        System.out.println("Enter your option: ");
+                        String option = Input.getLine();
+                        if (option.equals("Yes")) clear();
+                        else {
+                            clear();
+                            break;
+                        }
+                    }
+                    
+                case 4: // show word
+                    dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
+                    delay();
+                    clear();
                     break;
+                case 5: // look up
+                    while (function_state) {
+                        System.out.println("Enter the word you want to look up: ");
+                        String word = Input.getLine();
+                        ArrayList<String> pList = manager.dictionarySearcher(word, DictionaryID.ENGLISH_VIETNAMESE);
+                        if (pList.size() == 0) System.out.println("Cannot find!"); 
+                        else {
+                            for (String i : pList) {
+                                System.out.println(i);
+                            }
+                        }
+                        delay();
+                        clear();
+                        System.out.println("Do you want to continue: Yes or No");
+                        System.out.println("Enter your option: ");
+                        String option = Input.getLine();
+                        if (option.equals("Yes")) clear();
+                        else {
+                            clear();
+                            break;
+                        }
+                    }
+                    break;
+                case 7: // Game
+                    while (function_state) {
+                        game_manager = new GameManagement(DictionaryID.ENGLISH_VIETNAMESE, manager);
+                        game_manager.StartGame();
+                        delay();
+                        clear();
+                        System.out.println("Do you want to continue: Yes or No");
+                        System.out.println("Enter your option: ");
+                        String option = Input.getLine();
+                        if (option.equals("Yes")) clear();
+                        else {
+                            clear();
+                            break;
+                        }
+                    }
+                    break;
+                    
                 case 8:
                     //Note: this is uncompleted
                     //Update: user should be able import from an .txt with different source
                     manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, "");
+                    break;
                 case 9:
                     //Note: this is uncompleted
                     //Update: user should be able to export from different dictionary
                     manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, "");
+                    break;
+                default:
+                    //input < 0 or > 9
+                    System.out.println("Action not supported");
+                    delay();
+                    clear();
+                    break;
             }
-
         }
-        //in ra các từ bắt đầu bằng key.
-        /*if (inputOfCustomer == 3) {
-            String key = dictCom.cinKey();
-            for (String a : manager.dictionarySearcher(key, DictionaryID.ENGLISH_ENGLISH)) {
-                System.out.println(a);
-            }
-        }*/
     }
 }

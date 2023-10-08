@@ -8,9 +8,7 @@ public class Main {
                 Initializer.terminate();
             }
         });
-
         DictionaryPanel p = new DictionaryPanel();
         p.CommandLineManager();
     }
-
 }

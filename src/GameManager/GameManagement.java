@@ -6,7 +6,9 @@ import DictionaryManager.Word;
 import utils.Input.Input;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 public class GameManagement {
     private final int[] wrongAnswer = new int[3]; // the index in the dictionary of wrong answer
@@ -60,29 +62,31 @@ public class GameManagement {
      */
     private int[] randomAnswer() {
         int index = 0; //use for array wrongAnswer to debug duplicating answer
-        int index_answers = 1; //use as the index for answers array
+        //int index_answers = 1; //use as the index for answers array
         int[] answers = new int[4];
         Random ran = new Random();
-        Random ran2 = new Random();
 
         //get random 4 answers to create question
         rightAnswer = ran.nextInt((dictionary.size() - 1) + 1);
+	    Set<Integer> usedIndexes = new HashSet<>();
         answers[0] = rightAnswer;
-        for (int i = 1; i < 4; i++) {
+	    usedIndexes.add(rightAnswer);
+        for (int i = 1; i < 4;) {
             wrongAnswer[index] = ran.nextInt((dictionary.size() - 1) + 1);
-            if (wrongAnswer[index] != rightAnswer) {
+            if (wrongAnswer[index] != rightAnswer && !usedIndexes.contains(wrongAnswer[index])) {
                 //debug duplicating answer
                 //your code here:
-
+                usedIndexes.add(wrongAnswer[index]);
                 answers[i] = wrongAnswer[index];
                 index++;
+                i++;
             }
         }
 
         //shuffle the array to create random question format
         int length = 4;
         for (int i = length - 1; i > 0; i--) {
-            int randomIndex = ran2.nextInt(i + 1);
+            int randomIndex = ran.nextInt(i + 1);
 
             int temp = answers[i];
             answers[i] = answers[randomIndex];
