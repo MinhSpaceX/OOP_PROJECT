@@ -1,2 +1,0 @@
-Main-Class: SystemMain.Main
-Class-Path: lib/sqlite-jdbc-3.43.0.0.jar
