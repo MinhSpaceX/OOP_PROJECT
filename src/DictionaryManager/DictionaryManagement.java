@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+//import SystemMain.Default;
 import utils.Input.Input;
 
 public class DictionaryManagement {
@@ -154,7 +155,8 @@ public class DictionaryManagement {
                 String[] info = line.split("[|]");
                 String word_target = info[0].trim();
                 String word_explain = info[1].trim();
-                addWordToDictionary(new Word(word_target, word_explain, ""), id);
+                String word_type = info[2].trim();
+                addWordToDictionary(new Word(word_target, word_explain, word_type), id);
             }
 
         } catch (IOException e) {

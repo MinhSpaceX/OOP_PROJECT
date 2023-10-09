@@ -17,11 +17,11 @@ public class DictionaryCommandline {
      * @param dict dictionary to print out.
      */
     public void ShowAllWords(DictionaryID id) {
-        System.out.println("No | English | Vietnamese");
+        System.out.println("No | English | Vietnamese | WordType");
         int a = 1;
         Dictionary dict = manager.getDictionary(id);
         for (Word w : dict.getDictionary()) {
-            System.out.format("%s | %s | %s\n", a, w.GetWordTarget(), w.GetWordExplain());
+            System.out.format("%s | %s | %s | %s\n", a, w.GetWordTarget(), w.GetWordExplain(), w.GetWordType());
             a++;
         }
     }

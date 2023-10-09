@@ -1,9 +1,12 @@
-hello | xin chao
-hi | xin chao
-goodbye | tam biet
-run | chay
-name | ten
-see | nhin
-height | do cao
-cat | con meo
-runnable | co the chay
+hello | xin chao | noun
+goodbye | tam biet | noun
+number | so | noun
+three | 3 | noun
+sentence | cau | noun
+walk | di bo | verb
+hello | xin chao | noun
+goodbye | tam biet | noun
+number | so | noun
+three | 3 | noun
+sentence | cau | noun
+walk | di bo | verb

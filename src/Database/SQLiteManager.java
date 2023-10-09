@@ -7,10 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import DictionaryManager.Dictionary;
+//import DictionaryManager.Dictionary;
 import DictionaryManager.DictionaryManagement;
 import DictionaryManager.Word;
-import SystemMain.Default;
+//import SystemMain.Default;
 
 public class SQLiteManager {
     private String pathToDatabase;
@@ -78,7 +78,7 @@ public class SQLiteManager {
         int key = countRow() + 1;
         String query = "INSERT INTO English(wordID, wordTarget, wordExplain, wordType) VALUES(?, ?, ?, ?)";
         String wordEN = word.GetWordTarget();
-        String wordVN = word.GetWordExplain();
+        //String wordVN = word.GetWordExplain();
         String wordType = word.GetWordType();
         try (Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(query)) {

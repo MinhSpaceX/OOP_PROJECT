@@ -28,6 +28,6 @@ public class Word {
      */
     @Override
     public String toString() {
-        return String.format("%s | %s\n", word_target, word_explain);
+        return String.format("%s | %s | %s\n", word_target, word_explain, word_type);
     }
 }

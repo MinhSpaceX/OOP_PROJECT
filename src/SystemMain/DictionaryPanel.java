@@ -2,6 +2,7 @@ package SystemMain;
 
 import DictionaryManager.DictionaryID;
 import GameManager.GameManagement;
+//import utils.File.FileManager;
 import utils.Input.Input;
 
 import java.io.FileNotFoundException;
@@ -18,19 +19,8 @@ public class DictionaryPanel extends Initializer {
      * @param filePath The path to txt data file.
      */
     DictionaryPanel() {
-        manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+        manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
         System.out.printf("DictionaryPanel created.\n");
-    }
-    /**
-     * delay time run code
-    */
-    private void delay() {
-        try {
-            long milliseconds = 1000;
-            Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -98,11 +88,11 @@ public class DictionaryPanel extends Initializer {
                             manager.insertFromCommandLine(DictionaryID.ENGLISH_VIETNAMESE);
                         }
                         //override the current file
-                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
 
                         clear();
                         System.out.println("Do you want to continue: Yes or No");
-                        System.out.println("Enter your option: ");
+                        System.out.printf("Enter your option: ");
                         String option = Input.getLine();
                         if (option.equals("Yes")) clear();
                         else {
@@ -116,10 +106,10 @@ public class DictionaryPanel extends Initializer {
                         System.out.println("Enter the word number that you want to remove: ");
                         int wordNum = Integer.parseInt(Input.getLine());
                         manager.removeFromDictionary(wordNum, DictionaryID.ENGLISH_VIETNAMESE);
-                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
                         clear();
                         System.out.println("Do you want to continue: Yes or No");
-                        System.out.println("Enter your option: ");
+                        System.out.printf("Enter your option: ");
                         String option = Input.getLine();
                         if (option.equals("Yes")) clear();
                         else {
@@ -134,10 +124,10 @@ public class DictionaryPanel extends Initializer {
                         System.out.println("Enter the word number that you want to update: ");
                         int wordNum2 = Integer.parseInt(Input.getLine());
                         manager.updateDictionary(wordNum2, DictionaryID.ENGLISH_VIETNAMESE);
-                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, txtPath);
+                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
                         clear();
                         System.out.println("Do you want to continue: Yes or No");
-                        System.out.println("Enter your option: ");
+                        System.out.printf("Enter your option: ");
                         String option = Input.getLine();
                         if (option.equals("Yes")) clear();
                         else {
@@ -145,11 +135,11 @@ public class DictionaryPanel extends Initializer {
                             break;
                         }
                     }
-                    
+                    break;
                 case 4: // show word
                     dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
-                    delay();
-                    clear();
+                    String a = Input.getLine();
+                    if (a.equals("EXIT"))
                     break;
                 case 5: // look up
                     while (function_state) {
@@ -162,10 +152,8 @@ public class DictionaryPanel extends Initializer {
                                 System.out.println(i);
                             }
                         }
-                        delay();
-                        clear();
                         System.out.println("Do you want to continue: Yes or No");
-                        System.out.println("Enter your option: ");
+                        System.out.printf("Enter your option: ");
                         String option = Input.getLine();
                         if (option.equals("Yes")) clear();
                         else {
@@ -178,10 +166,8 @@ public class DictionaryPanel extends Initializer {
                     while (function_state) {
                         game_manager = new GameManagement(DictionaryID.ENGLISH_VIETNAMESE, manager);
                         game_manager.StartGame();
-                        delay();
-                        clear();
                         System.out.println("Do you want to continue: Yes or No");
-                        System.out.println("Enter your option: ");
+                        System.out.printf("Enter your option: ");
                         String option = Input.getLine();
                         if (option.equals("Yes")) clear();
                         else {
@@ -194,19 +180,18 @@ public class DictionaryPanel extends Initializer {
                 case 8:
                     //Note: this is uncompleted
                     //Update: user should be able import from an .txt with different source
-                    manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, "");
+                    manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
                     break;
                 case 9:
                     //Note: this is uncompleted
                     //Update: user should be able to export from different dictionary
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, "");
+                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
                     break;
                 default:
                     //input < 0 or > 9
                     System.out.println("Action not supported");
-                    delay();
-                    clear();
-                    break;
+                    String aString = Input.getLine();
+                    if (aString.equals("EXIT")) break;
             }
         }
     }
