@@ -30,4 +30,7 @@ public class Word {
     public String toString() {
         return String.format("%s | %s | %s\n", word_target, word_explain, word_type);
     }
+    public boolean equals(Word a) {
+        return (a.GetWordTarget().equals(word_target) && a.GetWordType().equals(word_type));
+    }
 }

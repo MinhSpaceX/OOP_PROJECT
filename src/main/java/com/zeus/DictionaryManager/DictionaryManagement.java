@@ -89,8 +89,16 @@ public class DictionaryManagement {
         String word_type = Input.getLine();
 
         Word word = new Word(word_target, word_explain, word_type);
-
-        addWordToDictionary(word, id);
+        boolean same = false;
+        for (Word a : dictionaries.get(id).getDictionary()) {
+            if (a.equals(word)) {
+                same = true;
+            }
+        }
+        if ( same) System.out.println("your word existed");
+        else {
+            addWordToDictionary(word, id);
+        }
     }
 
     public void removeFromDictionary(int index, DictionaryID id) {
@@ -140,7 +148,7 @@ public class DictionaryManagement {
     }
 
     public void dictionaryExportToFile(DictionaryID id, String filePath) {
-        try (FileWriter fw = new FileWriter(filePath);
+        try (FileWriter fw = new FileWriter(getClass().getClassLoader().getResource(filePath).getPath());
              BufferedWriter bw = new BufferedWriter(fw)) {
 
             for (Word a : dictionaries.get(id).getDictionary()) {
