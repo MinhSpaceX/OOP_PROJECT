@@ -121,10 +121,9 @@ public class DictionaryManagement {
     }
 
     public void insertFromFile(DictionaryID id, String filePath) {
-        System.out.println(filePath);
-        try (FileReader fr = new FileReader(String.valueOf(this.getClass().getResource(filePath)));
-             BufferedReader br = new BufferedReader(fr)) {
-
+        try (InputStream is = (getClass().getClassLoader().getResourceAsStream(filePath));
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+            System.out.println("READ");
             while (true) {
                 String line = br.readLine();
                 if (line == null) break;
@@ -135,8 +134,8 @@ public class DictionaryManagement {
                 addWordToDictionary(new Word(word_target, word_explain, word_type), id);
             }
 
-        } catch (IOException e) {
-            System.out.printf("%s", e.getMessage());
+        } catch (Exception e) {
+            System.out.printf("%s\n", e.getMessage());
         }
     }
 
