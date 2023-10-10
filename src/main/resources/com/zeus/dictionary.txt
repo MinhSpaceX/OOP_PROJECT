@@ -1,0 +1,12 @@
+hello | xin chao | noun
+goodbye | tam biet | noun
+number | so | noun
+three | 3 | noun
+sentence | cau | noun
+walk | di bo | verb
+hello | xin chao | noun
+goodbye | tam biet | noun
+number | so | noun
+three | 3 | noun
+sentence | cau | noun
+walk | di bo | verb
