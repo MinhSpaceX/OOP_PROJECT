@@ -47,6 +47,7 @@ public class DictionaryManagement {
      * @return the dictionary.
      */
     public Dictionary getDictionary(DictionaryID id) {
+
         return dictionaries.get(id);
     }
 
@@ -57,6 +58,7 @@ public class DictionaryManagement {
      * @return the list of all the words.
      */
     public ArrayList<Word> getListOfWords(DictionaryID id) {
+
         return getDictionary(id).getDictionary();
     }
 
@@ -67,6 +69,7 @@ public class DictionaryManagement {
      * @param id   the ID of the dictionary to add the word to.
      */
     public void addWordToDictionary(Word word, DictionaryID id) {
+
         dictionaries.get(id).addWord(word);
     }
 
@@ -123,9 +126,19 @@ public class DictionaryManagement {
 
         Word word = new Word(word_target, word_explain, word_type);
 
-        dictionary.set(index - 1, word);
+        boolean same = false;
+        for (Word a : dictionaries.get(id).getDictionary()) {
+            if (a.equals(word)) {
+                same = true;
+            }
+        }
+        if ( same) System.out.println("your word existed");
+        else {
+            dictionary.set(index - 1, word);
 
-        System.out.println("Your word has been update!");
+            System.out.println("Your word has been update!");
+        }
+
     }
 
     public void insertFromFile(DictionaryID id, String filePath) {
