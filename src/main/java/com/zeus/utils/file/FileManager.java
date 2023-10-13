@@ -1,14 +1,12 @@
 package com.zeus.utils.file;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.image.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-//import java.io.FileWriter;
-//import java.io.IOException;
-
-//import DictionaryManager.DictionaryID;
-//import DictionaryManager.Word;
-//import DictionaryManager.DictionaryManagement;
+import java.io.IOException;
 
 public class FileManager {
     public static String readLineFromFile(String filePath, int numberReadline) {
@@ -29,4 +27,13 @@ public class FileManager {
         }
         return null;
     }
+    public static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(FileManager.class.getResource(fxml));
+        return fxmlLoader.load();
+    }
+
+    public static Image loadImage(String filePath) throws IOException {
+        return new Image(filePath);
+    }
+
 }
