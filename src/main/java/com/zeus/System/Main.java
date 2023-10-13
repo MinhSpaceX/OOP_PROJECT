@@ -1,6 +1,5 @@
 package com.zeus.System;
 
-import com.zeus.App.App;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,6 +9,7 @@ public class Main {
                 Initializer.terminate();
             }
         });
-        App.main(args);
+        DictionaryPanel p = new DictionaryPanel();
+        p.CommandLineManager();
     }
 }

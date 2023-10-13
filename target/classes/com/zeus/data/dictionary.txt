@@ -1,0 +1,10 @@
+hello | xin chao | noun
+goodbye | tam biet | noun
+number | so | noun
+three | 3 | noun
+sentence | cau | noun
+walk | di bo | verb
+finger | ngon tay | noun
+hand | ban tay | noun
+war | chien tranh | noun
+student | hoc sinh | noun

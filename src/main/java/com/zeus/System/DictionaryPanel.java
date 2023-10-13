@@ -59,7 +59,6 @@ public class DictionaryPanel extends Initializer {
         //start the application
         while (app_state) {
             int inputOfCustomer = getInterface();
-            boolean function_state = true;
             switch (inputOfCustomer) {
                 case 0:
                     app_state = false;
@@ -123,6 +122,7 @@ public class DictionaryPanel extends Initializer {
                     break;
                 case 4: // show word
                     dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
+                    System.out.print("Enter \"EXIT\" to return: ");
                     String a = Input.getLine();
                     if (a.equalsIgnoreCase("exit")){
                         break;
@@ -176,6 +176,7 @@ public class DictionaryPanel extends Initializer {
                 default:
                     //input < 0 or > 9
                     System.out.println("Action not supported");
+                    System.out.print("Enter \"EXIT\" to return: ");
                     String aString = Input.getLine();
                     if (aString.equalsIgnoreCase("EXIT")) break;
             }
