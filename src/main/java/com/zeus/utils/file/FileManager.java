@@ -1,5 +1,7 @@
 package com.zeus.utils.file;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zeus.App.Config.Config;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.*;
@@ -7,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+
 
 public class FileManager {
     public static String readLineFromFile(String filePath, int numberReadline) {
@@ -23,7 +28,7 @@ public class FileManager {
             }
 
         } catch (Exception e) {
-            System.out.printf("%s. File path: '%s'.", e.getMessage(), filePath);
+            System.out.printf("%s. File path: '%s'.\n", e.getMessage(), filePath);
         }
         return null;
     }
@@ -32,8 +37,21 @@ public class FileManager {
         return fxmlLoader.load();
     }
 
-    public static Image loadImage(String filePath) throws IOException {
+    public static Image loadImage(String filePath) {
         return new Image(filePath);
+    }
+
+    public static Config getConfig(String target, String jsonPath) {
+        ObjectMapper objm = new ObjectMapper();
+        try {
+            List<Config> configs = objm.readValue(FileManager.class.getResource(jsonPath), objm.getTypeFactory().constructCollectionType(List.class, Config.class));
+            for (Config c : configs) {
+                return c;
+            }
+        } catch (Exception e) {
+            System.out.printf("%s.", e.getMessage());
+        }
+        return null;
     }
 
 }

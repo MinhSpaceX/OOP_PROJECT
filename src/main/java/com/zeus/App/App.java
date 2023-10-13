@@ -1,19 +1,21 @@
 package com.zeus.App;
 
+import com.zeus.App.Config.Config;
 import com.zeus.utils.file.FileManager;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class App extends Application {
-    private static final String title = "Duelingo";
-    private static final String iconPath = "/com/zeus/icon/icon.png";
-    private static final int HEIGHT = 400;
-    private static final int WIDTH = 600;
-    private static final boolean resizable = false;
-    private static final boolean fullScreen = false;
+    private String title;
+    private String iconPath;
+    private int HEIGHT;
+    private int WIDTH;
+    private boolean resizable;
+    private boolean fullScreen;
 
     public static void main(String[] args) {
         launch(args);
@@ -29,11 +31,23 @@ public class App extends Application {
     }
 
     private void inititialize(Stage stage) throws IOException {
+        getConfig();
         stage.setTitle(title);
         stage.getIcons().add(FileManager.loadImage(iconPath));
         stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
         stage.setResizable(resizable);
         stage.setFullScreen(fullScreen);
+    }
+
+    private void getConfig() {
+        Config window = FileManager.getConfig("WindowConfig", "/com/zeus/config/config.json");
+        assert window != null;
+        title = window.getProperties().getProperties().get("title").toString();
+        iconPath = window.getProperties().getProperties().get("iconPath").toString();
+        WIDTH = Integer.parseInt(window.getProperties().getProperties().get("WIDTH").toString());
+        HEIGHT = Integer.parseInt(window.getProperties().getProperties().get("HEIGHT").toString());
+        resizable = Boolean.parseBoolean(window.getProperties().getProperties().get("resizable").toString());
+        fullScreen = Boolean.parseBoolean(window.getProperties().getProperties().get("fullScreen").toString());
     }
 }
