@@ -1,4 +1,4 @@
-package DictionaryManager;
+package com.zeus.DictionaryManager;
 
 /**
  * IDs enum for all dictionary. If you need a new dictionary, add a value into this enum.

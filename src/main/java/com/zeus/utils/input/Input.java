@@ -1,4 +1,4 @@
-package Input;
+package com.zeus.utils.input;
 
 import java.util.Scanner;
 
@@ -19,5 +19,13 @@ public class Input {
      */
     public static synchronized void closeScanner() {
         sc.close();
+    }
+
+    public static String getLine() {
+        return sc.nextLine();
+    }
+
+    public static Integer getInteger() {
+        return Integer.parseInt(sc.nextLine());
     }
 }
