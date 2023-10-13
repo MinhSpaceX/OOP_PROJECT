@@ -65,7 +65,7 @@ public class DictionaryPanel extends Initializer {
                     app_state = false;
                     break;
                 case 1: // add word
-                    while (function_state) {
+                    while (true) {
                         System.out.println("Enter the number of words you want to add: ");
                         int num = Integer.parseInt(Input.getLine());
 
@@ -79,7 +79,7 @@ public class DictionaryPanel extends Initializer {
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
                         String option = Input.getLine();
-                        if (option.equals("Yes")) clear();
+                        if (option.equalsIgnoreCase("Yes")) clear();
                         else {
                             clear();
                             break;
@@ -87,7 +87,7 @@ public class DictionaryPanel extends Initializer {
                     }
                     break;
                 case 2: // delete word
-                    while (function_state) {
+                    while (true) {
                         System.out.println("Enter the word number that you want to remove: ");
                         int wordNum = Integer.parseInt(Input.getLine());
                         manager.removeFromDictionary(wordNum, DictionaryID.ENGLISH_VIETNAMESE);
@@ -96,7 +96,7 @@ public class DictionaryPanel extends Initializer {
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
                         String option = Input.getLine();
-                        if (option.equals("Yes")) clear();
+                        if (option.equalsIgnoreCase("Yes")) clear();
                         else {
                             clear();
                             break;
@@ -105,7 +105,7 @@ public class DictionaryPanel extends Initializer {
                     break;
 
                 case 3: // update word
-                    while (function_state) {
+                    while (true) {
                         System.out.println("Enter the word number that you want to update: ");
                         int wordNum2 = Integer.parseInt(Input.getLine());
                         manager.updateDictionary(wordNum2, DictionaryID.ENGLISH_VIETNAMESE);
@@ -114,7 +114,7 @@ public class DictionaryPanel extends Initializer {
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
                         String option = Input.getLine();
-                        if (option.equals("Yes")) clear();
+                        if (option.equalsIgnoreCase("Yes")) clear();
                         else {
                             clear();
                             break;
@@ -124,10 +124,11 @@ public class DictionaryPanel extends Initializer {
                 case 4: // show word
                     dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
                     String a = Input.getLine();
-                    if (a.equals("EXIT"))
+                    if (a.equalsIgnoreCase("exit")){
                         break;
+                    }
                 case 5: // look up
-                    while (function_state) {
+                    while (true) {
                         System.out.println("Enter the word you want to look up: ");
                         String word = Input.getLine();
                         ArrayList<String> pList = manager.dictionarySearcher(word, DictionaryID.ENGLISH_VIETNAMESE);
@@ -140,7 +141,7 @@ public class DictionaryPanel extends Initializer {
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
                         String option = Input.getLine();
-                        if (option.equals("Yes")) clear();
+                        if (option.equalsIgnoreCase("Yes")) clear();
                         else {
                             clear();
                             break;
@@ -148,13 +149,13 @@ public class DictionaryPanel extends Initializer {
                     }
                     break;
                 case 7: // Game
-                    while (function_state) {
+                    while (true) {
                         GameManagement game_manager = new GameManagement(DictionaryID.ENGLISH_VIETNAMESE, manager);
                         game_manager.StartGame();
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
                         String option = Input.getLine();
-                        if (option.equals("Yes")) clear();
+                        if (option.equalsIgnoreCase("Yes")) clear();
                         else {
                             clear();
                             break;
@@ -176,7 +177,7 @@ public class DictionaryPanel extends Initializer {
                     //input < 0 or > 9
                     System.out.println("Action not supported");
                     String aString = Input.getLine();
-                    if (aString.equals("EXIT")) break;
+                    if (aString.equalsIgnoreCase("EXIT")) break;
             }
         }
     }
