@@ -14,7 +14,7 @@
         <javafx.control.version>21</javafx.control.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <javafx.fxml.version>20.0.2</javafx.fxml.version>
-        <mainClass.Path>com.zeus.App.App</mainClass.Path>
+        <mainClass.Path>com.zeus.System.Main</mainClass.Path>
         <maven.compiler.plugin.version>3.10.1</maven.compiler.plugin.version>
     </properties>
 
