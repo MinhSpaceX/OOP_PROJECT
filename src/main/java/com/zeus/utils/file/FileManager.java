@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
 
 public class FileManager {
     public static String readLineFromFile(String filePath, int numberReadline) {

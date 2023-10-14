@@ -6,15 +6,8 @@
       "iconPath": "/com/zeus/icon/icon.png",
       "HEIGHT": 400,
       "WIDTH": 600,
-      "resizable": false,
+      "resizable": true,
       "fullScreen": false
-    }
-  },
-  {
-    "target": "AppConfig",
-    "properties": {
-      "title": "Duelingo",
-      "iconPath": "/com/zeus/icon/icon.png"
     }
   }
 ]

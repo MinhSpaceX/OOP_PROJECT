@@ -9,7 +9,7 @@ public class Initializer {
     static protected final String dbPath;
 
     static protected final DictionaryManagement manager;
-    static protected final DictionaryCommandline dictCom;
+    static public final DictionaryCommandline dictCom;
 
     /*
       Static block to ensure the order of variable declaration

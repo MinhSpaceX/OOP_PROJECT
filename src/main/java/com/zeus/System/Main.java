@@ -10,6 +10,6 @@ public class Main {
                 Initializer.terminate();
             }
         });
-        App.main(args);
+        App.run(args);
     }
 }

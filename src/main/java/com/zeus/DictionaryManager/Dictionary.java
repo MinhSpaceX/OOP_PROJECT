@@ -1,6 +1,7 @@
 package com.zeus.DictionaryManager;
 
 import java.util.ArrayList;
+import com.zeus.utils.log.Logger;
 
 public class Dictionary {
     private final ArrayList<Word> dictionary = new ArrayList<>();
@@ -13,7 +14,7 @@ public class Dictionary {
      */
     Dictionary(DictionaryID id) {
         dictId = id;
-        System.out.printf("Dictionary created. ID: %s.\n", id.toString());
+        Logger.info(String.format("Dictionary created. ID: %s.\n", dictId));
     }
 
     /**
