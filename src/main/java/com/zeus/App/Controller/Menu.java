@@ -1,5 +1,10 @@
 package com.zeus.App.Controller;
 
-public class Menu {
+import javafx.fxml.FXML;
 
+public class Menu {
+    @FXML
+    void CloseApp() {
+
+    }
 }
