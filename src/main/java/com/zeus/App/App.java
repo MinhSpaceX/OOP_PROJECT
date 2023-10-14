@@ -24,11 +24,16 @@ public class App extends Application {
         stage.show();
     }
 
+    /**
+     * Called method getConfig(stage)
+     * @param stage
+     */
     private void initialize(Stage stage) {
         getConfig(stage);
     }
 
     private void getConfig(Stage stage) {
+        //Create a config from the target string to get config from config.json then extract properties
         Config window = FileManager.getConfig("WindowConfig", "/com/zeus/config/config.json");
         assert window != null;
         String title = window.getProperties().getProperties().get("title").toString();
@@ -38,6 +43,9 @@ public class App extends Application {
         boolean resizable = Boolean.parseBoolean(window.getProperties().getProperties().get("resizable").toString());
         boolean fullScreen = Boolean.parseBoolean(window.getProperties().getProperties().get("fullScreen").toString());
 
+        /**
+         * Set properties: title, iconPath, WIDTH, HEIGHT, resizable, fullScreen
+         */
         stage.setTitle(title);
         stage.getIcons().add(FileManager.loadImage(iconPath));
         stage.setWidth(WIDTH);

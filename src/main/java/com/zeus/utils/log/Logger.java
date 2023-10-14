@@ -11,6 +11,10 @@ public class Logger {
         System.out.printf("[INFO]: %s. Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
     }
 
+    /**
+     * Funtion take information about Lineinfo.
+     * @return lineinfo.
+     */
     private static LineInfo getLineInfo() {
         StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
         // 0 is getStackTrace() | 1 is getLineInfo() | 2 is info()

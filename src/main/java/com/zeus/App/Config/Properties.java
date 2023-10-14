@@ -13,6 +13,11 @@ public class Properties {
         return properties;
     }
 
+    /**
+     * add the pair of key and value from JsonNode format to the Map.
+     * @param key
+     * @param value
+     */
     @JsonAnySetter
     public void setAdditionalProperty(String key, JsonNode value) {
         if (value.isTextual()) {
