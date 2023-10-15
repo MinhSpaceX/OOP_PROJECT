@@ -1,0 +1,455 @@
+Index: src/GameManager/GameManagement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package GameManager;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.Random;\r\nimport java.util.Scanner;\r\n\r\nimport DictionaryManager.Dictionary;\r\nimport DictionaryManager.DictionaryID;\r\nimport DictionaryManager.Word;\r\n\r\npublic class GameManagement {\r\n\t\r\n\tprivate int rightAnswer; // the index in the dictionary of right answer\r\n\tprivate int[] wrongAnswer = new int[3]; // the index in the dictionary of wrong answer\r\n\tprivate DictionaryID id; \r\n\tprivate boolean gameState = true;\r\n\tprivate char correct;\r\n\tprivate Scanner sc;\r\n\tprivate ArrayList<Word> dictionary;\r\n\t\r\n\tpublic GameManagement(Dictionary d, Scanner sc) {\r\n\t\tthis.dictionary = d.getDictionary();\r\n\t\tthis.sc = sc;\r\n\t}\r\n\t\r\n\tpublic void StartGame() {\r\n\t\trandomAnswer();\r\n\t\tgenerateQuestion();\r\n\t\twhile(gameState) {\r\n\t\t\tSystem.out.println(\"Enter your answer: [UPPER CASE]\");\r\n\t\t\tString input = sc.nextLine();\r\n\t\t\tchar char_input = input.charAt(0);\r\n\t\t\tif(char_input == correct) {\r\n\t\t\t\tSystem.out.println(\"Correct!\");\r\n\t\t\t\tgameState = false;\r\n\t\t\t}\r\n\t\t\telse {\r\n\t\t\t\tSystem.out.println(\"Wrong!\");\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n\t\t\r\n\t/**\r\n\t * Generate game\r\n\t * @param d\r\n\t * @param id\r\n\t */\r\n\tpublic void generateQuestion() {\r\n\t\tint[] answers = new int[4];\r\n\t\tanswers = randomAnswer();\r\n\t\tchar answer_index = 'A';\r\n\t\tSystem.out.println(\"What is the meaning of: \" + dictionary.get(rightAnswer).GetWordTarget());\r\n\t\tfor(int i = 0; i < 4; i++) {\r\n\t\t\tSystem.out.println(answer_index + \".\" + dictionary.get(answers[i]).GetWordExplain());\r\n\t\t\tif(answers[i] == rightAnswer) {\r\n\t\t\t\tcorrect = answer_index;\r\n\t\t\t}\r\n\t\t\tanswer_index++;\r\n\t\t}\r\n\t}\r\n\t\r\n\t/**\r\n\t * \r\n\t * @return an array that contain answers in random order\r\n\t */\r\n\tprivate int[] randomAnswer() {\r\n\t\t\r\n\t\t\r\n\t\tint index = 0; //use for array wrongAnswer to debug duplicating answer\r\n\t\tint index_answers = 1; //use as the index for answers array\r\n\t\tint[] answers = new int[4];\r\n\t\tRandom ran = new Random();\r\n\t\tRandom ran2 = new Random();\r\n\t\t\r\n\t\t//get random 4 answers to create question\r\n\t\trightAnswer = ran.nextInt((dictionary.size() - 1) + 1);\r\n\t\tanswers[0] = rightAnswer;\r\n\t\tfor(int i = 1; i < 4; i++) {\r\n\t\t\twrongAnswer[index] = ran.nextInt((dictionary.size() - 1) + 1);\r\n\t\t\tif(wrongAnswer[index] != rightAnswer) {\r\n\t\t\t\t//debug duplicating answer\r\n\t\t\t\t//your code here:\r\n\t\t\t\t\r\n\t\t\t\tanswers[i] = wrongAnswer[index];\r\n\t\t\t\tindex++;\r\n\t\t\t}\r\n\t\t}\r\n\t\t\r\n\t\t//shuffle the array to create random question format\r\n\t\tint length = 4;\r\n\t\tfor(int i = length - 1; i > 0; i--) {\r\n\t\t\tint randomIndex = ran2.nextInt(i + 1);\r\n\t\t\t\r\n\t\t\tint temp = answers[i];\r\n\t\t\tanswers[i] = answers[randomIndex];\r\n\t\t\tanswers[randomIndex] = temp; \r\n\t\t}\r\n\t\t\r\n\t\treturn answers;\r\n\t}\r\n}\r\n
+===================================================================
+diff --git a/src/GameManager/GameManagement.java b/src/GameManager/GameManagement.java
+--- a/src/GameManager/GameManagement.java	
++++ b/src/GameManager/GameManagement.java	
+@@ -9,39 +9,39 @@
+ import DictionaryManager.Word;
+ 
+ public class GameManagement {
+-	
++
+ 	private int rightAnswer; // the index in the dictionary of right answer
+ 	private int[] wrongAnswer = new int[3]; // the index in the dictionary of wrong answer
+-	private DictionaryID id; 
++	private DictionaryID id;
+ 	private boolean gameState = true;
+ 	private char correct;
+ 	private Scanner sc;
+ 	private ArrayList<Word> dictionary;
+-	
++
+ 	public GameManagement(Dictionary d, Scanner sc) {
+ 		this.dictionary = d.getDictionary();
+ 		this.sc = sc;
+ 	}
+-	
++
+ 	public void StartGame() {
+ 		randomAnswer();
+ 		generateQuestion();
+-		while(gameState) {
++		while (gameState) {
+ 			System.out.println("Enter your answer: [UPPER CASE]");
+ 			String input = sc.nextLine();
+ 			char char_input = input.charAt(0);
+-			if(char_input == correct) {
++			if (char_input == correct) {
+ 				System.out.println("Correct!");
+ 				gameState = false;
+-			}
+-			else {
++			} else {
+ 				System.out.println("Wrong!");
+ 			}
+ 		}
+ 	}
+-		
++
+ 	/**
+ 	 * Generate game
++	 * 
+ 	 * @param d
+ 	 * @param id
+ 	 */
+@@ -50,52 +50,51 @@
+ 		answers = randomAnswer();
+ 		char answer_index = 'A';
+ 		System.out.println("What is the meaning of: " + dictionary.get(rightAnswer).GetWordTarget());
+-		for(int i = 0; i < 4; i++) {
++		for (int i = 0; i < 4; i++) {
+ 			System.out.println(answer_index + "." + dictionary.get(answers[i]).GetWordExplain());
+-			if(answers[i] == rightAnswer) {
++			if (answers[i] == rightAnswer) {
+ 				correct = answer_index;
+ 			}
+ 			answer_index++;
+ 		}
+ 	}
+-	
++
+ 	/**
+ 	 * 
+ 	 * @return an array that contain answers in random order
+ 	 */
+ 	private int[] randomAnswer() {
+-		
+-		
+-		int index = 0; //use for array wrongAnswer to debug duplicating answer
+-		int index_answers = 1; //use as the index for answers array
++
++		int index = 0; // use for array wrongAnswer to debug duplicating answer
++		int index_answers = 1; // use as the index for answers array
+ 		int[] answers = new int[4];
+ 		Random ran = new Random();
+ 		Random ran2 = new Random();
+-		
+-		//get random 4 answers to create question
++
++		// get random 4 answers to create question
+ 		rightAnswer = ran.nextInt((dictionary.size() - 1) + 1);
+ 		answers[0] = rightAnswer;
+-		for(int i = 1; i < 4; i++) {
++		for (int i = 1; i < 4; i++) {
+ 			wrongAnswer[index] = ran.nextInt((dictionary.size() - 1) + 1);
+-			if(wrongAnswer[index] != rightAnswer) {
+-				//debug duplicating answer
+-				//your code here:
+-				
++			if (wrongAnswer[index] != rightAnswer) {
++				// debug duplicating answer
++				// your code here:
++
+ 				answers[i] = wrongAnswer[index];
+ 				index++;
+ 			}
+ 		}
+-		
+-		//shuffle the array to create random question format
++
++		// shuffle the array to create random question format
+ 		int length = 4;
+-		for(int i = length - 1; i > 0; i--) {
++		for (int i = length - 1; i > 0; i--) {
+ 			int randomIndex = ran2.nextInt(i + 1);
+-			
++
+ 			int temp = answers[i];
+ 			answers[i] = answers[randomIndex];
+-			answers[randomIndex] = temp; 
++			answers[randomIndex] = temp;
+ 		}
+-		
++
+ 		return answers;
+ 	}
+ }
+Index: src/DictionaryManager/DictionaryManagement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package DictionaryManager;\r\n\r\nimport java.io.BufferedReader;\r\nimport java.io.BufferedWriter;\r\nimport java.io.File;\r\nimport java.io.FileNotFoundException;\r\nimport java.io.FileReader;\r\nimport java.io.FileWriter;\r\nimport java.io.IOException;\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.Map;\r\nimport java.util.Scanner;\r\n\r\npublic class DictionaryManagement {\r\n    private Map<DictionaryID, Dictionary> dictionaries;\r\n\r\n    /**\r\n     * Constructor.\r\n     */\r\n    public DictionaryManagement() {\r\n        dictionaries = new HashMap<DictionaryID, Dictionary>();\r\n        createDictionary();\r\n    }\r\n    /**\r\n     * Function to create all dictionary from the enum file.\r\n     */\r\n    private void createDictionary() {\r\n        for (DictionaryID x : DictionaryID.values()) {\r\n            Dictionary dict = new Dictionary(x);\r\n            dictionaries.put(dict.getId(), dict);\r\n        } \r\n    }\r\n    \r\n    /**\r\n     * Function to create new word.\r\n     * @param word_target the word to create.\r\n     * @param word_explain definition of the word.\r\n     * @return the word created.\r\n     */\r\n    public Word createWord(String word_target, String word_explain) {\r\n        Word word = new Word(word_target, word_explain);\r\n        return word;\r\n    }\r\n    \r\n    /**\r\n     * Function to get a dictionary from the provided ID.\r\n     * @param id the id of the dictionary.\r\n     * @return the dictionary.\r\n     */\r\n    public Dictionary getDictionary(DictionaryID id) {\r\n        return dictionaries.get(id);\r\n    }\r\n    \r\n    /**\r\n     * Function to add word to a dictionary.\r\n     * @param word the word to add. \r\n     * @param id the ID of the dictionary to add the word to.\r\n     */\r\n    public void addWordToDictionary(Word word, DictionaryID id) {\r\n        dictionaries.get(id).addWord(word);\r\n    }\r\n    \r\n    /**\r\n     * Function to search for words start with the key value.\r\n     * @param key : value to pass in.\r\n     * @return list string \r\n     */\r\n    public ArrayList<String> dictionarySearcher(String word, DictionaryID id) {\r\n        ArrayList<String> pList = new ArrayList<>();\r\n        \r\n        //look up all the word with similar prefix\r\n        for (Word a : dictionaries.get(id).getDictionary()) {\r\n            if (a.GetWordTarget().startsWith(word)) {\r\n                pList.add(a.GetWordTarget());   \r\n            }\r\n        }\r\n        return pList;\r\n    }\r\n\r\n    /**\r\n     * Function to get input from terminal.\r\n     * @return inserted word.\r\n     */\r\n    public void insertFromCommandLine(Scanner sc, DictionaryID id) {\r\n        System.out.println(\"Enter your input with format: word_target <enter> word_explain\");\r\n        String word_target = sc.nextLine();\r\n        String word_explain = sc.nextLine();\r\n\r\n        Word word = new Word(word_target, word_explain);\r\n        \r\n        addWordToDictionary(word, id);\r\n    }\r\n    \r\n    /**\r\n     * Function to remove word from dictionary\r\n     * Note*: This function will delete in both array and file\r\n     * @param word \r\n     */\r\n    public void removeFromDictionary(int index, DictionaryID id) {\r\n    \t\r\n    \tArrayList<Word> dictionary = dictionaries.get(id).getDictionary();\r\n    \t//Search for the word\r\n    \tdictionary.remove(index - 1);\r\n    \t\t\r\n    }\r\n    \r\n    /**\r\n     * update new word to the desired position\r\n     * @param index\r\n     * @param id\r\n     */\r\n    public void updateDictionary(int index, DictionaryID id, Scanner sc) {\r\n    \t\r\n    \tArrayList<Word> dictionary = dictionaries.get(id).getDictionary();\r\n    \tSystem.out.println(\"Input the change: word_target <enter> word_explain\");\r\n    \tString word_target = sc.nextLine();\r\n        String word_explain = sc.nextLine();\r\n\r\n        Word word = new Word(word_target, word_explain);\r\n        \r\n        dictionary.set(index - 1, word);\r\n        \r\n        System.out.println(\"Your word has been update!\");\r\n    }\r\n    \r\n    /**\r\n     * Function Import dictionary data from a text file.\r\n     * @param id the DictionaryID.\r\n     * @throws FileNotFoundException\r\n     * @throws IOException \r\n     */\r\n    public void insertFromFile(DictionaryID id) throws FileNotFoundException, IOException {\r\n        File f = new File(\"src/dictionary.txt\");\r\n        FileReader fr = new FileReader(f);\r\n        BufferedReader br = new BufferedReader(fr);\r\n        \r\n        while (true) {\r\n            String line = br.readLine();\r\n            if (line == null) break;\r\n            String[] info = line.split(\"[|]\");\r\n            String word_target = info[0].trim();\r\n            String word_explain = info[1].trim();\r\n            addWordToDictionary(new Word(word_target,word_explain), id);\r\n        }\r\n        \r\n        br.close();\r\n        fr.close();\r\n    }\r\n    \r\n    /**\r\n     * Function export existing dictionary data to a text file.\r\n     * @param id the DictionaryID.\r\n     * @throws IOException \r\n     */\r\n    public void dictionaryExportToFile(DictionaryID id) throws IOException {\r\n        File f = new File(\"src/dictionary.txt\");\r\n        FileWriter fw = new FileWriter(f);\r\n        BufferedWriter bw = new BufferedWriter(fw);\r\n        \r\n            for( Word a : dictionaries.get(id).getDictionary()) {\r\n                bw.write(a.toString());\r\n            } \r\n            \r\n        bw.close();\r\n        fw.close();\r\n            \r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/DictionaryManager/DictionaryManagement.java b/src/DictionaryManager/DictionaryManagement.java
+--- a/src/DictionaryManager/DictionaryManagement.java	
++++ b/src/DictionaryManager/DictionaryManagement.java	
+@@ -13,157 +13,168 @@
+ import java.util.Scanner;
+ 
+ public class DictionaryManagement {
+-    private Map<DictionaryID, Dictionary> dictionaries;
++	private Map<DictionaryID, Dictionary> dictionaries;
+ 
+-    /**
+-     * Constructor.
+-     */
+-    public DictionaryManagement() {
+-        dictionaries = new HashMap<DictionaryID, Dictionary>();
+-        createDictionary();
+-    }
+-    /**
+-     * Function to create all dictionary from the enum file.
+-     */
+-    private void createDictionary() {
+-        for (DictionaryID x : DictionaryID.values()) {
+-            Dictionary dict = new Dictionary(x);
+-            dictionaries.put(dict.getId(), dict);
+-        } 
+-    }
+-    
+-    /**
+-     * Function to create new word.
+-     * @param word_target the word to create.
+-     * @param word_explain definition of the word.
+-     * @return the word created.
+-     */
+-    public Word createWord(String word_target, String word_explain) {
+-        Word word = new Word(word_target, word_explain);
+-        return word;
+-    }
+-    
+-    /**
+-     * Function to get a dictionary from the provided ID.
+-     * @param id the id of the dictionary.
+-     * @return the dictionary.
+-     */
+-    public Dictionary getDictionary(DictionaryID id) {
+-        return dictionaries.get(id);
+-    }
+-    
+-    /**
+-     * Function to add word to a dictionary.
+-     * @param word the word to add. 
+-     * @param id the ID of the dictionary to add the word to.
+-     */
+-    public void addWordToDictionary(Word word, DictionaryID id) {
+-        dictionaries.get(id).addWord(word);
+-    }
+-    
+-    /**
+-     * Function to search for words start with the key value.
+-     * @param key : value to pass in.
+-     * @return list string 
+-     */
+-    public ArrayList<String> dictionarySearcher(String word, DictionaryID id) {
+-        ArrayList<String> pList = new ArrayList<>();
+-        
+-        //look up all the word with similar prefix
+-        for (Word a : dictionaries.get(id).getDictionary()) {
+-            if (a.GetWordTarget().startsWith(word)) {
+-                pList.add(a.GetWordTarget());   
+-            }
+-        }
+-        return pList;
+-    }
++	/**
++	 * Constructor.
++	 */
++	public DictionaryManagement() {
++		dictionaries = new HashMap<DictionaryID, Dictionary>();
++		createDictionary();
++	}
++
++	/**
++	 * Function to create all dictionary from the enum file.
++	 */
++	private void createDictionary() {
++		for (DictionaryID x : DictionaryID.values()) {
++			Dictionary dict = new Dictionary(x);
++			dictionaries.put(dict.getId(), dict);
++		}
++	}
++
++	/**
++	 * Function to create new word.
++	 * 
++	 * @param word_target  the word to create.
++	 * @param word_explain definition of the word.
++	 * @return the word created.
++	 */
++	public Word createWord(String word_target, String word_explain) {
++		Word word = new Word(word_target, word_explain);
++		return word;
++	}
++
++	/**
++	 * Function to get a dictionary from the provided ID.
++	 * 
++	 * @param id the id of the dictionary.
++	 * @return the dictionary.
++	 */
++	public Dictionary getDictionary(DictionaryID id) {
++		return dictionaries.get(id);
++	}
++
++	/**
++	 * Function to add word to a dictionary.
++	 * 
++	 * @param word the word to add.
++	 * @param id   the ID of the dictionary to add the word to.
++	 */
++	public void addWordToDictionary(Word word, DictionaryID id) {
++		dictionaries.get(id).addWord(word);
++	}
++
++	/**
++	 * Function to search for words start with the key value.
++	 * 
++	 * @param key : value to pass in.
++	 * @return list string
++	 */
++	public ArrayList<String> dictionarySearcher(String word, DictionaryID id) {
++		ArrayList<String> pList = new ArrayList<>();
++
++		// look up all the word with similar prefix
++		for (Word a : dictionaries.get(id).getDictionary()) {
++			if (a.GetWordTarget().startsWith(word)) {
++				pList.add(a.GetWordTarget());
++			}
++		}
++		return pList;
++	}
+ 
+-    /**
+-     * Function to get input from terminal.
+-     * @return inserted word.
+-     */
+-    public void insertFromCommandLine(Scanner sc, DictionaryID id) {
+-        System.out.println("Enter your input with format: word_target <enter> word_explain");
+-        String word_target = sc.nextLine();
+-        String word_explain = sc.nextLine();
++	/**
++	 * Function to get input from terminal.
++	 * 
++	 * @return inserted word.
++	 */
++	public void insertFromCommandLine(Scanner sc, DictionaryID id) {
++		System.out.println("Enter your input with format: word_target <enter> word_explain");
++		String word_target = sc.nextLine();
++		String word_explain = sc.nextLine();
+ 
+-        Word word = new Word(word_target, word_explain);
+-        
+-        addWordToDictionary(word, id);
+-    }
+-    
+-    /**
+-     * Function to remove word from dictionary
+-     * Note*: This function will delete in both array and file
+-     * @param word 
+-     */
+-    public void removeFromDictionary(int index, DictionaryID id) {
+-    	
+-    	ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
+-    	//Search for the word
+-    	dictionary.remove(index - 1);
+-    		
+-    }
+-    
+-    /**
+-     * update new word to the desired position
+-     * @param index
+-     * @param id
+-     */
+-    public void updateDictionary(int index, DictionaryID id, Scanner sc) {
+-    	
+-    	ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
+-    	System.out.println("Input the change: word_target <enter> word_explain");
+-    	String word_target = sc.nextLine();
+-        String word_explain = sc.nextLine();
++		Word word = new Word(word_target, word_explain);
++
++		addWordToDictionary(word, id);
++	}
++
++	/**
++	 * Function to remove word from dictionary Note*: This function will delete in
++	 * both array and file
++	 * 
++	 * @param word
++	 */
++	public void removeFromDictionary(int index, DictionaryID id) {
++
++		ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
++		// Search for the word
++		dictionary.remove(index - 1);
++
++	}
++
++	/**
++	 * update new word to the desired position
++	 * 
++	 * @param index
++	 * @param id
++	 */
++	public void updateDictionary(int index, DictionaryID id, Scanner sc) {
++
++		ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
++		System.out.println("Input the change: word_target <enter> word_explain");
++		String word_target = sc.nextLine();
++		String word_explain = sc.nextLine();
+ 
+-        Word word = new Word(word_target, word_explain);
+-        
+-        dictionary.set(index - 1, word);
+-        
+-        System.out.println("Your word has been update!");
+-    }
+-    
+-    /**
+-     * Function Import dictionary data from a text file.
+-     * @param id the DictionaryID.
+-     * @throws FileNotFoundException
+-     * @throws IOException 
+-     */
+-    public void insertFromFile(DictionaryID id) throws FileNotFoundException, IOException {
+-        File f = new File("src/dictionary.txt");
+-        FileReader fr = new FileReader(f);
+-        BufferedReader br = new BufferedReader(fr);
+-        
+-        while (true) {
+-            String line = br.readLine();
+-            if (line == null) break;
+-            String[] info = line.split("[|]");
+-            String word_target = info[0].trim();
+-            String word_explain = info[1].trim();
+-            addWordToDictionary(new Word(word_target,word_explain), id);
+-        }
+-        
+-        br.close();
+-        fr.close();
+-    }
+-    
+-    /**
+-     * Function export existing dictionary data to a text file.
+-     * @param id the DictionaryID.
+-     * @throws IOException 
+-     */
+-    public void dictionaryExportToFile(DictionaryID id) throws IOException {
+-        File f = new File("src/dictionary.txt");
+-        FileWriter fw = new FileWriter(f);
+-        BufferedWriter bw = new BufferedWriter(fw);
+-        
+-            for( Word a : dictionaries.get(id).getDictionary()) {
+-                bw.write(a.toString());
+-            } 
+-            
+-        bw.close();
+-        fw.close();
+-            
+-    }
++		Word word = new Word(word_target, word_explain);
++
++		dictionary.set(index - 1, word);
++
++		System.out.println("Your word has been update!");
++	}
++
++	/**
++	 * Function Import dictionary data from a text file.
++	 * 
++	 * @param id the DictionaryID.
++	 * @throws FileNotFoundException
++	 * @throws IOException
++	 */
++	public void insertFromFile(DictionaryID id) throws FileNotFoundException, IOException {
++		File f = new File("src/dictionary.txt");
++		FileReader fr = new FileReader(f);
++		BufferedReader br = new BufferedReader(fr);
++
++		while (true) {
++			String line = br.readLine();
++			if (line == null)
++				break;
++			String[] info = line.split("[|]");
++			String word_target = info[0].trim();
++			String word_explain = info[1].trim();
++			addWordToDictionary(new Word(word_target, word_explain), id);
++		}
++
++		br.close();
++		fr.close();
++	}
++
++	/**
++	 * Function export existing dictionary data to a text file.
++	 * 
++	 * @param id the DictionaryID.
++	 * @throws IOException
++	 */
++	public void dictionaryExportToFile(DictionaryID id) throws IOException {
++		File f = new File("src/dictionary.txt");
++		FileWriter fw = new FileWriter(f);
++		BufferedWriter bw = new BufferedWriter(fw);
++
++		for (Word a : dictionaries.get(id).getDictionary()) {
++			bw.write(a.toString());
++		}
++
++		bw.close();
++		fw.close();
++
++	}
+ }

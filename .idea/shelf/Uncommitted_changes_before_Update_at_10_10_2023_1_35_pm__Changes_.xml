@@ -1,0 +1,19 @@
+<changelist name="Uncommitted_changes_before_Update_at_10_10_2023_1_35_pm_[Changes]" date="1696919750462" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_10_2023_1_35_pm_[Changes]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 10/10/2023 1:35 pm [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/zeus/GameManager/GameManagement.class" />
+    <option name="AFTER_PATH" value="target/classes/com/zeus/GameManager/GameManagement.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_10_2023_1_35_pm_[Changes]/GameManagement.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/zeus/DictionaryManager/DictionaryID.class" />
+    <option name="AFTER_PATH" value="target/classes/com/zeus/DictionaryManager/DictionaryID.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_10_2023_1_35_pm_[Changes]/DictionaryID.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="target/classes/com/zeus/DictionaryManager/DictionaryManagement.class" />
+    <option name="AFTER_PATH" value="target/classes/com/zeus/DictionaryManager/DictionaryManagement.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10_10_2023_1_35_pm_[Changes]/DictionaryManagement.class" />
+  </binary>
+</changelist>

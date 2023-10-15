@@ -1,0 +1,26 @@
+Index: bin/.gitignore
+===================================================================
+diff --git a/bin/.gitignore b/bin/.gitignore
+deleted file mode 100644
+--- a/bin/.gitignore	
++++ /dev/null	
+@@ -1,1 +0,0 @@
+-/DictionaryManager/
+Index: dictionary.txt
+===================================================================
+diff --git a/dictionary.txt b/dictionary.txt
+deleted file mode 100644
+--- a/dictionary.txt	
++++ /dev/null	
+@@ -1,11 +0,0 @@
+-hello | xin chao
+-hi | xin chao
+-goodbye | tam biet
+-train | dao tao
+-translate | phien dich
+-number | so
+-name | ten
+-see | nhin
+-height | do cao
+-cat | con meo
+-wolf | con soi
