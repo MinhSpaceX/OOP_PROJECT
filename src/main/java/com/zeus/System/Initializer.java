@@ -17,7 +17,6 @@ public class Initializer {
     static {
         txtPath = Default.DATABASE_PATH_TXT;
         dbPath = Default.DATABASE_PATH_DB;
-
         manager = new DictionaryManagement();
         dictCom = new DictionaryCommandline(manager);
     }
