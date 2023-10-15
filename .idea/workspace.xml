@@ -4,30 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="358de993-aae7-4c46-9bec-bb868e8305f3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/zeus/DatabaseManager/MongoPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/App/Controller/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/App/Controller/Menu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/DictionaryManager/DictionaryCommandline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/DictionaryManager/DictionaryCommandline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/DictionaryManager/DictionaryManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/DictionaryManager/DictionaryManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/DictionaryManager/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/DictionaryManager/Word.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/GameManager/GameManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/GameManager/GameManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/System/Default.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/System/Default.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zeus/System/Initializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zeus/System/Initializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/zeus/fxml/menu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/zeus/fxml/menu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/Dictionary.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/Dictionary.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/DictionaryCommandline.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/DictionaryCommandline.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/DictionaryID.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/DictionaryID.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/DictionaryManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/DictionaryManagement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/Word.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/DictionaryManager/Word.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/GameManager/GameManagement.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/GameManager/GameManagement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/System/Default.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/System/Default.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/System/DictionaryPanel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/System/DictionaryPanel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/System/Initializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/System/Initializer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/System/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/System/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/System/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/System/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/utils/file/FileManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/utils/file/FileManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/zeus/utils/input/Input.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/zeus/utils/input/Input.class" afterDir="false" />
+    <list default="true" id="358de993-aae7-4c46-9bec-bb868e8305f3" name="Changes" comment="New Gui interacts with database">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +20,12 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
         <entry key="$PROJECT_DIR$" value="ver1.1.1_interface_Searcher_function_Hung" />
@@ -146,6 +130,23 @@
       <option name="presentableId" value="Default" />
       <updated>1696323873460</updated>
     </task>
+    <task id="LOCAL-00001" summary="New Gui interacts with database">
+      <option name="closed" value="true" />
+      <created>1697356210492</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697356210492</updated>
+    </task>
+    <task id="LOCAL-00002" summary="New Gui interacts with database">
+      <option name="closed" value="true" />
+      <created>1697356350235</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1697356350235</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -170,5 +171,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="New Gui interacts with database" />
+    <option name="LAST_COMMIT_MESSAGE" value="New Gui interacts with database" />
   </component>
 </project>
