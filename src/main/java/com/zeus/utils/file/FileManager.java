@@ -44,7 +44,7 @@ public class FileManager {
 
     /**
      * return an image loaded from icon.png path
-     * @param filePath
+     * @param filePath File path.
      * @return an object of class Image.
      */
     public static Image loadImage(String filePath) {

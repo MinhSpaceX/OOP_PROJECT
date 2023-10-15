@@ -7,12 +7,12 @@ public class Config {
      * @JsonProperty("target") maps the target field in the Config class to the "target" property in JSON.
      */
     @JsonProperty("target")
-    String target = null;
+     String target = null;
     @JsonProperty("properties")
     Properties properties = null;
 
     /**
-     * getter Target.
+     * Get target.
      * @return target.
      */
     public String getTarget() {
@@ -20,7 +20,7 @@ public class Config {
     }
 
     /**
-     * getter properties.
+     * Get properties.
      * @return properties.
      */
     public Properties getProperties() {

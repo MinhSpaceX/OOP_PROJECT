@@ -98,7 +98,7 @@ public class DictionaryManagement {
                 same = true;
             }
         }
-        if ( same) System.out.println("your word existed");
+        if (same) System.out.println("your word existed");
         else {
             addWordToDictionary(word, id);
         }

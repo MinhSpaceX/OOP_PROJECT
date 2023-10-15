@@ -11,10 +11,19 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
+    /**
+     * Main method to start the app.
+     * @param args User arguments.
+     */
     public static void run(String[] args) {
         launch(args);
     }
 
+    /**
+     * Start the stage, this method doesn't need to be called manually.
+     * @param stage The stage to run.
+     * @throws IOException Exceptions handle.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
@@ -25,13 +34,17 @@ public class App extends Application {
     }
 
     /**
-     * Called method getConfig(stage)
-     * @param stage
+     * Initialize method use to init elements needed to run.
+     * @param stage The main stage.
      */
     private void initialize(Stage stage) {
         getConfig(stage);
     }
 
+    /**
+     * Get configs from JSON config file.
+     * @param stage The main stage.
+     */
     private void getConfig(Stage stage) {
         //Create a config from the target string to get config from config.json then extract properties
         Config window = FileManager.getConfig("WindowConfig", "/com/zeus/config/config.json");
@@ -43,7 +56,7 @@ public class App extends Application {
         boolean resizable = Boolean.parseBoolean(window.getProperties().getProperties().get("resizable").toString());
         boolean fullScreen = Boolean.parseBoolean(window.getProperties().getProperties().get("fullScreen").toString());
 
-        /**
+        /*
          * Set properties: title, iconPath, WIDTH, HEIGHT, resizable, fullScreen
          */
         stage.setTitle(title);

@@ -12,7 +12,7 @@ public class Logger {
     }
 
     /**
-     * Funtion take information about Lineinfo.
+     * Function take information about Line-info.
      * @return lineinfo.
      */
     private static LineInfo getLineInfo() {
