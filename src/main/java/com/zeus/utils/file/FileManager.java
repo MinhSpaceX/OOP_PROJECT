@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
 
 public class FileManager {
     public static String readLineFromFile(String filePath, int numberReadline) {
@@ -32,15 +30,33 @@ public class FileManager {
         }
         return null;
     }
+
+    /**
+     *Load a Parent based on fxml path provided
+     * @param fxml
+     * @return an object name's parent
+     * @throws IOException
+     */
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FileManager.class.getResource(fxml));
         return fxmlLoader.load();
     }
 
+    /**
+     * return an image loaded from icon.png path
+     * @param filePath
+     * @return an object of class Image.
+     */
     public static Image loadImage(String filePath) {
         return new Image(filePath);
     }
 
+    /**
+     * get configuration based on target and config.json file path provided.
+     * @param target
+     * @param jsonPath
+     * @return an object of Config Class
+     */
     public static Config getConfig(String target, String jsonPath) {
         ObjectMapper objm = new ObjectMapper();
         try {
