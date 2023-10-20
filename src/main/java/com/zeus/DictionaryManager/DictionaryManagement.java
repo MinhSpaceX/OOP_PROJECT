@@ -1,5 +1,6 @@
 package com.zeus.DictionaryManager;
 
+import com.zeus.DatabaseManager.MongoPanel;
 import com.zeus.utils.input.Input;
 
 import java.io.*;
@@ -78,8 +79,8 @@ public class DictionaryManagement {
 
         //look up all the word with similar prefix
         for (Word a : dictionaries.get(id).getDictionary()) {
-            if (a.GetWordTarget().startsWith(word)) {
-                pList.add(a.GetWordTarget());
+            if (a.getWordTarget().startsWith(word)) {
+                pList.add(a.getWordTarget());
             }
         }
         return pList;
@@ -105,7 +106,6 @@ public class DictionaryManagement {
     }
 
     public void removeFromDictionary(int index, DictionaryID id) {
-
         ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
         //Search for the word
         dictionary.remove(index - 1);
@@ -132,7 +132,7 @@ public class DictionaryManagement {
                 same = true;
             }
         }
-        if ( same) System.out.println("your word existed");
+        if (same) System.out.println("your word existed");
         else {
             dictionary.set(index - 1, word);
 
@@ -170,6 +170,5 @@ public class DictionaryManagement {
         } catch (IOException e) {
             System.out.printf("%s", e.getMessage());
         }
-
     }
 }

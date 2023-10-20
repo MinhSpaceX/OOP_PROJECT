@@ -41,9 +41,9 @@ public class GameManagement {
     public void generateQuestion() {
         int[] answers = randomAnswer();
         char answer_index = 'A';
-        System.out.println("What is the meaning of: " + dictionary.get(rightAnswer).GetWordTarget());
+        System.out.println("What is the meaning of: " + dictionary.get(rightAnswer).getWordTarget());
         for (int i = 0; i < 4; i++) {
-            System.out.println(answer_index + "." + dictionary.get(answers[i]).GetWordExplain());
+            System.out.println(answer_index + "." + dictionary.get(answers[i]).getWordExplain());
             if (answers[i] == rightAnswer) {
                 correct = answer_index;
             }
