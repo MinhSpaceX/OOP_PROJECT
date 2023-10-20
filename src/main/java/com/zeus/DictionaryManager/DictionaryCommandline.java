@@ -16,10 +16,9 @@ public class DictionaryCommandline {
         int a = 1;
         Dictionary dict = manager.getDictionary(id);
         for (Word w : dict.getDictionary()) {
-            System.out.format("%s | %s | %s | %s\n", a, w.GetWordTarget(), w.GetWordExplain(), w.GetWordType());
+            System.out.format("%s | %s | %s | %s\n", a, w.getWordTarget(), w.getWordExplain(), w.getWordType());
             a++;
         }
     }
-
 
 }
