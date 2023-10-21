@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zeus.App.Config.Config;
 import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.*;
@@ -99,5 +100,26 @@ public class FileManager {
             System.out.printf("%s.", e.getMessage());
         }
         return words;
+    }
+
+    public static Trie loadTrie(String jsonPath, int countWord) {
+        Trie result = new Trie();
+        List<Word> words = new ArrayList<>();
+        URL url = FileManager.class.getResource(jsonPath);
+        ObjectMapper o = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
+            jsonParser.nextToken();
+            while (jsonParser.nextToken() != null && countWord > 0) {
+                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
+                    countWord--;
+                    result.insert(jsonParser.currentName());
+                    jsonParser.skipChildren();
+                }
+            }
+        } catch (Exception e) {
+            System.out.printf("%s.", e.getMessage());
+        }
+        return result;
     }
 }

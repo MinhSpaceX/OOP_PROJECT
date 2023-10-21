@@ -1,5 +1,6 @@
 package com.zeus.utils.trie;
 
+import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.log.Logger;
 import javafx.util.Pair;
 
@@ -11,16 +12,20 @@ public class Trie {
     public Trie() {
         root = new Node();
     }
+
+    public Trie(List<Word> words) {
+        root = new Node();
+        words.forEach(w -> this.insert(w.getWordTarget()));
+    }
     public boolean insert(String word) {
         if (root == null) {
             Logger.warn("Root is null.");
         }
         if (word == null) return false;
         word = word.toLowerCase();
-        int index = 0;
         Node iterator = root;
         for (int character = 0; character < word.length(); character++) {
-            index = word.charAt(character);
+            int index = word.charAt(character);
             if (iterator.getChildren().get(index) == null) {
                 iterator.add(index);
             }
@@ -115,7 +120,8 @@ public class Trie {
             System.out.println(word);
         }
         else {
-            for (Integer character : node.getChildren().keySet()) {
+            Set<Integer> keys = new TreeSet<>(node.getChildren().keySet());
+            for (Integer character : keys) {
                 StringBuilder temp = new StringBuilder();
                 temp.append(word);
                 temp.append((char) ((int) character));
