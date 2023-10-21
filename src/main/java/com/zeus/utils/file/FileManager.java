@@ -1,7 +1,13 @@
 package com.zeus.utils.file;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeus.App.Config.Config;
+import com.zeus.DictionaryManager.Word;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.*;
@@ -9,7 +15,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class FileManager {
     public static String readLineFromFile(String filePath, int numberReadline) {
@@ -70,4 +80,21 @@ public class FileManager {
         return null;
     }
 
+    public static List<Word> loadWord(String jsonPath) {
+        List<Word> words = new ArrayList<>();
+        URL url = FileManager.class.getResource(jsonPath);
+        ObjectMapper o = new ObjectMapper();
+        try {
+            JsonNode root = o.readTree(url);
+            Iterator<String> word = root.fieldNames();
+            while (word.hasNext()) {
+                String field = word.next();
+                Word w = new Word(field, o.treeToValue(root.get(field), Word.Description.class));
+                words.add(w);
+            }
+        } catch (Exception e) {
+            System.out.printf("%s.", e.getMessage());
+        }
+        return words;
+    }
 }
