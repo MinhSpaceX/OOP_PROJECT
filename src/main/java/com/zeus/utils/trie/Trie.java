@@ -1,9 +1,9 @@
 package com.zeus.utils.trie;
 
 import com.zeus.utils.log.Logger;
+import javafx.util.Pair;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Trie {
     private static final int ALPHABET_SIZE = 26;
@@ -83,6 +83,45 @@ public class Trie {
             node.getChildren().remove((int)word.charAt(depth));
         }
         return false;
+    }
+
+    public void printAll() {
+        printAll(root, "");
+    }
+
+    public List<String> getAllWords() {
+        List<String> result = new ArrayList<>();
+        getAllWords(root, "", result);
+        return result;
+    }
+
+    private void getAllWords(Node node, String word, List<String> list) {
+        if (node.isEndOfWord()) {
+            System.out.println(word);
+        }
+        else {
+            for (Integer character : node.getChildren().keySet()) {
+                StringBuilder temp = new StringBuilder();
+                temp.append(word);
+                temp.append((char) ((int) character));
+                getAllWords(node.getChildren().get(character), temp.toString(), list);
+            }
+        }
+    }
+
+
+    private void printAll(Node node, String word) {
+        if (node.isEndOfWord()) {
+            System.out.println(word);
+        }
+        else {
+            for (Integer character : node.getChildren().keySet()) {
+                StringBuilder temp = new StringBuilder();
+                temp.append(word);
+                temp.append((char) ((int) character));
+                printAll(node.getChildren().get(character), temp.toString());
+            }
+        }
     }
 
     public void reset() {

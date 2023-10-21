@@ -20,6 +20,7 @@ public class Main {
 
         Trie trie = new Trie();
         trie.insert("cat");
+        trie.insert("car");
         trie.insert("cats");
         trie.insert("catse");
         trie.insert("catses");
@@ -28,5 +29,6 @@ public class Main {
         trie.search("cats");
         trie.search("catse");
         trie.search("catses");
+        //trie.printAll();
     }
 }
