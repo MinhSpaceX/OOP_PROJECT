@@ -122,8 +122,7 @@ public class Trie {
         if (node.isEndOfWord()) {
             System.out.println("PRINT: " + word);
         }
-        List<Integer> keys = new ArrayList<>(node.getChildren().keySet());
-        keys.sort(Comparator.reverseOrder());
+        Set<Integer> keys = node.getChildren().keySet();
         for (Integer character : keys) {
             //System.out.println(character);
             String temp = word + (char) ((int) character);
