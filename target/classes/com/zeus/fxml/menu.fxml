@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.Menu">
+   <children>
+      <Button fx:id="addButton" layoutX="21.0" layoutY="140.0" mnemonicParsing="false" onAction="#getNewWord" prefHeight="31.0" prefWidth="78.0" text="ADD" />
+      <TextField fx:id="getWordTarget" layoutX="102.0" layoutY="25.0" prefHeight="26.0" prefWidth="90.0" />
+      <Label layoutX="13.0" layoutY="29.0" prefHeight="18.0" prefWidth="73.0" text="Word_target" />
+      <TextField fx:id="getWordExplain" layoutX="102.0" layoutY="61.0" prefHeight="26.0" prefWidth="90.0" />
+      <TextField fx:id="getWordType" layoutX="102.0" layoutY="98.0" prefHeight="26.0" prefWidth="90.0" />
+      <Label layoutX="12.0" layoutY="65.0" prefHeight="18.0" prefWidth="74.0" text="Word_explain" />
+      <Label layoutX="18.0" layoutY="102.0" prefHeight="18.0" prefWidth="62.0" text="Word_type" />
+      <Button fx:id="deleteButton" layoutX="117.0" layoutY="140.0" mnemonicParsing="false" onAction="#deleteWord" prefHeight="31.0" prefWidth="78.0" text="DELETE" />
+      <Button fx:id="refresher" layoutX="440.0" layoutY="261.0" mnemonicParsing="false" onAction="#displayData" text="Refresh/Display" />
+      <Label layoutX="300.0" layoutY="265.0" text="Database view console" />
+      <TableView fx:id="table" layoutX="206.0" layoutY="10.0" prefHeight="242.0" prefWidth="374.0">
+        <columns>
+          <TableColumn fx:id="word_targetDisplay" prefWidth="151.20001220703125" text="word_target" />
+            <TableColumn fx:id="word_explainDisplay" prefWidth="136.0" text="word_explain" />
+            <TableColumn fx:id="word_typeDisplay" prefWidth="100.7999267578125" text="word_type" />
+        </columns>
+      </TableView>
+      <TextField fx:id="searchInput" layoutX="17.0" layoutY="187.0" prefHeight="26.0" prefWidth="178.0" promptText="Search" />
+      <Button fx:id="search" layoutX="161.0" layoutY="187.0" mnemonicParsing="false" onAction="#findWord" prefHeight="26.0" prefWidth="33.0">
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icon/OIP.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
