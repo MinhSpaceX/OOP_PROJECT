@@ -1,23 +1,42 @@
 package com.zeus.System;
 
+import com.mongodb.client.*;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.trie.Trie;
+import org.bson.Document;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         // Shutdown function when the program end.
         long startTime = System.currentTimeMillis();
-        String url1 = "/com/zeus/data/dictionary.json";
-        String url2 = "/com/zeus/data/english-vietnamese.json";
-        int words = 10;
-        Trie trie = FileManager.loadTrie(url2, words);
-        long endTime = System.currentTimeMillis();
-        System.out.printf("Execution Time: %s Millisecond\n",endTime-startTime);
-        trie.printAll();
+
+        Trie trie = new Trie();
+
+        MongoClient client = MongoClients.create("mongodb+srv://hotmashmallow:SydFj7MBdnl57nID@cluster0.z4stprp.mongodb.net/");
+        MongoDatabase database = client.getDatabase("dictionary_metadata");
+        MongoCollection<Document> col = database.getCollection("dictionary");
+
+        List<Document> pipeline = Arrays.asList(new Document("$project", new Document("keys", new Document("$objectToArray", "$$ROOT"))),
+                new Document("$unwind", "$keys"),
+                new Document("$group", new Document("_id", null).append("allKeys", new Document("$addToSet", "$keys.k"))),
+                new Document("$project", new Document("_id", 0).append("allKeys", 1)));
+        AggregateIterable<Document> result = col.aggregate(pipeline);
+
+       long count = 0;
+       for (Document doc : result) {
+           List<String> allKeys = (List<String>) doc.get("allKeys");
+           for (String key : allKeys) {
+               System.out.println(key);
+               trie.insert(key);
+           }
+       }
+
+       //trie.search("run");
+
+       long endTime = System.currentTimeMillis();
+       System.out.printf("Execution Time: %s Millisecond\n",endTime-startTime);
     }
 }

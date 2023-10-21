@@ -102,7 +102,7 @@ public class FileManager {
         return words;
     }
 
-    public static Trie loadTrie(String jsonPath, int countWord) {
+    public static Trie loadTrie(String jsonPath) {
         Trie result = new Trie();
         List<Word> words = new ArrayList<>();
         URL url = FileManager.class.getResource(jsonPath);
@@ -110,9 +110,9 @@ public class FileManager {
         JsonFactory jsonFactory = new JsonFactory();
         try (JsonParser jsonParser = jsonFactory.createParser(url)) {
             jsonParser.nextToken();
-            while (jsonParser.nextToken() != null && countWord > 0) {
+            while (jsonParser.nextToken() != null) {
                 if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
-                    countWord--;
+                    //countWord--;
                     result.insert(jsonParser.currentName());
                     jsonParser.skipChildren();
                 }
