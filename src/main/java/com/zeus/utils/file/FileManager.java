@@ -3,9 +3,10 @@ package com.zeus.utils.file;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zeus.App.Config.Config;
 import com.zeus.DictionaryManager.Word;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +20,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class FileManager {
     public static String readLineFromFile(String filePath, int numberReadline) {
@@ -80,17 +80,20 @@ public class FileManager {
         return null;
     }
 
-    public static List<Word> loadWord(String jsonPath) {
+    public static List<Word> loadWord(String jsonPath, int countWord) {
         List<Word> words = new ArrayList<>();
         URL url = FileManager.class.getResource(jsonPath);
         ObjectMapper o = new ObjectMapper();
-        try {
-            JsonNode root = o.readTree(url);
-            Iterator<String> word = root.fieldNames();
-            while (word.hasNext()) {
-                String field = word.next();
-                Word w = new Word(field, o.treeToValue(root.get(field), Word.Description.class));
-                words.add(w);
+        JsonFactory jsonFactory = new JsonFactory();
+        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
+            jsonParser.nextToken();
+            while (jsonParser.nextToken() != null && countWord > 0) {
+                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
+                    countWord--;
+                    Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
+                    words.add(w);
+                    jsonParser.skipChildren();
+                }
             }
         } catch (Exception e) {
             System.out.printf("%s.", e.getMessage());

@@ -125,6 +125,7 @@ public class Word {
                 public String toString() {
                     StringBuilder result = new StringBuilder();
                     result.append(String.format("\"%s\": [", explain));
+                    if (!examples.isEmpty()) result.append('\n');
                     for (Example e : examples) {
                         result.append(e.toString().replaceAll("(?m)^", "\t"));
                     }
@@ -151,7 +152,7 @@ public class Word {
 
                     @Override
                     public String toString() {
-                        return String.format("\n\"%s\": \"%s\"\n", english, vietnamese);
+                        return String.format("\"%s\": \"%s\"\n", english, vietnamese);
                     }
                 }
             }
