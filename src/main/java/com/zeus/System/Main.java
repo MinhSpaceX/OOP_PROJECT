@@ -29,13 +29,10 @@ public class Main {
        for (Document doc : result) {
            List<String> allKeys = (List<String>) doc.get("allKeys");
            for (String key : allKeys) {
-               System.out.println(key);
                trie.insert(key);
            }
        }
-
-       //trie.search("run");
-
+       trie.printAll();
        long endTime = System.currentTimeMillis();
        System.out.printf("Execution Time: %s Millisecond\n",endTime-startTime);
     }

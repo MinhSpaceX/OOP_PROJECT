@@ -35,6 +35,7 @@ public class Trie {
             Logger.warn("Insert action cancelled. Word existed!");
             return false;
         }
+        System.out.println("ADD: "+word);
         iterator.setEndOfWord(true);
         return true;
     }
@@ -56,6 +57,8 @@ public class Trie {
         }
         if (iterator.isEndOfWord()) {
             Logger.info("Found word: "+ word);
+        } else {
+            Logger.info("Did not found the word: " + word);
         }
         return iterator.isEndOfWord();
     }
@@ -117,16 +120,14 @@ public class Trie {
 
     private void printAll(Node node, String word) {
         if (node.isEndOfWord()) {
-            System.out.println(word);
+            System.out.println("PRINT: " + word);
         }
-        else {
-            Set<Integer> keys = new TreeSet<>(node.getChildren().keySet());
-            for (Integer character : keys) {
-                StringBuilder temp = new StringBuilder();
-                temp.append(word);
-                temp.append((char) ((int) character));
-                printAll(node.getChildren().get(character), temp.toString());
-            }
+        List<Integer> keys = new ArrayList<>(node.getChildren().keySet());
+        keys.sort(Comparator.reverseOrder());
+        for (Integer character : keys) {
+            //System.out.println(character);
+            String temp = word + (char) ((int) character);
+            printAll(node.getChildren().get(character), temp);
         }
     }
 
