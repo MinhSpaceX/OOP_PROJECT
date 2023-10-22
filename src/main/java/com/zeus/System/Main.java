@@ -1,11 +1,9 @@
 package com.zeus.System;
 
 import com.mongodb.client.*;
-import com.zeus.utils.file.FileManager;
 import com.zeus.utils.trie.Trie;
 import org.bson.Document;
 
-import java.io.File;
 import java.util.*;
 
 public class Main {
@@ -32,7 +30,8 @@ public class Main {
                trie.insert(key);
            }
        }
-       trie.printAll();
+
+       trie.autoFill("Man", 3, 4).forEach(System.out::println);
        long endTime = System.currentTimeMillis();
        System.out.printf("Execution Time: %s Millisecond\n",endTime-startTime);
     }

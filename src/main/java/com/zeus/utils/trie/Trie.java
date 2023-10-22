@@ -4,7 +4,9 @@ import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.log.Logger;
 import javafx.util.Pair;
 
+import java.security.cert.CertSelector;
 import java.util.*;
+
 
 public class Trie {
     private static final int ALPHABET_SIZE = 26;
@@ -13,7 +15,7 @@ public class Trie {
         root = new Node();
     }
 
-    public Trie(List<Word> words) {
+    Trie(List<Word> words) {
         root = new Node();
         words.forEach(w -> this.insert(w.getWordTarget()));
     }
@@ -35,7 +37,6 @@ public class Trie {
             Logger.warn("Insert action cancelled. Word existed!");
             return false;
         }
-        System.out.println("ADD: "+word);
         iterator.setEndOfWord(true);
         return true;
     }
@@ -74,6 +75,41 @@ public class Trie {
         }
         return false;
     }
+    public void print() {
+        print(root, "");
+    }
+    public void reset() {
+        root.children.clear();
+    }
+    public boolean isEmpty() {
+        return root.getChildren().isEmpty() || root == null;
+    }
+
+    public List<String> autoFill(String word, int numberOfWords, int wordLength) {
+        List<String> result = new ArrayList<>();
+        Node babyGroot = goTo(word);
+        if (babyGroot == null) return result;
+        if (babyGroot.isEndOfWord()) result.add(word.toLowerCase());
+        getWords(babyGroot, word.toLowerCase(), result, numberOfWords, wordLength);
+        return result;
+    }
+    private Node goTo(String word) {
+        Node node = root;
+        if (isEmpty()) {
+            Logger.warn("Trie is empty.");
+            return null;
+        }
+        word = word.toLowerCase();
+        int index = 0;
+        for (int character = 0; character < word.length(); character++) {
+            index = word.charAt(character);
+            node = node.next(index);
+        }
+        if (node == null) {
+            Logger.warn("No word to auto fill.");
+        }
+        return node;
+    }
 
     private boolean delete(Node node, String word, int depth) {
         if (node == null) {
@@ -93,49 +129,27 @@ public class Trie {
         return false;
     }
 
-    public void printAll() {
-        printAll(root, "");
-    }
-
-    public List<String> getAllWords() {
-        List<String> result = new ArrayList<>();
-        getAllWords(root, "", result);
-        return result;
-    }
-
-    private void getAllWords(Node node, String word, List<String> list) {
-        if (node.isEndOfWord()) {
-            System.out.println(word);
-        }
-        else {
-            for (Integer character : node.getChildren().keySet()) {
-                StringBuilder temp = new StringBuilder();
-                temp.append(word);
-                temp.append((char) ((int) character));
-                getAllWords(node.getChildren().get(character), temp.toString(), list);
-            }
-        }
-    }
-
-
-    private void printAll(Node node, String word) {
-        if (node.isEndOfWord()) {
-            System.out.println("PRINT: " + word);
+    private void getWords(Node node, String word, List<String> list, int numberOfWords, int wordLength) {
+        if (list.size() >= numberOfWords && numberOfWords != -1) return;
+        if (node.isEndOfWord() && word.length() >= wordLength) {
+            if (word.matches("[a-z]+")) list.add(word);
         }
         Set<Integer> keys = node.getChildren().keySet();
         for (Integer character : keys) {
-            //System.out.println(character);
-            String temp = word + (char) ((int) character);
-            printAll(node.getChildren().get(character), temp);
+                String temp = word + (char) ((int) character);
+                getWords(node.getChildren().get(character), temp, list, numberOfWords, wordLength);
+            }
+    }
+
+    private void print(Node node, String word) {
+        if (node.isEndOfWord()) {
+            System.out.println(word);
         }
-    }
-
-    public void reset() {
-        root.children.clear();
-    }
-
-    public boolean isEmpty() {
-        return root.getChildren().isEmpty() || root == null;
+        Set<Integer> keys = node.getChildren().keySet();
+        for (Integer character : keys) {
+            String temp = word + (char) ((int) character);
+            print(node.getChildren().get(character), temp);
+        }
     }
     static class Node {
         private Map<Integer, Node> children = new HashMap<>();
