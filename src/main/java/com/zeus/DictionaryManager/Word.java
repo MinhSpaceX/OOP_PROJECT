@@ -12,14 +12,15 @@ import java.util.List;
 import java.util.Properties;
 
 public class Word {
+    private String wordTarget;
+    private Description description;
     public Word() {
     }
     public Word(String wordTarget, Description description) {
         this.wordTarget = wordTarget;
         this.description = description;
     }
-    private String wordTarget;
-    private Description description;
+
 
     @JsonAnySetter
     public void setWord(String wordTarget, Description description) {
@@ -63,7 +64,11 @@ public class Word {
         public void setTypes(List<Type> types) {
             this.types = types;
         }
-
+        @JsonAnySetter
+        public void setDescription(String pronoun, List<Type> types) {
+            this.pronoun = pronoun;
+            this.types = types;
+        }
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
