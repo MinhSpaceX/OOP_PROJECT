@@ -17,6 +17,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +26,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class FileManager {
+    public static String getPathFromFile(String file) throws URISyntaxException {
+        URI uri = new URI(Objects.requireNonNull(FileManager.class.getResource(file)).getPath());
+        return uri.getPath();
+    }
+
     public static String readLineFromFile(String filePath, int numberReadline) {
         try (FileReader fr = new FileReader(new File(filePath));
              BufferedReader br = new BufferedReader(fr)) {
