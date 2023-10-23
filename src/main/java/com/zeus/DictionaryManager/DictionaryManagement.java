@@ -124,7 +124,7 @@ public class DictionaryManagement {
 
         try {
             File jsonFile = new File(file);
-            FileReader reader = new FileReader(jsonFile);
+            FileReader reader = new FileReader(Objects.requireNonNull(getClass().getResource(file)).getPath());
             JsonParser jsonParser = jsonFactory.createParser(reader);
 
             // Di chuyển đến phần tử JSON cuối cùng trong tệp
@@ -133,9 +133,9 @@ public class DictionaryManagement {
                 jsonParser.skipChildren();
             }
 
-            FileWriter writer = new FileWriter(file, true); // Mở tệp JSON để ghi thêm dữ liệu
+            FileWriter writer = new FileWriter(Objects.requireNonNull(getClass().getResource(file)).getPath(), true); // Mở tệp JSON để ghi thêm dữ liệu
             JsonGenerator jsonGenerator = jsonFactory.createGenerator(writer);
-
+            jsonGenerator.setCodec(new ObjectMapper());
             if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
                 // Nếu mảng JSON đã tồn tại, thêm dấu phẩy
                 jsonGenerator.writeRaw(',');

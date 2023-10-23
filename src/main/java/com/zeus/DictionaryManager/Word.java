@@ -81,6 +81,14 @@ public class Word {
             return result.toString();
         }
 
+        public String getPronoun() {
+            return pronoun;
+        }
+
+        public List<Type> getTypes() {
+            return types;
+        }
+
         public static class Type {
             private String name;
             private List<Meaning> meanings;
