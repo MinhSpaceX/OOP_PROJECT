@@ -47,8 +47,16 @@ public class Word {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
+        result.append(String.format(",\"%s\":{", wordTarget));
+        result.append(description.toString());
+        result.append("}");
+        return result.toString();
+    }
+
+    public String print() {
+        StringBuilder result = new StringBuilder();
         result.append(String.format("\"%s\": {", wordTarget));
-        result.append(description.toString().replaceAll("(?m)^", "\t"));
+        result.append(description.print().replaceAll("(?m)^", "\t"));
         result.append("},\n");
         return result.toString();
     }
@@ -72,10 +80,26 @@ public class Word {
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
+            result.append(String.format("\"pronoun\":\"%s\",", pronoun));
+            result.append("\"type\":[");
+            if (types.size() > 1) {
+                for (Type t : types) {
+                    result.append(t.toString()).append(",");
+                }
+                result.deleteCharAt(result.length()-1);
+            } else if (types.size() == 1) {
+                result.append(types.get(0).toString());
+            }
+            result.append("]");
+            return result.toString();
+        }
+
+        public String print() {
+            StringBuilder result = new StringBuilder();
             result.append(String.format("\n\"pronoun\": %s\n", pronoun));
             result.append("\"type\": [\n");
             for (Type t : types) {
-                result.append(t.toString().replaceAll("(?m)^", "\t"));
+                result.append(t.print().replaceAll("(?m)^", "\t"));
             }
             result.append("]\n");
             return result.toString();
@@ -109,9 +133,25 @@ public class Word {
             @Override
             public String toString() {
                 StringBuilder result = new StringBuilder();
+                result.append(String.format("{\"%s\":[", name));
+                if (meanings.size() > 1) {
+                    for (Meaning m : meanings) {
+                        result.append(m.toString()).append(",");
+                    }
+                    result.deleteCharAt(result.length()-1);
+                } else if (meanings.size() == 1) {
+                    result.append(meanings.get(0).toString());
+                }
+
+                result.append("]}");
+                return result.toString();
+            }
+
+            public String print() {
+                StringBuilder result = new StringBuilder();
                 result.append(String.format("\"%s\": [\n", name));
                 for (Meaning m : meanings) {
-                    result.append(m.toString().replaceAll("(?m)^", "\t"));
+                    result.append(m.print().replaceAll("(?m)^", "\t"));
                 }
                 result.append("],\n");
                 return result.toString();
@@ -137,10 +177,25 @@ public class Word {
                 @Override
                 public String toString() {
                     StringBuilder result = new StringBuilder();
+                    result.append(String.format("{\"%s\":[", explain));
+                    if (examples.size() > 1) {
+                        for (Example e : examples) {
+                            result.append(e.toString()).append(",");
+                        }
+                        result.deleteCharAt(result.length()-1);
+                    } else if (examples.size() == 1) {
+                        result.append(examples.get(0).toString());
+                    }
+                    result.append("]}");
+                    return result.toString();
+                }
+
+                public String print() {
+                    StringBuilder result = new StringBuilder();
                     result.append(String.format("\"%s\": [", explain));
                     if (!examples.isEmpty()) result.append('\n');
                     for (Example e : examples) {
-                        result.append(e.toString().replaceAll("(?m)^", "\t"));
+                        result.append(e.print().replaceAll("(?m)^", "\t"));
                     }
                     result.append("],\n");
                     return result.toString();
@@ -165,6 +220,10 @@ public class Word {
 
                     @Override
                     public String toString() {
+                        return String.format("{\"%s\":\"%s\"}", english, vietnamese);
+                    }
+
+                    public String print() {
                         return String.format("\"%s\": \"%s\"\n", english, vietnamese);
                     }
                 }

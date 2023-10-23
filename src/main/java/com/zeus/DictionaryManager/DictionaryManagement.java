@@ -7,10 +7,14 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.zeus.System.Default;
+import com.zeus.utils.file.FileManager;
 import com.zeus.utils.input.Input;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -120,41 +124,17 @@ public class DictionaryManagement {
     }
 
     public void dictionaryExportToFile(String file) {
-        JsonFactory jsonFactory = new JsonFactory();
 
-        try {
-            File jsonFile = new File(file);
-            FileReader reader = new FileReader(Objects.requireNonNull(getClass().getResource(file)).getPath());
-            JsonParser jsonParser = jsonFactory.createParser(reader);
-
-            // Di chuyển đến phần tử JSON cuối cùng trong tệp
-            while (jsonParser.nextToken() != null && jsonParser.getCurrentToken() != JsonToken.END_ARRAY) {
-                // Bỏ qua tất cả các token trước mảng JSON;
-                jsonParser.skipChildren();
-            }
-
-            FileWriter writer = new FileWriter(Objects.requireNonNull(getClass().getResource(file)).getPath(), true); // Mở tệp JSON để ghi thêm dữ liệu
-            JsonGenerator jsonGenerator = jsonFactory.createGenerator(writer);
-            jsonGenerator.setCodec(new ObjectMapper());
-            if (jsonParser.getCurrentToken() == JsonToken.START_ARRAY) {
-                // Nếu mảng JSON đã tồn tại, thêm dấu phẩy
-                jsonGenerator.writeRaw(',');
-            } else {
-                // Nếu mảng JSON chưa tồn tại, viết một mảng mới
-                jsonGenerator.writeStartArray();
-            }
-
-            // Ghi các đối tượng Word mới vào tệp JSON
+        try (RandomAccessFile raf = new RandomAccessFile(FileManager.getPathFromFile(file), "rw");) {
+            raf.seek(raf.length()-1);
             for (Word word : dictionary.getDictionary()) {
-                jsonGenerator.writeObject(word);
+                raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
             }
-
-            jsonGenerator.writeEndArray();
-            jsonGenerator.close();
-            reader.close();
-            System.out.println("Dữ liệu đã được ghi vào tệp JSON thành công.");
+            raf.writeBytes("}");
         } catch (IOException e) {
             System.out.println("Lỗi khi ghi dữ liệu vào tệp JSON: " + e.getMessage());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 }
