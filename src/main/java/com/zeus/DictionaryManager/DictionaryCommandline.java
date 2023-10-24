@@ -15,7 +15,7 @@ public class DictionaryCommandline {
         Dictionary dict = manager.getDictionary();
         int count = 0;
         for (Word a : dict.getDictionary()) {
-            System.out.println(a.toString());
+            System.out.println(a.print());
             count++;
             if (count > 10) break;
         }
