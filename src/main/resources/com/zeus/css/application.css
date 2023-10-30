@@ -1,0 +1,36 @@
+
+#searchButton{
+    -fx-background-color: rgb(119, 82, 254);
+    -fx-border-color: transparent;
+    -fx-background-radius: 5;
+}
+
+.button{
+    -fx-background-color: rgb(119, 82, 254);
+}
+
+.button:hover{
+    -fx-background-color: "white";
+}
+
+.round-layout{
+    -fx-background-radius: 5;
+    -fx-background-color: "white";
+}
+
+.option-layout{
+    -fx-background-color:  rgb(142, 143, 250);
+}
+
+#searchBar{
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+}
+
+#navigationBar{
+    -fx-background-radius: 10;
+}
+
+.navName{
+    -fx-background-radius: 5;
+}
