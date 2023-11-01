@@ -1,5 +1,7 @@
 package com.zeus.System;
 
+import com.zeus.App.App;
+
 public class Main {
     public static void main(String[] args) {
         // Shutdown function when the program end.
@@ -8,7 +10,6 @@ public class Main {
                 Initializer.terminate();
             }
         });
-        DictionaryPanel p = new DictionaryPanel();
-        p.CommandLineManager();
+        App.run(args);
     }
 }

@@ -1,16 +1,7 @@
 package com.zeus.utils.file;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zeus.App.Config.Config;
-import com.zeus.DictionaryManager.Word;
-import com.zeus.utils.log.Logger;
-import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.*;
@@ -18,22 +9,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class FileManager {
-    public static String getPathFromFile(String file) throws URISyntaxException {
-        File dir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        file = dir.getParent() + file;
-        return file;
-    }
-
     public static String readLineFromFile(String filePath, int numberReadline) {
         try (FileReader fr = new FileReader(new File(filePath));
              BufferedReader br = new BufferedReader(fr)) {
@@ -92,45 +70,4 @@ public class FileManager {
         return null;
     }
 
-    public static List<Word> loadWord(String jsonPath, int countWord) {
-        List<Word> words = new ArrayList<>();
-        URL url = FileManager.class.getResource(jsonPath);
-        ObjectMapper o = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
-            jsonParser.nextToken();
-            while (jsonParser.nextToken() != null && countWord > 0) {
-                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
-                    countWord--;
-                    Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
-                    words.add(w);
-                    jsonParser.skipChildren();
-                }
-            }
-        } catch (Exception e) {
-            System.out.printf("%s.", e.getMessage());
-        }
-        return words;
-    }
-
-    public static Trie loadTrie(String jsonPath) {
-        Trie result = new Trie();
-        List<Word> words = new ArrayList<>();
-        URL url = FileManager.class.getResource(jsonPath);
-        ObjectMapper o = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
-            jsonParser.nextToken();
-            while (jsonParser.nextToken() != null) {
-                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
-                    //countWord--;
-                    result.insert(jsonParser.currentName());
-                    jsonParser.skipChildren();
-                }
-            }
-        } catch (Exception e) {
-            System.out.printf("%s.", e.getMessage());
-        }
-        return result;
-    }
 }

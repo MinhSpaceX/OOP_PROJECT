@@ -1,7 +1,6 @@
 package com.zeus.App.Controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zeus.DatabaseManager.MongoPanel;
 import com.zeus.DictionaryManager.Word;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;

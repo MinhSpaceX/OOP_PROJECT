@@ -8,16 +8,7 @@ public class Logger {
      */
     public static void info(String msg) {
         LineInfo info = getLineInfo();
-        System.out.printf("[INFO]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
-    }
-    public static void warn(String msg) {
-        LineInfo info = getLineInfo();
-        System.out.printf("[WARNING]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
-    }
-
-    public static void error(String msg) {
-        LineInfo info = getLineInfo();
-        System.out.printf("[ERROR]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
+        System.out.printf("[INFO]: %s. Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
     }
 
     /**
