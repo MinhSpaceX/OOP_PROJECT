@@ -90,16 +90,17 @@ public class Menu implements Initializable {
 
     }
 
-    public void OpenWordCard(){
-        if(!searchBar.getText().isEmpty()) {
-            String searchText = searchBar.getText();
-        }
+    public void OpenWordCard(ActionEvent event){
         if(!findWord) {
             wordCard.setVisible(true);
             menuCard.setVisible(false);
             findWord = true;
         }
-        System.out.println("CLick");
+        else{
+            wordCard.setVisible(false);
+            menuCard.setVisible(true);
+            findWord = false;
+        }
     }
 
     public void DenyIcon(){
