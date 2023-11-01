@@ -1,16 +1,15 @@
 package com.zeus.System;
 
-import com.zeus.DictionaryManager.DictionaryID;
 import com.zeus.GameManager.GameManagement;
 import com.zeus.utils.input.Input;
-
+import com.zeus.utils.file.FileManager;
 import java.util.ArrayList;
 
 public class DictionaryPanel extends Initializer {
     private boolean app_state = true;
 
     DictionaryPanel() {
-        manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
+        manager.insertFromFile(Default.DATABASE_PATH_JSON1); ;
         System.out.print("DictionaryPanel created.\n");
     }
 
@@ -44,8 +43,6 @@ public class DictionaryPanel extends Initializer {
         System.out.println("[5] Lookup");
         System.out.println("[6] Search");
         System.out.println("[7] Game");
-        System.out.println("[8] Import from file");
-        System.out.println("[9] Export to file");
         System.out.print("Your action: ");
 
         int input = Input.getInteger();
@@ -70,10 +67,10 @@ public class DictionaryPanel extends Initializer {
                         int num = Integer.parseInt(Input.getLine());
 
                         for (int i = 0; i < num; i++) {
-                            manager.insertFromCommandLine(DictionaryID.ENGLISH_VIETNAMESE);
+                            manager.insertFromCommandLine();
                         }
                         //override the current file
-                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
+                        manager.dictionaryExportToFile(Default.DATABASE_PATH_JSON1);
 
                         clear();
                         System.out.println("Do you want to continue: Yes or No");
@@ -90,8 +87,8 @@ public class DictionaryPanel extends Initializer {
                     while (true) {
                         System.out.println("Enter the word number that you want to remove: ");
                         int wordNum = Integer.parseInt(Input.getLine());
-                        manager.removeFromDictionary(wordNum, DictionaryID.ENGLISH_VIETNAMESE);
-                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
+                        manager.removeFromDictionary(wordNum);
+                        manager.dictionaryExportToFile(Default.DATABASE_PATH_JSON1);
                         clear();
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
@@ -108,8 +105,8 @@ public class DictionaryPanel extends Initializer {
                     while (true) {
                         System.out.println("Enter the word number that you want to update: ");
                         int wordNum2 = Integer.parseInt(Input.getLine());
-                        manager.updateDictionary(wordNum2, DictionaryID.ENGLISH_VIETNAMESE);
-                        manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
+                        manager.updateDictionary(wordNum2);
+                        manager.dictionaryExportToFile( Default.DATABASE_PATH_JSON1);
                         clear();
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
@@ -122,7 +119,8 @@ public class DictionaryPanel extends Initializer {
                     }
                     break;
                 case 4: // show word
-                    dictCom.ShowAllWords(DictionaryID.ENGLISH_VIETNAMESE);
+                    dictCom.ShowAllWords();
+                    System.out.print("Enter exit to return: ");
                     String a = Input.getLine();
                     if (a.equalsIgnoreCase("exit")){
                         break;
@@ -131,7 +129,7 @@ public class DictionaryPanel extends Initializer {
                     while (true) {
                         System.out.println("Enter the word you want to look up: ");
                         String word = Input.getLine();
-                        ArrayList<String> pList = manager.dictionarySearcher(word, DictionaryID.ENGLISH_VIETNAMESE);
+                        ArrayList<String> pList = manager.dictionarySearcher(word);
                         if (pList.isEmpty()) System.out.println("Cannot find!");
                         else {
                             for (String i : pList) {
@@ -150,7 +148,7 @@ public class DictionaryPanel extends Initializer {
                     break;
                 case 7: // Game
                     while (true) {
-                        GameManagement game_manager = new GameManagement(DictionaryID.ENGLISH_VIETNAMESE, manager);
+                        GameManagement game_manager = new GameManagement(manager);
                         game_manager.StartGame();
                         System.out.println("Do you want to continue: Yes or No");
                         System.out.print("Enter your option: ");
@@ -161,17 +159,6 @@ public class DictionaryPanel extends Initializer {
                             break;
                         }
                     }
-                    break;
-
-                case 8:
-                    //Note: this is uncompleted
-                    //Update: user should be able to import from an .txt with different source
-                    manager.insertFromFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
-                    break;
-                case 9:
-                    //Note: this is uncompleted
-                    //Update: user should be able to export from different dictionary
-                    manager.dictionaryExportToFile(DictionaryID.ENGLISH_VIETNAMESE, Default.DATABASE_PATH_TXT);
                     break;
                 default:
                     //input < 0 or > 9

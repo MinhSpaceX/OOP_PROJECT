@@ -1,174 +1,170 @@
 package com.zeus.DictionaryManager;
 
-import com.zeus.DatabaseManager.MongoPanel;
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.SequenceWriter;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.zeus.System.Default;
+import com.zeus.utils.file.FileManager;
 import com.zeus.utils.input.Input;
 
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 
 public class DictionaryManagement {
-    private final Map<DictionaryID, Dictionary> dictionaries;
+    private final Dictionary dictionary;
 
-    /**
-     * Constructor.
-     */
     public DictionaryManagement() {
-        dictionaries = new HashMap<>();
-        createDictionary();
-        System.out.print("DictionaryManagement created.\n");
+        dictionary = new Dictionary();
+        System.out.println("DictionaryManagement initialized\n");
     }
 
-    /**
-     * Function to create all dictionary from the enum file.
-     */
-    private void createDictionary() {
-        for (DictionaryID x : DictionaryID.values()) {
-            Dictionary dict = new Dictionary(x);
-            dictionaries.put(dict.getId(), dict);
-        }
+    public Dictionary getDictionary() {
+        return dictionary;
     }
 
-    /**
-     * Function to create new word.
-     *
-     * @param word_target  the word to create.
-     * @param word_explain definition of the word.
-     * @return the word created.
-     */
-    public Word createWord(String word_target, String word_explain, String word_type) {
-        return new Word(word_target, word_explain, word_type);
+    public void addWordToDictionary(Word word) {
+        dictionary.addWord(word);
     }
 
-    /**
-     * Function to get a dictionary from the provided ID.
-     *
-     * @param id the id of the dictionary.
-     * @return the dictionary.
-     */
-    public Dictionary getDictionary(DictionaryID id) {
-
-        return dictionaries.get(id);
-    }
-
-    /**
-     * Get the array with provided id.
-     *
-     * @param id the id of dictionary.
-     * @return the list of all the words.
-     */
-    public ArrayList<Word> getListOfWords(DictionaryID id) {
-
-        return getDictionary(id).getDictionary();
-    }
-
-    /**
-     * Function to add word to a dictionary.
-     *
-     * @param word the word to add.
-     * @param id   the ID of the dictionary to add the word to.
-     */
-    public void addWordToDictionary(Word word, DictionaryID id) {
-
-        dictionaries.get(id).addWord(word);
-    }
-
-    public ArrayList<String> dictionarySearcher(String word, DictionaryID id) {
+    public ArrayList<String> dictionarySearcher(String word) {
         ArrayList<String> pList = new ArrayList<>();
 
         //look up all the word with similar prefix
-        for (Word a : dictionaries.get(id).getDictionary()) {
+        for (Word a : dictionary.getDictionary()) {
             if (a.getWordTarget().startsWith(word)) {
                 pList.add(a.getWordTarget());
+                if (pList.size() > 10 ) break;
             }
         }
         return pList;
     }
 
-    public void insertFromCommandLine(DictionaryID id) {
-        System.out.println("Enter your input with format: word_target <enter> word_explain <enter> word_type");
-        String word_target = Input.getLine();
-        String word_explain = Input.getLine();
-        String word_type = Input.getLine();
+    public Word createWord() {
+        try {
+            System.out.print("Enter word_target:");
+            String word_target = Input.getLine();
+            System.out.println("Enter pronoun: ");
+            String pronoun = Input.getLine();
 
-        Word word = new Word(word_target, word_explain, word_type);
-        boolean same = false;
-        for (Word a : dictionaries.get(id).getDictionary()) {
-            if (a.equals(word)) {
-                same = true;
-            }
-        }
-        if (same) System.out.println("your word existed");
-        else {
-            addWordToDictionary(word, id);
-        }
-    }
+            List<Word.Description.Type> typesList = new ArrayList<>();
 
-    public void removeFromDictionary(int index, DictionaryID id) {
-        ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
-        //Search for the word
-        dictionary.remove(index - 1);
-    }
+            System.out.println("Enter number of types: ");
+            int numberTypes = Input.getInteger();
 
-    /**
-     * update new word to the desired position
-     *
-     * @param index The index.
-     * @param id the id.
-     */
-    public void updateDictionary(int index, DictionaryID id) {
-        ArrayList<Word> dictionary = dictionaries.get(id).getDictionary();
-        System.out.println("Input the change: word_target <enter> word_explain <enter> word_type");
-        String word_target = Input.getLine();
-        String word_explain = Input.getLine();
-        String word_type = Input.getLine();
+            for (int i = 0; i < numberTypes; i++) {
+                System.out.print("Enter type: ");
+                String typeName = Input.getLine();
 
-        Word word = new Word(word_target, word_explain, word_type);
+                List<Word.Description.Type.Meaning> meaningsList = new ArrayList<>();
 
-        boolean same = false;
-        for (Word a : dictionaries.get(id).getDictionary()) {
-            if (a.equals(word)) {
-                same = true;
-            }
-        }
-        if (same) System.out.println("your word existed");
-        else {
-            dictionary.set(index - 1, word);
+                System.out.println("Enter number of meanings for type '" + typeName + "': ");
+                int numberMeanings = Input.getInteger();
 
-            System.out.println("Your word has been update!");
-        }
+                for (int j = 0; j < numberMeanings; j++) {
+                    System.out.print("Enter meaning: ");
+                    String meaningExplanation = Input.getLine();
 
-    }
+                    List<Word.Description.Type.Meaning.Example> examplesList = new ArrayList<>();
 
-    public void insertFromFile(DictionaryID id, String filePath) {
-        try (InputStream is = (getClass().getClassLoader().getResourceAsStream(filePath));
-             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-            System.out.println("READ");
-            while (true) {
-                String line = br.readLine();
-                if (line == null) break;
-                String[] info = line.split("[|]");
-                String word_target = info[0].trim();
-                String word_explain = info[1].trim();
-                String word_type = info[2].trim();
-                addWordToDictionary(new Word(word_target, word_explain, word_type), id);
+                    System.out.println("Enter number of examples for meaning '" + meaningExplanation + "': ");
+                    int numberExamples = Input.getInteger();
+
+                    for (int k = 0; k < numberExamples; k++) {
+                        System.out.print("Enter example in English: ");
+                        String exampleEnglish = Input.getLine();
+                        System.out.print("Enter example in Vietnamese: ");
+                        String exampleVietnamese = Input.getLine();
+
+                        Word.Description.Type.Meaning.Example example = new Word.Description.Type.Meaning.Example();
+                        example.setExample(exampleEnglish, exampleVietnamese);
+                        examplesList.add(example);
+                    }
+
+                    Word.Description.Type.Meaning meaning = new Word.Description.Type.Meaning();
+                    meaning.setMeaning(meaningExplanation, examplesList);
+                    meaningsList.add(meaning);
+                }
+
+                Word.Description.Type type = new Word.Description.Type();
+                type.setType(typeName, meaningsList);
+                typesList.add(type);
             }
 
+            Word.Description description = new Word.Description();
+            description.setDescription(pronoun, typesList);
+
+            return new Word(word_target, description);
         } catch (Exception e) {
             System.out.printf("%s\n", e.getMessage());
+            System.out.println("ReWrite your Input!");
+            return createWord();
         }
     }
 
-    public void dictionaryExportToFile(DictionaryID id, String filePath) {
-        try (FileWriter fw = new FileWriter(getClass().getClassLoader().getResource(filePath).getPath());
-             BufferedWriter bw = new BufferedWriter(fw)) {
+    public void insertFromCommandLine() {
+        //System.out.println("Enter your input with format: word_target <enter> word_explain <enter> word_type");
+        addWordToDictionary(createWord());
+        System.out.println("Successfull!");
+    }
 
-            for (Word a : dictionaries.get(id).getDictionary()) {
-                bw.write(a.toString());
+    public void removeFromDictionary(int index) {
+        //Search for the word
+        dictionary.getDictionary().remove(index - 1);
+    }
+
+    public void updateDictionary(int index) {
+        System.out.println("Input the change: word_target <enter> word_explain <enter> word_type");
+        dictionary.getDictionary().set(index - 1, createWord());
+    }
+
+    public void insertFromFile(String file) {
+        URL url = DictionaryManagement.class.getResource(file);
+        ObjectMapper o = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+
+        try (JsonParser jsonParser = jsonFactory.createParser(new BufferedReader(new InputStreamReader(new FileInputStream(FileManager.getPathFromFile(file)))))) {
+            jsonParser.nextToken();
+            while (jsonParser.nextToken() != null) {
+                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
+                    System.out.println(jsonParser.currentName());
+                    Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
+                    addWordToDictionary(w);
+                    jsonParser.skipChildren();
+                }
             }
+        } catch (Exception e) {
+            System.out.printf("%s.", e.getMessage());
+        }
+    }
+
+    public void dictionaryExportToFile(String file) {
+        try (RandomAccessFile raf = new RandomAccessFile(FileManager.getPathFromFile(file), "rw");) {
+            raf.seek(1);
+            int i= 0;
+            for (Word word : dictionary.getDictionary()) {
+                if (i == dictionary.getDictionary().size() -1) {
+                    raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
+                } else {
+                    raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
+                    raf.writeBytes(",");
+                    i++;
+                }
+            }
+            raf.writeBytes("\n}");
         } catch (IOException e) {
-            System.out.printf("%s", e.getMessage());
+            System.out.println("Lỗi khi ghi dữ liệu vào tệp JSON: " + e.getMessage());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 }
+
