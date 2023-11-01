@@ -13,7 +13,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import javax.crypto.Cipher;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
 public class App extends Application {
@@ -39,7 +42,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException, URISyntaxException {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
-        scene.getStylesheets().add(FileManager.getPathFromFile("/com/zeus/css/index.css"));
+        scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
         handleKeyEvent(scene);
         initialize(stage);
         stage.setScene(scene);
@@ -54,7 +57,7 @@ public class App extends Application {
      * Initialize method use to init elements needed to run.
      * @param stage The main stage.
      */
-    private void initialize(Stage stage) {
+    private void initialize(Stage stage) throws FileNotFoundException, UnsupportedEncodingException {
         getConfig(stage);
     }
 
@@ -62,7 +65,7 @@ public class App extends Application {
      * Get configs from JSON config file.
      * @param stage The main stage.
      */
-    private void getConfig(Stage stage) {
+    private void getConfig(Stage stage) throws FileNotFoundException, UnsupportedEncodingException {
         //Create a config from the target string to get config from config.json then extract properties
         String title = window.getProperty("title", String.class);
         String iconPath = window.getProperty("iconPath", String.class);

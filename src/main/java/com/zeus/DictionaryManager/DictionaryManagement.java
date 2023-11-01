@@ -13,6 +13,7 @@ import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -25,10 +26,9 @@ public class DictionaryManagement {
     private final Dictionary dictionary;
     private Trie trie = null;
 
-    public DictionaryManagement(String databasePath) {
+    public DictionaryManagement(String databasePath) throws FileNotFoundException, UnsupportedEncodingException, MalformedURLException {
         dictionary = new Dictionary();
         trie = FileManager.loadTrie(databasePath);
-        Logger.info("DictionaryManagement initialized");
     }
 
     public Dictionary getDictionary() {

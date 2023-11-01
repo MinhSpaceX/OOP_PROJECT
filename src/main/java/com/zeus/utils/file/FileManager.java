@@ -13,10 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.image.*;
 
 import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
+import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +65,13 @@ public class FileManager {
      * @param filePath File path.
      * @return an object of class Image.
      */
-    public static Image loadImage(String filePath) {
-        return new Image(filePath);
+    public static Image loadImage(String filePath) throws FileNotFoundException, UnsupportedEncodingException {
+        File file = new File(getPathFromFile(filePath));
+        if (file.exists()) {
+            return new Image(file.toURI().toString());
+        }
+        Logger.warn("Cannot find file: " + file.toURI().toString());
+        return null;
     }
 
     public static List<Word> loadWord(String jsonPath, int countWord) {
@@ -93,10 +95,10 @@ public class FileManager {
         return words;
     }
 
-    public static Trie loadTrie(String jsonPath) {
+    public static Trie loadTrie(String jsonPath) throws FileNotFoundException, UnsupportedEncodingException, MalformedURLException {
         Trie result = new Trie();
         List<Word> words = new ArrayList<>();
-        URL url = FileManager.class.getResource(jsonPath);
+        URL url = new File(getPathFromFile(jsonPath)).toURI().toURL();
         ObjectMapper o = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
         try (JsonParser jsonParser = jsonFactory.createParser(url)) {

@@ -10,6 +10,7 @@ import com.zeus.utils.trie.Trie;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 
 public class System {
     private final static String configPath = "/com/zeus/config/config.json";
@@ -19,14 +20,12 @@ public class System {
     public System() {
         try {
             configFactory = new ConfigFactory(FileManager.getPathFromFile(configPath));
-        } catch (UnsupportedEncodingException e) {
+            dictionaryManagement = new DictionaryManagement(configFactory.getConfig("Database").getProperty("localDataPath", String.class));
+        } catch (UnsupportedEncodingException | FileNotFoundException | MalformedURLException e) {
             Logger.error(e.getMessage());
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }
         App.setWindow(configFactory.getConfig("WindowConfig"));
         mongoPanel = new MongoPanel(configFactory.getConfig("Database").getProperty("mongodbPath", String.class));
-        dictionaryManagement = new DictionaryManagement(configFactory.getConfig("Database").getProperty("localDataPath", String.class));
     }
 
     public static MongoPanel getMongoPanel() {
