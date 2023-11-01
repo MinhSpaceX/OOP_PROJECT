@@ -26,7 +26,7 @@ public class System {
         }
         App.setWindow(configFactory.getConfig("WindowConfig"));
         mongoPanel = new MongoPanel(configFactory.getConfig("Database").getProperty("mongodbPath", String.class));
-        dictionaryManagement = new DictionaryManagement(configFactory.getConfig("localDataPath").getProperty("localDataPath", String.class));
+        dictionaryManagement = new DictionaryManagement(configFactory.getConfig("Database").getProperty("localDataPath", String.class));
     }
 
     public static MongoPanel getMongoPanel() {
