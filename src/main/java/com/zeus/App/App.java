@@ -26,8 +26,9 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
-        Scene scene = new Scene(root, 640, 480);
+        Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
+        Scene scene = new Scene(root, 787, 492);
+        scene.getStylesheets().add(getClass().getResource("/com/zeus/css/index.css").toExternalForm());
         initialize(stage);
         stage.setScene(scene);
         stage.show();
