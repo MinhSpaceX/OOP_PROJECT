@@ -1,11 +1,16 @@
 package com.zeus.App;
 
 import com.zeus.utils.config.Config;
+import com.zeus.App.Config.Config;
+import com.zeus.App.Controller.Menu;
 import com.zeus.utils.file.FileManager;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import javax.crypto.Cipher;
@@ -17,6 +22,8 @@ public class App extends Application {
     public static void setWindow(Config config) {
         window = config;
     }
+
+    Menu controller = new Menu();
 
     /**
      * Main method to start the app.
@@ -36,9 +43,14 @@ public class App extends Application {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(FileManager.getPathFromFile("/com/zeus/css/index.css"));
+        handleKeyEvent(scene);
         initialize(stage);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void handleKeyEvent(Scene sc){
+
     }
 
     /**
