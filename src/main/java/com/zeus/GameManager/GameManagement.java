@@ -1,8 +1,9 @@
 package com.zeus.GameManager;
 
-import com.zeus.DictionaryManager.DictionaryID;
+import com.zeus.DictionaryManager.Dictionary;
 import com.zeus.DictionaryManager.DictionaryManagement;
 import com.zeus.DictionaryManager.Word;
+import com.zeus.System.Initializer;
 import com.zeus.utils.input.Input;
 
 import java.util.ArrayList;
@@ -10,15 +11,15 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class GameManagement {
-    private final int[] wrongAnswer = new int[3]; // the index in the dictionary of wrong answer
+public class GameManagement  {
     private final ArrayList<Word> dictionary;
+    private final int[] wrongAnswer = new int[3]; // the index in the dictionary of wrong answer
     private int rightAnswer; // the index in the dictionary of right answer
     private boolean gameState = true;
     private char correct;
 
-    public GameManagement(DictionaryID ID, DictionaryManagement manager) {
-        dictionary = manager.getListOfWords(ID);
+    public GameManagement(DictionaryManagement management) {
+        dictionary = management.getDictionary().getDictionary();
     }
 
     public void StartGame() {
@@ -43,7 +44,7 @@ public class GameManagement {
         char answer_index = 'A';
         System.out.println("What is the meaning of: " + dictionary.get(rightAnswer).getWordTarget());
         for (int i = 0; i < 4; i++) {
-            System.out.println(answer_index + "." + dictionary.get(answers[i]).getWordExplain());
+            System.out.println(answer_index + "." + dictionary.get(answers[i]).getDescription().getTypes().get(0).getMeanings().get(0));
             if (answers[i] == rightAnswer) {
                 correct = answer_index;
             }
