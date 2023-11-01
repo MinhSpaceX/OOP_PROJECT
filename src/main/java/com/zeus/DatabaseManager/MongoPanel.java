@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Filters;
 import com.zeus.DictionaryManager.Word;
-import com.zeus.System.Default;
+import com.zeus.utils.config.Config;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.bson.Document;
@@ -15,15 +15,13 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MongoPanel {
-
     private MongoClient client;
     private MongoDatabase db;
     private MongoCollection collection;
     private ObjectMapper objm = new ObjectMapper();
     private ObservableList<Word> dictionary = FXCollections.observableArrayList();
-
-    public MongoPanel(){
-        client = MongoClients.create(Default.DATABASE_PATH_DB);
+    public MongoPanel(String mongodbPath){
+        client = MongoClients.create(mongodbPath);
         db = client.getDatabase("dictionary");
         collection = db.getCollection("words");
     }

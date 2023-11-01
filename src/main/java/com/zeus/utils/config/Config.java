@@ -1,6 +1,8 @@
-package com.zeus.utils.Config;
+package com.zeus.utils.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zeus.utils.log.Logger;
 
 public class Config {
     /**
@@ -23,7 +25,12 @@ public class Config {
      * Get properties.
      * @return properties.
      */
-    public Properties getProperties() {
-        return properties;
+    public <T> T getProperty(String property, Class<T> typeClass) {
+        Object o = properties.getProperties().get(property);
+        if (typeClass.isInstance(o)) {
+            return typeClass.cast(o);
+        }
+        Logger.warn("Property doesn't exist. Re-check property type or create new property.");
+        return null;
     }
 }

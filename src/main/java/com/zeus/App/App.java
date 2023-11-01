@@ -1,6 +1,6 @@
 package com.zeus.App;
 
-import com.zeus.utils.Config.Config;
+import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
 
 import javafx.application.Application;
@@ -8,9 +8,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import javax.crypto.Cipher;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class App extends Application {
+    private static Config window = null;
+    public static void setWindow(Config config) {
+        window = config;
+    }
+
     /**
      * Main method to start the app.
      * @param args User arguments.
@@ -25,10 +32,10 @@ public class App extends Application {
      * @throws IOException Exceptions handle.
      */
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, URISyntaxException {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
-        scene.getStylesheets().add(getClass().getResource("/com/zeus/css/index.css").toExternalForm());
+        scene.getStylesheets().add(FileManager.getPathFromFile("/com/zeus/css/index.css"));
         initialize(stage);
         stage.setScene(scene);
         stage.show();
@@ -48,14 +55,12 @@ public class App extends Application {
      */
     private void getConfig(Stage stage) {
         //Create a config from the target string to get config from config.json then extract properties
-        Config window = FileManager.getConfig("WindowConfig", "/com/zeus/config/config.json");
-        assert window != null;
-        String title = window.getProperties().getProperties().get("title").toString();
-        String iconPath = window.getProperties().getProperties().get("iconPath").toString();
-        int WIDTH = Integer.parseInt(window.getProperties().getProperties().get("WIDTH").toString());
-        int HEIGHT = Integer.parseInt(window.getProperties().getProperties().get("HEIGHT").toString());
-        boolean resizable = Boolean.parseBoolean(window.getProperties().getProperties().get("resizable").toString());
-        boolean fullScreen = Boolean.parseBoolean(window.getProperties().getProperties().get("fullScreen").toString());
+        String title = window.getProperty("title", String.class);
+        String iconPath = window.getProperty("iconPath", String.class);
+        int WIDTH = window.getProperty("WIDTH", Integer.class);
+        int HEIGHT = window.getProperty("HEIGHT", Integer.class);
+        boolean resizable = window.getProperty("resizable", Boolean.class);
+        boolean fullScreen = window.getProperty("fullScreen", Boolean.class);
 
         /*
          * Set properties: title, iconPath, WIDTH, HEIGHT, resizable, fullScreen

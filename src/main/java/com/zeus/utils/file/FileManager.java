@@ -4,24 +4,32 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeus.utils.Config.Config;
+import com.zeus.utils.config.Config;
 import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileManager {
-    public static String getPathFromFile(String file) {
+    public static String getPathFromFile(String file) throws UnsupportedEncodingException, FileNotFoundException {
         File dir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         file = dir.getParent() + file;
+        file = URLDecoder.decode(file, StandardCharsets.UTF_8);
+        File f = new File(file);
+        if (!f.exists()) {
+            throw new FileNotFoundException("File: " + file + " did not exist.");
+        }
         return file;
     }
 
@@ -51,7 +59,7 @@ public class FileManager {
      * @throws IOException
      */
     public static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(FileManager.class.getResource(fxml));
+        FXMLLoader fxmlLoader = new FXMLLoader(new File(getPathFromFile(fxml)).toURI().toURL());
         return fxmlLoader.load();
     }
 
@@ -62,25 +70,6 @@ public class FileManager {
      */
     public static Image loadImage(String filePath) {
         return new Image(filePath);
-    }
-
-    /**
-     * get configuration based on target and config.json file path provided.
-     * @param target
-     * @param jsonPath
-     * @return an object of Config Class
-     */
-    public static Config getConfig(String target, String jsonPath) {
-        ObjectMapper objm = new ObjectMapper();
-        try {
-            List<Config> configs = objm.readValue(FileManager.class.getResource(jsonPath), objm.getTypeFactory().constructCollectionType(List.class, Config.class));
-            for (Config c : configs) {
-                if (c.getTarget().equals(target)) return c;
-            }
-        } catch (Exception e) {
-            System.out.printf("%s.", e.getMessage());
-        }
-        return null;
     }
 
     public static List<Word> loadWord(String jsonPath, int countWord) {

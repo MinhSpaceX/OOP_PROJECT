@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import com.zeus.System.Default;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.input.Input;
 
@@ -131,7 +130,7 @@ public class DictionaryManagement {
         ObjectMapper o = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
 
-        try (JsonParser jsonParser = jsonFactory.createParser(new BufferedReader(new InputStreamReader(new FileInputStream(FileManager.getPathFromFile(file)))))) {
+        try (JsonParser jsonParser = jsonFactory.createParser(new BufferedReader(new InputStreamReader(new FileInputStream(FileManager.getPathFromFile(file)), StandardCharsets.UTF_8)))) {
             jsonParser.nextToken();
             while (jsonParser.nextToken() != null) {
                 if (jsonParser.currentToken() == JsonToken.START_OBJECT) {

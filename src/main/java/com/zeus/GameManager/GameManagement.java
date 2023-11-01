@@ -3,7 +3,6 @@ package com.zeus.GameManager;
 import com.zeus.DictionaryManager.Dictionary;
 import com.zeus.DictionaryManager.DictionaryManagement;
 import com.zeus.DictionaryManager.Word;
-import com.zeus.System.Initializer;
 import com.zeus.utils.input.Input;
 
 import java.util.ArrayList;
