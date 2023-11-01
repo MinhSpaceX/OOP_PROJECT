@@ -1,7 +1,6 @@
 package com.zeus.App;
 
 import com.zeus.utils.config.Config;
-import com.zeus.App.Config.Config;
 import com.zeus.App.Controller.Menu;
 import com.zeus.utils.file.FileManager;
 
@@ -22,8 +21,6 @@ public class App extends Application {
     public static void setWindow(Config config) {
         window = config;
     }
-
-    Menu controller = new Menu();
 
     /**
      * Main method to start the app.

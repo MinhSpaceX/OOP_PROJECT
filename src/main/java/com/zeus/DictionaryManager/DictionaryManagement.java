@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.SequenceWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.input.Input;
+import com.zeus.utils.trie.Trie;
 
 import java.io.*;
 import java.net.URI;
@@ -20,14 +22,24 @@ import java.util.Objects;
 
 public class DictionaryManagement {
     private final Dictionary dictionary;
+    private Trie trie = null;
 
-    public DictionaryManagement() {
+    public DictionaryManagement(String databasePath) {
         dictionary = new Dictionary();
+        trie = FileManager.loadTrie(databasePath);
         System.out.println("DictionaryManagement initialized");
     }
 
     public Dictionary getDictionary() {
         return dictionary;
+    }
+
+    public boolean search(String word) {
+        return trie.search(word);
+    }
+
+    public List<String> autoFill(String word, int numberOfWords, int wordLength) {
+        return trie.autoFill(word, numberOfWords, wordLength);
     }
 
     public void addWordToDictionary(Word word) {

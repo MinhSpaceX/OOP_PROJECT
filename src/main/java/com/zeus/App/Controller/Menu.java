@@ -61,7 +61,6 @@ public class Menu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         slider.setTranslateX(-170);
         menuCard.setVisible(true);
         wordCard.setVisible(false);
