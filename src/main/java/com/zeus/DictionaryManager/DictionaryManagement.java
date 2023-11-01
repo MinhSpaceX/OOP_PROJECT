@@ -23,7 +23,7 @@ public class DictionaryManagement {
 
     public DictionaryManagement() {
         dictionary = new Dictionary();
-        System.out.println("DictionaryManagement initialized\n");
+        System.out.println("DictionaryManagement initialized");
     }
 
     public Dictionary getDictionary() {
@@ -32,97 +32,6 @@ public class DictionaryManagement {
 
     public void addWordToDictionary(Word word) {
         dictionary.addWord(word);
-    }
-
-    public ArrayList<String> dictionarySearcher(String word) {
-        ArrayList<String> pList = new ArrayList<>();
-
-        //look up all the word with similar prefix
-        for (Word a : dictionary.getDictionary()) {
-            if (a.getWordTarget().startsWith(word)) {
-                pList.add(a.getWordTarget());
-                if (pList.size() > 10 ) break;
-            }
-        }
-        return pList;
-    }
-
-    public Word createWord() {
-        try {
-            System.out.print("Enter word_target:");
-            String word_target = Input.getLine();
-            System.out.println("Enter pronoun: ");
-            String pronoun = Input.getLine();
-
-            List<Word.Description.Type> typesList = new ArrayList<>();
-
-            System.out.println("Enter number of types: ");
-            int numberTypes = Input.getInteger();
-
-            for (int i = 0; i < numberTypes; i++) {
-                System.out.print("Enter type: ");
-                String typeName = Input.getLine();
-
-                List<Word.Description.Type.Meaning> meaningsList = new ArrayList<>();
-
-                System.out.println("Enter number of meanings for type '" + typeName + "': ");
-                int numberMeanings = Input.getInteger();
-
-                for (int j = 0; j < numberMeanings; j++) {
-                    System.out.print("Enter meaning: ");
-                    String meaningExplanation = Input.getLine();
-
-                    List<Word.Description.Type.Meaning.Example> examplesList = new ArrayList<>();
-
-                    System.out.println("Enter number of examples for meaning '" + meaningExplanation + "': ");
-                    int numberExamples = Input.getInteger();
-
-                    for (int k = 0; k < numberExamples; k++) {
-                        System.out.print("Enter example in English: ");
-                        String exampleEnglish = Input.getLine();
-                        System.out.print("Enter example in Vietnamese: ");
-                        String exampleVietnamese = Input.getLine();
-
-                        Word.Description.Type.Meaning.Example example = new Word.Description.Type.Meaning.Example();
-                        example.setExample(exampleEnglish, exampleVietnamese);
-                        examplesList.add(example);
-                    }
-
-                    Word.Description.Type.Meaning meaning = new Word.Description.Type.Meaning();
-                    meaning.setMeaning(meaningExplanation, examplesList);
-                    meaningsList.add(meaning);
-                }
-
-                Word.Description.Type type = new Word.Description.Type();
-                type.setType(typeName, meaningsList);
-                typesList.add(type);
-            }
-
-            Word.Description description = new Word.Description();
-            description.setDescription(pronoun, typesList);
-
-            return new Word(word_target, description);
-        } catch (Exception e) {
-            System.out.printf("%s\n", e.getMessage());
-            System.out.println("ReWrite your Input!");
-            return createWord();
-        }
-    }
-
-    public void insertFromCommandLine() {
-        //System.out.println("Enter your input with format: word_target <enter> word_explain <enter> word_type");
-        addWordToDictionary(createWord());
-        System.out.println("Successfull!");
-    }
-
-    public void removeFromDictionary(int index) {
-        //Search for the word
-        dictionary.getDictionary().remove(index - 1);
-    }
-
-    public void updateDictionary(int index) {
-        System.out.println("Input the change: word_target <enter> word_explain <enter> word_type");
-        dictionary.getDictionary().set(index - 1, createWord());
     }
 
     public void insertFromFile(String file) {
