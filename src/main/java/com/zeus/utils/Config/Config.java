@@ -1,4 +1,4 @@
-package com.zeus.App.Config;
+package com.zeus.utils.Config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

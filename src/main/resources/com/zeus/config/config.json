@@ -9,5 +9,12 @@
       "resizable": false,
       "fullScreen": false
     }
+  },
+  {
+    "target": "DefaultPaths",
+    "properties": {
+      "mongodbPath": "mongodb+srv://hotmashmallow:SydFj7MBdnl57nID@cluster0.z4stprp.mongodb.net/?retryWrites=true&w=majority",
+      "localDataPath": "/com/zeus/data/english-vietnamese.json"
+    }
   }
 ]

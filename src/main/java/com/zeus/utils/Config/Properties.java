@@ -1,4 +1,4 @@
-package com.zeus.App.Config;
+package com.zeus.utils.Config;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.JsonNode;

@@ -162,8 +162,6 @@ public class DictionaryManagement {
             raf.writeBytes("\n}");
         } catch (IOException e) {
             System.out.println("Lỗi khi ghi dữ liệu vào tệp JSON: " + e.getMessage());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
 }

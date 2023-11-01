@@ -1,6 +1,6 @@
 package com.zeus.App;
 
-import com.zeus.App.Config.Config;
+import com.zeus.utils.Config.Config;
 import com.zeus.utils.file.FileManager;
 
 import javafx.application.Application;

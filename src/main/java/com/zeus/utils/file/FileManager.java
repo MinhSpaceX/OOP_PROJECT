@@ -3,13 +3,9 @@ package com.zeus.utils.file;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zeus.App.Config.Config;
+import com.zeus.utils.Config.Config;
 import com.zeus.DictionaryManager.Word;
-import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,14 +14,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 
 public class FileManager {
     public static String getPathFromFile(String file) {
@@ -84,7 +75,7 @@ public class FileManager {
         try {
             List<Config> configs = objm.readValue(FileManager.class.getResource(jsonPath), objm.getTypeFactory().constructCollectionType(List.class, Config.class));
             for (Config c : configs) {
-                return c;
+                if (c.getTarget().equals(target)) return c;
             }
         } catch (Exception e) {
             System.out.printf("%s.", e.getMessage());
