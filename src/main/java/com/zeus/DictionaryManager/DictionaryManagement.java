@@ -135,6 +135,7 @@ public class DictionaryManagement {
             jsonParser.nextToken();
             while (jsonParser.nextToken() != null) {
                 if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
+                    System.out.println(jsonParser.currentName());
                     Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
                     addWordToDictionary(w);
                     jsonParser.skipChildren();
