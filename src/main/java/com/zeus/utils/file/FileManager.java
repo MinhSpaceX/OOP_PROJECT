@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zeus.App.Config.Config;
 import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -27,8 +29,9 @@ import java.util.Objects;
 
 public class FileManager {
     public static String getPathFromFile(String file) throws URISyntaxException {
-        URI uri = new URI(Objects.requireNonNull(FileManager.class.getResource(file)).getPath());
-        return uri.getPath();
+        File dir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        file = dir.getParent() + file;
+        return file;
     }
 
     public static String readLineFromFile(String filePath, int numberReadline) {

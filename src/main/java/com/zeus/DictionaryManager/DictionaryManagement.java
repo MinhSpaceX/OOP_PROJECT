@@ -49,46 +49,67 @@ public class DictionaryManagement {
     }
 
     public Word createWord() {
-        List<Word.Description.Type.Meaning.Example> exampleList = new ArrayList<Word.Description.Type.Meaning.Example>();
-        List<Word.Description.Type> typeslist = new ArrayList<Word.Description.Type>();
-        List<Word.Description.Type.Meaning> meaningList = new ArrayList<Word.Description.Type.Meaning>();
-        System.out.print("Enter word_target:");
-        String word_target = Input.getLine();
-        System.out.println("Enter pronoun: ");
-        String pronoun = Input.getLine();
-        System.out.println("Enter number of type: ");
-        int number = Input.getInteger();
-        for (int i = 0; i < number; i++) {
-            System.out.print("Enter type: ");
-            String nameType = Input.getLine();
-            System.out.println("Enter number of meaning: ");
-            int numberMeaning = Input.getInteger();
-            for (int j = 0; j < numberMeaning; j++) {
-                System.out.print("Enter explain: ");
-                String explain = Input.getLine();
-                System.out.println("Enter number of example: ");
-                int numberExample = Input.getInteger();
-                for (int k = 0; k < numberExample; k++) {
-                    System.out.print("Enter example_English <enter> example_VietNames: ");
-                    String example_English = Input.getLine();
-                    String example_Vietnamese = Input.getLine();
-                    Word.Description.Type.Meaning.Example example = new Word.Description.Type.Meaning.Example();
-                    example.setExample(example_English, example_Vietnamese);
-                    exampleList.add(example);
-                }
-                Word.Description.Type.Meaning meaning = new Word.Description.Type.Meaning();
-                meaning.setMeaning(explain, exampleList);
-                meaningList.add(meaning);
-            }
-            Word.Description.Type type = new Word.Description.Type();
-            type.setType(nameType, meaningList);
-            typeslist.add(type);
-        }
-        Word.Description description = new Word.Description();
-        description.setDescription(pronoun, typeslist);
+        try {
+            System.out.print("Enter word_target:");
+            String word_target = Input.getLine();
+            System.out.println("Enter pronoun: ");
+            String pronoun = Input.getLine();
 
-       return new Word(word_target, description);
+            List<Word.Description.Type> typesList = new ArrayList<>();
+
+            System.out.println("Enter number of types: ");
+            int numberTypes = Input.getInteger();
+
+            for (int i = 0; i < numberTypes; i++) {
+                System.out.print("Enter type: ");
+                String typeName = Input.getLine();
+
+                List<Word.Description.Type.Meaning> meaningsList = new ArrayList<>();
+
+                System.out.println("Enter number of meanings for type '" + typeName + "': ");
+                int numberMeanings = Input.getInteger();
+
+                for (int j = 0; j < numberMeanings; j++) {
+                    System.out.print("Enter meaning: ");
+                    String meaningExplanation = Input.getLine();
+
+                    List<Word.Description.Type.Meaning.Example> examplesList = new ArrayList<>();
+
+                    System.out.println("Enter number of examples for meaning '" + meaningExplanation + "': ");
+                    int numberExamples = Input.getInteger();
+
+                    for (int k = 0; k < numberExamples; k++) {
+                        System.out.print("Enter example in English: ");
+                        String exampleEnglish = Input.getLine();
+                        System.out.print("Enter example in Vietnamese: ");
+                        String exampleVietnamese = Input.getLine();
+
+                        Word.Description.Type.Meaning.Example example = new Word.Description.Type.Meaning.Example();
+                        example.setExample(exampleEnglish, exampleVietnamese);
+                        examplesList.add(example);
+                    }
+
+                    Word.Description.Type.Meaning meaning = new Word.Description.Type.Meaning();
+                    meaning.setMeaning(meaningExplanation, examplesList);
+                    meaningsList.add(meaning);
+                }
+
+                Word.Description.Type type = new Word.Description.Type();
+                type.setType(typeName, meaningsList);
+                typesList.add(type);
+            }
+
+            Word.Description description = new Word.Description();
+            description.setDescription(pronoun, typesList);
+
+            return new Word(word_target, description);
+        } catch (Exception e) {
+            System.out.printf("%s\n", e.getMessage());
+            System.out.println("ReWrite your Input!");
+            return createWord();
+        }
     }
+
     public void insertFromCommandLine() {
         //System.out.println("Enter your input with format: word_target <enter> word_explain <enter> word_type");
         addWordToDictionary(createWord());
@@ -109,7 +130,8 @@ public class DictionaryManagement {
         URL url = DictionaryManagement.class.getResource(file);
         ObjectMapper o = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
-        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
+
+        try (JsonParser jsonParser = jsonFactory.createParser(new BufferedReader(new InputStreamReader(new FileInputStream(FileManager.getPathFromFile(file)))))) {
             jsonParser.nextToken();
             while (jsonParser.nextToken() != null) {
                 if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
@@ -124,13 +146,19 @@ public class DictionaryManagement {
     }
 
     public void dictionaryExportToFile(String file) {
-
         try (RandomAccessFile raf = new RandomAccessFile(FileManager.getPathFromFile(file), "rw");) {
-            raf.seek(raf.length()-1);
+            raf.seek(1);
+            int i= 0;
             for (Word word : dictionary.getDictionary()) {
-                raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
+                if (i == dictionary.getDictionary().size() -1) {
+                    raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
+                } else {
+                    raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
+                    raf.writeBytes(",");
+                    i++;
+                }
             }
-            raf.writeBytes("}");
+            raf.writeBytes("\n}");
         } catch (IOException e) {
             System.out.println("Lỗi khi ghi dữ liệu vào tệp JSON: " + e.getMessage());
         } catch (URISyntaxException e) {

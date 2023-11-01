@@ -11,7 +11,7 @@ public class Dictionary {
      *
      * @param word the word to add.
      */
-    void addWord(Word word) {
+    public void addWord(Word word) {
         dictionary.add(word);
     }
 
@@ -20,7 +20,7 @@ public class Dictionary {
      *
      * @return the dictionary.
      */
-    ArrayList<Word> getDictionary() {
+    public ArrayList<Word> getDictionary() {
         return dictionary;
     }
 }

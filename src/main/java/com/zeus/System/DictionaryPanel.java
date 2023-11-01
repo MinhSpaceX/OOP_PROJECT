@@ -147,6 +147,18 @@ public class DictionaryPanel extends Initializer {
                     }
                     break;
                 case 7: // Game
+                    while (true) {
+                        GameManagement game_manager = new GameManagement(manager);
+                        game_manager.StartGame();
+                        System.out.println("Do you want to continue: Yes or No");
+                        System.out.print("Enter your option: ");
+                        String option = Input.getLine();
+                        if (option.equalsIgnoreCase("Yes")) clear();
+                        else {
+                            clear();
+                            break;
+                        }
+                    }
                     break;
                 default:
                     //input < 0 or > 9

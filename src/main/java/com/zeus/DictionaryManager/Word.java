@@ -47,7 +47,7 @@ public class Word {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
-        result.append(String.format(",\"%s\":{", wordTarget));
+        result.append(String.format("\n\"%s\":{", wordTarget));
         result.append(description.toString());
         result.append("}");
         return result.toString();
