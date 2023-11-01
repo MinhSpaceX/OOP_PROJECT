@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class FileManager {
-    public static String getPathFromFile(String file) throws URISyntaxException {
+    public static String getPathFromFile(String file) {
         File dir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         file = dir.getParent() + file;
         return file;
