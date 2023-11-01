@@ -1,16 +1,23 @@
 package com.zeus.App;
 
 import com.zeus.App.Config.Config;
+import com.zeus.App.Controller.Menu;
 import com.zeus.utils.file.FileManager;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class App extends Application {
+
+    Menu controller = new Menu();
+
     /**
      * Main method to start the app.
      * @param args User arguments.
@@ -29,9 +36,14 @@ public class App extends Application {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(getClass().getResource("/com/zeus/css/index.css").toExternalForm());
+        handleKeyEvent(scene);
         initialize(stage);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void handleKeyEvent(Scene sc){
+
     }
 
     /**
