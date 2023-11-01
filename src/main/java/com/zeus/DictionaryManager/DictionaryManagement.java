@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.input.Input;
+import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 
 import java.io.*;
@@ -27,7 +28,7 @@ public class DictionaryManagement {
     public DictionaryManagement(String databasePath) {
         dictionary = new Dictionary();
         trie = FileManager.loadTrie(databasePath);
-        System.out.println("DictionaryManagement initialized");
+        Logger.info("DictionaryManagement initialized");
     }
 
     public Dictionary getDictionary() {
