@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeus.utils.config.Config;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
@@ -31,7 +30,7 @@ public class FileManager {
     }
 
     public static String readLineFromFile(String filePath, int numberReadline) {
-        try (FileReader fr = new FileReader(new File(filePath));
+        try (FileReader fr = new FileReader(getPathFromFile(filePath));
              BufferedReader br = new BufferedReader(fr)) {
 
             int countLine = 0;
