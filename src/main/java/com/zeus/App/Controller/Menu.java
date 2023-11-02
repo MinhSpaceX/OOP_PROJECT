@@ -132,11 +132,8 @@ public class Menu implements Initializable {
     }
 
     public void loadData(){
-        System.out.println("loading");
-        Clock.tick();
-        sm.loadDataFromBase();
-        Clock.tock();
-        Clock.printTime();
+        System.out.println("LOADING DATABASE");
+        Clock.timer(() -> sm.loadDataFromBase());
     }
 
     public void searchWord(){
