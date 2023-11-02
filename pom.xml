@@ -17,10 +17,17 @@
         <javafx.fxml.version>20.0.2</javafx.fxml.version>
         <mainClass.Path>com.zeus.System.Main</mainClass.Path>
         <jackson.version>2.15.1</jackson.version>
+        <sqlite.driver.version>3.42.0.0</sqlite.driver.version>
         <mongodb.driver.sync>4.9.1</mongodb.driver.sync>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.7</version>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>de.jensd</groupId>
             <artifactId>fontawesomefx-fontawesome</artifactId>
@@ -45,6 +52,11 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>${mongodb.driver.sync}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>${sqlite.driver.version}</version>
         </dependency>
     </dependencies>
 
@@ -110,5 +122,11 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+            </resource>
+        </resources>
     </build>
 </project>

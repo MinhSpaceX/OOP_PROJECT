@@ -2,9 +2,7 @@ package com.zeus.utils.trie;
 
 import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.log.Logger;
-import javafx.util.Pair;
 
-import java.security.cert.CertSelector;
 import java.util.*;
 
 
@@ -19,11 +17,11 @@ public class Trie {
         root = new Node();
         words.forEach(w -> this.insert(w.getWordTarget()));
     }
-    public boolean insert(String word) {
+    public void insert(String word) {
         if (root == null) {
             Logger.warn("Root is null.");
         }
-        if (word == null) return false;
+        if (word == null) return;
         word = word.toLowerCase();
         Node iterator = root;
         for (int character = 0; character < word.length(); character++) {
@@ -35,10 +33,9 @@ public class Trie {
         }
         if (iterator.isEndOfWord()) {
             Logger.warn("Insert action cancelled. Word existed!");
-            return false;
+            return;
         }
         iterator.setEndOfWord(true);
-        return true;
     }
 
     public boolean search(String word) {
@@ -103,7 +100,9 @@ public class Trie {
         int index = 0;
         for (int character = 0; character < word.length(); character++) {
             index = word.charAt(character);
-            node = node.next(index);
+            if(node != null) {
+                node = node.next(index);
+            }
         }
         if (node == null) {
             Logger.warn("No word to auto fill.");
