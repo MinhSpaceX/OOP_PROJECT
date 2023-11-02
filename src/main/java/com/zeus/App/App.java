@@ -1,9 +1,11 @@
 package com.zeus.App;
 
+import com.zeus.DatabaseManager.MongoPanel;
 import com.zeus.utils.config.Config;
 import com.zeus.App.Controller.Menu;
 import com.zeus.utils.file.FileManager;
 
+import com.zeus.utils.trie.Trie;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -18,9 +20,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 public class App extends Application {
     private static Config window = null;
+    private SearchManager sm = new SearchManager();
     public static void setWindow(Config config) {
         window = config;
     }
@@ -43,14 +47,11 @@ public class App extends Application {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
-        handleKeyEvent(scene);
+        //loadDataFromBase();
+        //List<String> list = searchPath.autoFill("co", 5, 5);
         initialize(stage);
         stage.setScene(scene);
         stage.show();
-    }
-
-    public void handleKeyEvent(Scene sc){
-
     }
 
     /**

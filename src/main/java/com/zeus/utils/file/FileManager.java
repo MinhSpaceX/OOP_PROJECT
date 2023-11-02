@@ -30,25 +30,6 @@ public class FileManager {
         return file;
     }
 
-    public static String readLineFromFile(String filePath, int numberReadline) {
-        try (FileReader fr = new FileReader(new File(filePath));
-             BufferedReader br = new BufferedReader(fr)) {
-
-            int countLine = 0;
-            while (numberReadline >= countLine) {
-                if (countLine > 1) throw new Exception("ERROR: File contains more than 1 line");
-                String line = br.readLine();
-                countLine++;
-                if (line == null) break;
-                return line;
-            }
-
-        } catch (Exception e) {
-            System.out.printf("%s. File path: '%s'.\n", e.getMessage(), filePath);
-        }
-        return null;
-    }
-
     /**
      *Load a Parent based on fxml path provided
      * @param fxml
@@ -74,45 +55,4 @@ public class FileManager {
         return null;
     }
 
-    public static List<Word> loadWord(String jsonPath, int countWord) {
-        List<Word> words = new ArrayList<>();
-        URL url = FileManager.class.getResource(jsonPath);
-        ObjectMapper o = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
-            jsonParser.nextToken();
-            while (jsonParser.nextToken() != null && countWord > 0) {
-                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
-                    countWord--;
-                    Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
-                    words.add(w);
-                    jsonParser.skipChildren();
-                }
-            }
-        } catch (Exception e) {
-            System.out.printf("%s.", e.getMessage());
-        }
-        return words;
-    }
-
-    public static Trie loadTrie(String jsonPath) throws FileNotFoundException, UnsupportedEncodingException, MalformedURLException {
-        Trie result = new Trie();
-        List<Word> words = new ArrayList<>();
-        URL url = new File(getPathFromFile(jsonPath)).toURI().toURL();
-        ObjectMapper o = new ObjectMapper();
-        JsonFactory jsonFactory = new JsonFactory();
-        try (JsonParser jsonParser = jsonFactory.createParser(url)) {
-            jsonParser.nextToken();
-            while (jsonParser.nextToken() != null) {
-                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
-                    //countWord--;
-                    result.insert(jsonParser.currentName());
-                    jsonParser.skipChildren();
-                }
-            }
-        } catch (Exception e) {
-            System.out.printf("%s.", e.getMessage());
-        }
-        return result;
-    }
 }
