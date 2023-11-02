@@ -17,8 +17,8 @@
         <javafx.fxml.version>20.0.2</javafx.fxml.version>
         <mainClass.Path>com.zeus.System.Main</mainClass.Path>
         <jackson.version>2.15.1</jackson.version>
-        <mongodb.driver.sync>4.9.1</mongodb.driver.sync>
         <sqlite.driver.version>3.42.0.0</sqlite.driver.version>
+        <mongodb.driver.sync>4.9.1</mongodb.driver.sync>
     </properties>
 
     <dependencies>
