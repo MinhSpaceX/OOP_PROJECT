@@ -8,7 +8,6 @@ import com.zeus.utils.log.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 
 public class System {
     private final static String configPath = "/com/zeus/config/config.json";
@@ -34,10 +33,6 @@ public class System {
 
     public static MongoPanel getMongoPanel() {
         return mongoPanel;
-    }
-
-    public static DictionaryManagement getDictionaryManagement() {
-        return dictionaryManagement;
     }
 
     public void run(String[] args) {

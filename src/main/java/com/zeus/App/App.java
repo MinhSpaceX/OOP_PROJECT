@@ -43,7 +43,7 @@ public class App extends Application {
      * @throws IOException Exceptions handle.
      */
     @Override
-    public void start(Stage stage) throws IOException, URISyntaxException {
+    public void start(Stage stage) throws IOException {
         Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());

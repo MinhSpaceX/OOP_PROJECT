@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
+import com.zeus.utils.clock.Clock;
 import com.zeus.utils.file.FileManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
@@ -27,6 +28,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -130,8 +132,11 @@ public class Menu implements Initializable {
     }
 
     public void loadData(){
-        System.out.println("load");
+        System.out.println("loading");
+        Clock.tick();
         sm.loadDataFromBase();
+        Clock.tock();
+        Clock.printTime();
     }
 
     public void searchWord(){

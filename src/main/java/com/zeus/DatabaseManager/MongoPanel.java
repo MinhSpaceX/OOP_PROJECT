@@ -18,8 +18,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MongoPanel {
-
-    String url = "mongodb+srv://hotmashmallow:SydFj7MBdnl57nID@cluster0.z4stprp.mongodb.net/";
     private MongoClient client ;
     private MongoDatabase database;
     private MongoCollection<Document> collection;
@@ -32,7 +30,7 @@ public class MongoPanel {
     );
 
 
-    public MongoPanel(){
+    public MongoPanel(String url){
         client = MongoClients.create(url);
         database = client.getDatabase("dictionary_metadata");
         collection = database.getCollection("dictionary");
