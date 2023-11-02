@@ -7,9 +7,10 @@ public class Main {
         // Shutdown function when the program end.
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                Initializer.terminate();
+
             }
         });
-        App.run(args);
+        System system = new System();
+        system.run(args);
     }
 }

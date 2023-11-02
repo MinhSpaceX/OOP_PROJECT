@@ -9,5 +9,24 @@
       "resizable": false,
       "fullScreen": false
     }
+  },
+  {
+    "target": "Database",
+    "properties": {
+      "mongodbPath": "mongodb+srv://hotmashmallow:SydFj7MBdnl57nID@cluster0.z4stprp.mongodb.net/?retryWrites=true&w=majority",
+      "localDataPath": "/com/zeus/data/dictionary.json"
+    }
+  },
+  {
+    "target": "FXML",
+    "properties": {
+
+    }
+  },
+  {
+    "target": "CSS",
+    "properties": {
+
+    }
   }
 ]

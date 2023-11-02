@@ -18,6 +18,7 @@
         <mainClass.Path>com.zeus.System.Main</mainClass.Path>
         <jackson.version>2.15.1</jackson.version>
         <mongodb.driver.sync>4.9.1</mongodb.driver.sync>
+        <sqlite.driver.version>3.42.0.0</sqlite.driver.version>
     </properties>
 
     <dependencies>
@@ -45,6 +46,11 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>${mongodb.driver.sync}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>${sqlite.driver.version}</version>
         </dependency>
     </dependencies>
 
@@ -110,5 +116,11 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+            </resource>
+        </resources>
     </build>
 </project>
