@@ -96,11 +96,11 @@ public class Menu implements Initializable {
 
     public void OpenWordCard(ActionEvent event){
         if(WordViewVisible) {
+            searchBar = tempSearchBar;
+            setToDefault();
             wordCard.setVisible(false);
             menuCard.setVisible(true);
             WordViewVisible = false;
-            searchBar = tempSearchBar;
-            setToDefault();
             searchWord();
         }
     }
@@ -185,14 +185,21 @@ public class Menu implements Initializable {
     }
 
     public void displayLabelContent(Label label){
-        wordTargetDisplay.setText(label.getText());
-        wordCard.setVisible(true);
-        menuCard.setVisible(false);
-        WordViewVisible = true;
-        tempSearchBar = searchBar;
-        searchBar = searchBar2;
-        setToDefault();
-        searchWord();
+        if(!WordViewVisible) {
+            wordTargetDisplay.setText(label.getText());
+            wordCard.setVisible(true);
+            menuCard.setVisible(false);
+            WordViewVisible = true;
+            setToDefault();
+            tempSearchBar = searchBar;
+            searchBar = searchBar2;
+            searchWord();
+        }
+        if(WordViewVisible){
+            wordTargetDisplay.setText(label.getText());
+            setToDefault();
+            searchWord();
+        }
     }
 
     /**
