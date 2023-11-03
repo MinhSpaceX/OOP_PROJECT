@@ -52,8 +52,13 @@
 .search-container{
     -fx-border-width: 2;
     -fx-border-radius: 5;
-    -fx-border-color: rgb(142, 143, 250);
+    -fx-border-color: #999;
 }
+
+.search-container:focus-within{
+    -fx-border-color: #4d59fd
+}
+
 
 .explain-card-template{
     -fx-border-color: rgb(119, 82, 254);

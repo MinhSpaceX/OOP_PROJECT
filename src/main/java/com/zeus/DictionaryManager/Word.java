@@ -31,6 +31,9 @@ public class Word {
     public String getWordTarget() {
         return wordTarget;
     }
+    public String getPronoun() {
+        return description.getPronoun();
+    }
 
     public void setWordTarget(String wordTarget) {
         this.wordTarget = wordTarget;
