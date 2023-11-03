@@ -61,7 +61,7 @@ public class MongoPanel {
                 Word word = new Word();
                 word.setWordTarget(wordTarget);
                 ObjectMapper objectMapper = new ObjectMapper();
-                word.setDescription(objectMapper.readValue(wordDoc.getString(wordTarget), Word.Description.class));
+                word.setDescription(objectMapper.convertValue(wordDoc.get(wordTarget, Document.class), Word.Description.class));
                 if (word.getDescription() != null) {
                     return word;
                 }
