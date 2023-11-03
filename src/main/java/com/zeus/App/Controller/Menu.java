@@ -71,6 +71,8 @@ public class Menu implements Initializable {
     private HBox typeContainer;
     @FXML
     private Text explainDisplay;
+    @FXML
+    private Text wordTargetDisplay;
 
     @FXML
     VBox resultDisplay = new VBox();
@@ -93,16 +95,7 @@ public class Menu implements Initializable {
     }
 
     public void OpenWordCard(ActionEvent event){
-        if(!WordViewVisible) {
-            wordCard.setVisible(true);
-            menuCard.setVisible(false);
-            WordViewVisible = true;
-            tempSearchBar = searchBar;
-            searchBar = searchBar2;
-            setToDefault();
-            searchWord();
-        }
-        else{
+        if(WordViewVisible) {
             wordCard.setVisible(false);
             menuCard.setVisible(true);
             WordViewVisible = false;
@@ -186,8 +179,20 @@ public class Menu implements Initializable {
         for(var i : temp){
             Label label = new Label(i);
             label.getStyleClass().add("label-style");
+            label.setOnMouseClicked(e -> displayLabelContent(label));
             resultDisplay.getChildren().add(label);
         }
+    }
+
+    public void displayLabelContent(Label label){
+        wordTargetDisplay.setText(label.getText());
+        wordCard.setVisible(true);
+        menuCard.setVisible(false);
+        WordViewVisible = true;
+        tempSearchBar = searchBar;
+        searchBar = searchBar2;
+        setToDefault();
+        searchWord();
     }
 
     /**
