@@ -100,7 +100,16 @@ public class Menu implements Initializable {
         sideNavSlide();
         searchWord();
         Logger.info("finish");
-        audio.setOnMouseClicked(event -> mediaPlayer.play());
+        audio.setOnMouseClicked(event -> {
+            try {
+                if (mediaPlayer == null) throw new NullPointerException("Media is null, change word or add data.");
+                mediaPlayer.pause();
+                mediaPlayer.seek(mediaPlayer.getStartTime());
+                mediaPlayer.play();
+            } catch (Exception e) {
+                Logger.error(e.getMessage());
+            }
+        });
     }
 
     public void OpenWordCard(ActionEvent event){

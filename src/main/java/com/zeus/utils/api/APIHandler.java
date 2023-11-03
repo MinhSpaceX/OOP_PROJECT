@@ -34,7 +34,7 @@ public class APIHandler {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.body());
-            if (jsonNode.get(0).get("phonetics").isEmpty()) throw new Exception("There is no audio for thios word, change the word or add new data.");
+            if (jsonNode.isEmpty() || jsonNode.get(0) == null || jsonNode.get(0).get("phonetics").isEmpty() || jsonNode.get(0).get("phonetics").get(0) == null) throw new Exception("There is no audio for this word, change the word or add new data.");
             String audioURL = jsonNode.get(0).get("phonetics").get(0).get("audio").asText();
             MediaPlayer mediaPlayer = new MediaPlayer(new Media(audioURL));
             mediaPlayer.setOnEndOfMedia(mediaPlayer::play);
