@@ -54,4 +54,24 @@ public class FileManager {
         return null;
     }
 
+    public List<Word> deserializeFromFile(String filePath) {
+        List<Word> words = new ArrayList<>();
+        ObjectMapper o = new ObjectMapper();
+        JsonFactory jsonFactory = new JsonFactory();
+        try (JsonParser jsonParser = jsonFactory.createParser(getPathFromFile(filePath))) {
+            jsonParser.nextToken();
+            while (jsonParser.nextToken() != null) {
+                if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
+                    System.out.println(jsonParser.currentName());
+                    Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
+                    words.add(w);
+                    jsonParser.skipChildren();
+                }
+            }
+            return words;
+        } catch (Exception e) {
+            System.out.printf("%s.", e.getMessage());
+        }
+        return null;
+    }
 }

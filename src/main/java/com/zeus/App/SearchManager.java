@@ -15,10 +15,6 @@ public class SearchManager {
         mgp = System.getMongoPanel();
         mgp.fetchDatafromBase();
         searchPath = mgp.ReturnTrie();
-        WordFactory wordFactory = new WordFactory(mgp.fetchWord("run"));
-        wordFactory.getSingleWordArray().forEach(singleWord -> {
-            java.lang.System.out.printf("%s %s %s %s", singleWord.getWordTarget(), singleWord.getPronoun(), singleWord.getType(), singleWord.getMeaning());
-        });
     }
 
     /**

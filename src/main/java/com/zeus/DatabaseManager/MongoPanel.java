@@ -10,6 +10,7 @@ import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.bson.BsonNull;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -54,24 +55,15 @@ public class MongoPanel {
     }
 
     public Word fetchWord(String wordTarget){
-        List<Document> tempPipeline = List.of(new Document("$project", new Document("_id", 0L).append(wordTarget, 1L)));
+        List<Document> tempPipeline = Arrays.asList(new Document("$match",new Document("run",new Document("$exists", true).append("$ne",new BsonNull()))),new Document("$project",new Document("_id", 0L).append("run", 1L)));
+        ObjectMapper objectMapper = new ObjectMapper();
         try (MongoCursor<Document> cursor = collection.aggregate(tempPipeline).iterator()) {
-            if (cursor.hasNext()) {
-                Document wordDoc = cursor.next();
-                Word word = new Word();
-                word.setWordTarget(wordTarget);
-                ObjectMapper objectMapper = new ObjectMapper();
-                word.setDescription(objectMapper.convertValue(wordDoc.get(wordTarget, Document.class), Word.Description.class));
-                if (word.getDescription() != null) {
-                    return word;
-                }
-                else {
-                    Logger.warn("Fail to fetch word's description.");
-                }
-            }
-            else {
-                Logger.warn("Query return null.");
-            }
+            if (!cursor.hasNext()) throw new Exception("Query return null.");
+            Document wordDoc = cursor.next();
+            if (wordDoc.isEmpty()) throw new Exception("Query return empty.");
+            Word word = new Word(wordTarget, objectMapper.convertValue(wordDoc.get(wordTarget, Document.class), Word.Description.class));
+            if (word.getDescription() == null) throw new Exception("Fail to fetch word's description.");
+            return word;
         } catch (Exception e) {
             Logger.error(e.getMessage());
         }
