@@ -3,6 +3,7 @@ package com.zeus.App.Controller;
 import com.zeus.App.SearchManager;
 import com.zeus.utils.clock.Clock;
 import com.zeus.utils.file.FileManager;
+import com.zeus.utils.log.Logger;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ObservableValue;
@@ -23,9 +24,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.apache.commons.logging.Log;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,6 +42,9 @@ public class Menu implements Initializable {
 
     @FXML
     private Button menuButton;
+
+    @FXML
+    private Button audio;
 
     @FXML
     private AnchorPane slider;
@@ -83,13 +89,15 @@ public class Menu implements Initializable {
     SearchManager sm = new SearchManager();
     private List<String> temp = new ArrayList<>();
     boolean canContinue = true;
+    MediaPlayer mediaPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadData();
         sideNavSlide();
         searchWord();
-        System.out.println("finish");
+        Logger.info("finish");
+        audio.setOnMouseClicked(event -> mediaPlayer.play());
     }
 
     public void OpenWordCard(ActionEvent event){
@@ -144,7 +152,7 @@ public class Menu implements Initializable {
 
     public void searchWord(){
         resultDisplay.setVisible(false);
-        System.out.println("called");
+        Logger.info("called");
         if(WordViewVisible){
             resultDisplay.setLayoutY(64);
         }
