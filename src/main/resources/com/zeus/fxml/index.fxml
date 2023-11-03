@@ -164,7 +164,7 @@
                                     <children>
                                         <HBox alignment="CENTER" prefHeight="33.0" prefWidth="330.0" spacing="10.0">
                                             <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="343.736697435379">
+                                                <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="343.736697435379">
                                                     <font>
                                                         <Font name="Corbel" size="18.0" />
                                                     </font>
@@ -206,7 +206,7 @@
                                     <Font size="14.0" />
                                  </font>
                                         </Label>
-                              <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="437.0" style="-fx-background-color: white;" styleClass="tab-bar-hbox" stylesheets="@../css/index.css">
+                              <HBox fx:id="typeContainer" alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="437.0" style="-fx-background-color: white;" styleClass="tab-bar-hbox" stylesheets="@../css/index.css">
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>
@@ -246,7 +246,7 @@
                                     <Insets left="5.0" right="5.0" top="5.0" />
                                  </padding>
                                  <content>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Display 1..." wrappingWidth="419.73677825927734">
+                                    <Text fx:id="explainDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Display 1..." wrappingWidth="419.73677825927734">
                                        <font>
                                           <Font size="16.0" />
                                        </font>
@@ -302,7 +302,7 @@
                 </VBox>
             </children>
         </AnchorPane>
-      <VBox fx:id="resultDisplay" layoutX="182.0" layoutY="208.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css">
+      <VBox fx:id="resultDisplay" layoutX="182.0" layoutY="208.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css" visible="false">
          <children>
             <Label prefHeight="20.0" prefWidth="411.0" style="-fx-background-color: gray;" styleClass="label-style" stylesheets="@../css/index.css" text="Label">
                <font>
