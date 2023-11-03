@@ -21,7 +21,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -65,6 +67,10 @@ public class Menu implements Initializable {
     @FXML
     private TextField searchBar2 = new TextField();
     TextField tempSearchBar = new TextField();
+    @FXML
+    private HBox typeContainer;
+    @FXML
+    private Text explainDisplay;
 
     @FXML
     VBox resultDisplay = new VBox();
@@ -140,7 +146,7 @@ public class Menu implements Initializable {
         resultDisplay.setVisible(false);
         System.out.println("called");
         if(WordViewVisible){
-            resultDisplay.setLayoutY(126);
+            resultDisplay.setLayoutY(64);
         }
         else{
             resultDisplay.setLayoutY(208);
@@ -155,6 +161,10 @@ public class Menu implements Initializable {
             } else {
                 resultDisplay.setVisible(false);
             }
+            if((keyEvent.getTarget() instanceof TextField)){
+                searchBar.requestFocus();
+            }
+            System.out.println(keyEvent.getTarget());
         });
     }
 

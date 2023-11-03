@@ -46,7 +46,7 @@
 
 .label-style{
     -fx-font-size: 14px;
-    -fx-pref-width: 350;
+    -fx-pref-width: 412;
     -fx-background-radius: 5;
     -fx-padding: 0 0 0 5;
 }
@@ -60,4 +60,32 @@
 .label-style:hover{
     -fx-background-color: rgb(185, 180, 199);
     -fx-cursor: hand;
+}
+
+.tab-bar-hbox{
+
+}
+
+.tab-label{
+    -fx-border-color: rgb(142, 143, 250);
+    -fx-background-color: rgb(142, 143, 250);
+    -fx-text-fill: white;
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-radius: 5 5 0 0;
+    -fx-border-width: 2 2 0 2;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Corbel';
+}
+
+.unchoose-table-label{
+    -fx-border-color: rgb(142, 143, 250);
+    -fx-background-color: white;
+    -fx-text-fill: rgb(142, 143, 250);
+    -fx-background-radius: 5 5 0 0;
+    -fx-border-radius: 5 5 0 0;
+    -fx-border-width: 2 2 0 2;
+     -fx-font-size: 17px;
+     -fx-font-weight: bold;
+     -fx-font-family: 'Corbel';
 }

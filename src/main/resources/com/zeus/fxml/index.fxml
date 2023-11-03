@@ -64,7 +64,7 @@
                 </Separator>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="menuCard" layoutX="201.0" layoutY="106.0" prefHeight="194.0" prefWidth="385.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css" AnchorPane.bottomAnchor="192.39999999999998" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="200.5999999999999" AnchorPane.topAnchor="106.0">
+        <AnchorPane fx:id="menuCard" layoutX="170.4" layoutY="106.0" prefHeight="194.0" prefWidth="446.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css" AnchorPane.bottomAnchor="192.0" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="171.0" AnchorPane.topAnchor="106.0">
             <children>
                 <VBox layoutX="49.0" layoutY="58.4" prefHeight="308.0" prefWidth="329.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
@@ -94,7 +94,7 @@
                                         <Insets />
                                     </opaqueInsets>
                                     <children>
-                                        <TextField fx:id="searchBar" prefHeight="36.0" prefWidth="329.0" promptText="Type a word here..." styleClass="transparent-template" stylesheets="@../css/application.css">
+                                        <TextField fx:id="searchBar" prefHeight="31.0" prefWidth="384.0" promptText="Type a word here..." styleClass="transparent-template" stylesheets="@../css/application.css">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
@@ -116,7 +116,7 @@
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                             <children>
-                                <Text fill="#b1a9a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Type a word to get meaning, example, pronunciation, and synonyms of that typed word." wrappingWidth="364.79999999999995" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                <Text fill="#b1a9a9" strokeType="OUTSIDE" strokeWidth="0.0" text="Type a word to get meaning, example, pronunciation, and synonyms of that typed word." wrappingWidth="424.79999999999995" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                                     <font>
                                         <Font name="Corbel" size="16.0" />
                                     </font>
@@ -127,29 +127,10 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="wordCard" layoutX="304.0" layoutY="15.0" prefHeight="462.0" prefWidth="281.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="15.0">
+        <AnchorPane fx:id="wordCard" layoutX="170.0" layoutY="11.0" prefHeight="470.0" prefWidth="447.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css" visible="false" AnchorPane.bottomAnchor="11.399999999999977" AnchorPane.leftAnchor="170.0" AnchorPane.rightAnchor="170.0" AnchorPane.topAnchor="11.0">
             <children>
                 <VBox layoutX="49.0" layoutY="58.4" prefHeight="308.0" prefWidth="329.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <AnchorPane prefHeight="58.0" prefWidth="329.0">
-                            <children>
-                                <Label alignment="CENTER" layoutX="136.0" layoutY="-8.8" prefHeight="67.0" prefWidth="330.0" text="CUBIC DICTIONARY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                    <graphic>
-                                        <ImageView fitHeight="39.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
-                                            <image>
-                                                <Image url="@../icon/icon.png" />
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <font>
-                                        <Font name="Dubai Medium" size="24.0" />
-                                    </font>
-                                    <padding>
-                                        <Insets top="10.0" />
-                                    </padding>
-                                </Label>
-                            </children>
-                        </AnchorPane>
                         <AnchorPane prefHeight="53.0" prefWidth="329.0">
                             <children>
                                 <HBox alignment="CENTER" layoutX="11.0" layoutY="31.0" prefHeight="41.0" prefWidth="308.0" styleClass="search-container" stylesheets="@../css/application.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
@@ -157,7 +138,7 @@
                                         <Insets />
                                     </opaqueInsets>
                                     <children>
-                                        <TextField fx:id="searchBar2" prefHeight="36.0" prefWidth="329.0" promptText="Type a word here..." styleClass="transparent-template" stylesheets="@../css/application.css">
+                                        <TextField fx:id="searchBar2" prefHeight="36.0" prefWidth="383.0" promptText="Type a word here..." styleClass="transparent-template" stylesheets="@../css/application.css">
                                             <font>
                                                 <Font size="15.0" />
                                             </font>
@@ -177,13 +158,13 @@
                                 <Insets top="10.0" />
                             </VBox.margin>
                         </AnchorPane>
-                        <AnchorPane prefHeight="339.0" prefWidth="330.0" style="-fx-background-radius: 10;">
+                        <AnchorPane prefHeight="405.0" prefWidth="446.0" style="-fx-background-radius: 10;">
                             <children>
-                                <VBox layoutX="108.0" layoutY="-61.0" prefHeight="338.0" prefWidth="330.0" style="-fx-background-radius: 10;" AnchorPane.bottomAnchor="-12.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <VBox layoutX="108.0" layoutY="-61.0" prefHeight="398.0" prefWidth="446.0" style="-fx-background-radius: 10;" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <children>
                                         <HBox alignment="CENTER" prefHeight="33.0" prefWidth="330.0" spacing="10.0">
                                             <children>
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="282.9367082118988">
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="343.736697435379">
                                                     <font>
                                                         <Font name="Corbel" size="18.0" />
                                                     </font>
@@ -221,128 +202,56 @@
                                             <padding>
                                                 <Insets left="15.0" />
                                             </padding>
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
                                         </Label>
-                                        <ScrollPane prefHeight="284.0" prefWidth="385.0">
+                              <HBox alignment="BOTTOM_RIGHT" prefHeight="100.0" prefWidth="437.0" style="-fx-background-color: white;" styleClass="tab-bar-hbox" stylesheets="@../css/index.css">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="33.0" prefWidth="62.0" styleClass="unchoose-table-label" stylesheets="@../css/index.css" text="Type">
+                                       <font>
+                                          <Font name="Corbel Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="33.0" prefWidth="62.0" styleClass="tab-label" stylesheets="@../css/index.css" text="Type">
+                                       <font>
+                                          <Font name="Corbel Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="33.0" prefWidth="62.0" styleClass="unchoose-table-label" stylesheets="@../css/index.css" text="Type">
+                                       <font>
+                                          <Font name="Corbel Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="33.0" prefWidth="62.0" styleClass="unchoose-table-label" stylesheets="@../css/index.css" text="Type">
+                                       <font>
+                                          <Font name="Corbel Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                    <Label alignment="CENTER" prefHeight="33.0" prefWidth="62.0" styleClass="unchoose-table-label" stylesheets="@../css/index.css" text="Type">
+                                       <font>
+                                          <Font name="Corbel Bold" size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                                        <ScrollPane prefHeight="399.0" prefWidth="437.0">
                                             <VBox.margin>
                                                 <Insets left="5.0" right="5.0" />
                                             </VBox.margin>
-                                            <content>
-                                                <VBox prefHeight="328.0" prefWidth="370.0" spacing="5.0">
-                                                    <children>
-                                                        <AnchorPane prefHeight="99.0" prefWidth="367.0" styleClass="explain-card-template" stylesheets="@../css/application.css">
-                                                            <children>
-                                                                <VBox layoutX="130.0" layoutY="-50.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                    <children>
-                                                                        <Label alignment="CENTER" style="-fx-text-fill: white;" styleClass="type-css" stylesheets="@../css/application.css" text="Type" textFill="WHITE">
-                                                                            <VBox.margin>
-                                                                                <Insets left="2.0" top="2.0" />
-                                                                            </VBox.margin>
-                                                                            <font>
-                                                                                <Font name="System Bold" size="12.0" />
-                                                                            </font>
-                                                                            <padding>
-                                                                                <Insets left="5.0" right="5.0" />
-                                                                            </padding>
-                                                                        </Label>
-                                                                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                                                                            <content>
-                                                                                <VBox prefHeight="70.0" prefWidth="348.0">
-                                                                                    <children>
-                                                                                        <Text fill="#767373" strokeType="OUTSIDE" strokeWidth="0.0" text="Everything will be display here..." wrappingWidth="342.1367244720459">
-                                                                                            <VBox.margin>
-                                                                                                <Insets left="5.0" />
-                                                                                            </VBox.margin>
-                                                                                            <font>
-                                                                                                <Font size="13.0" />
-                                                                                            </font>
-                                                                                        </Text>
-                                                                                    </children>
-                                                                                </VBox>
-                                                                            </content>
-                                                                        </ScrollPane>
-                                                                    </children>
-                                                                </VBox>
-                                                            </children>
-                                                            <VBox.margin>
-                                                                <Insets />
-                                                            </VBox.margin>
-                                                        </AnchorPane>
-                                                        <AnchorPane prefHeight="99.0" prefWidth="367.0" styleClass="explain-card-template" stylesheets="@../css/application.css">
-                                                            <children>
-                                                                <VBox layoutX="130.0" layoutY="-50.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                    <children>
-                                                                        <Label alignment="CENTER" style="-fx-text-fill: white;" styleClass="type-css" stylesheets="@../css/application.css" text="Type" textFill="WHITE">
-                                                                            <VBox.margin>
-                                                                                <Insets left="2.0" top="2.0" />
-                                                                            </VBox.margin>
-                                                                            <font>
-                                                                                <Font name="System Bold" size="12.0" />
-                                                                            </font>
-                                                                            <padding>
-                                                                                <Insets left="5.0" right="5.0" />
-                                                                            </padding>
-                                                                        </Label>
-                                                                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                                                                            <content>
-                                                                                <VBox prefHeight="70.0" prefWidth="348.0">
-                                                                                    <children>
-                                                                                        <Text fill="#767373" strokeType="OUTSIDE" strokeWidth="0.0" text="Everything will be display here..." wrappingWidth="342.1367244720459">
-                                                                                            <VBox.margin>
-                                                                                                <Insets left="5.0" />
-                                                                                            </VBox.margin>
-                                                                                            <font>
-                                                                                                <Font size="13.0" />
-                                                                                            </font>
-                                                                                        </Text>
-                                                                                    </children>
-                                                                                </VBox>
-                                                                            </content>
-                                                                        </ScrollPane>
-                                                                    </children>
-                                                                </VBox>
-                                                            </children>
-                                                        </AnchorPane>
-                                                        <AnchorPane prefHeight="99.0" prefWidth="359.0" styleClass="explain-card-template" stylesheets="@../css/application.css">
-                                                            <children>
-                                                                <VBox layoutX="130.0" layoutY="-50.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                                    <children>
-                                                                        <Label alignment="CENTER" style="-fx-text-fill: white;" styleClass="type-css" stylesheets="@../css/application.css" text="Type" textFill="WHITE">
-                                                                            <VBox.margin>
-                                                                                <Insets left="2.0" top="2.0" />
-                                                                            </VBox.margin>
-                                                                            <font>
-                                                                                <Font name="System Bold" size="12.0" />
-                                                                            </font>
-                                                                            <padding>
-                                                                                <Insets left="5.0" right="5.0" />
-                                                                            </padding>
-                                                                        </Label>
-                                                                        <ScrollPane prefHeight="200.0" prefWidth="200.0">
-                                                                            <content>
-                                                                                <VBox prefHeight="70.0" prefWidth="348.0">
-                                                                                    <children>
-                                                                                        <Text fill="#767373" strokeType="OUTSIDE" strokeWidth="0.0" text="Everything will be display here..." wrappingWidth="342.1367244720459">
-                                                                                            <VBox.margin>
-                                                                                                <Insets left="5.0" />
-                                                                                            </VBox.margin>
-                                                                                            <font>
-                                                                                                <Font size="13.0" />
-                                                                                            </font>
-                                                                                        </Text>
-                                                                                    </children>
-                                                                                </VBox>
-                                                                            </content>
-                                                                        </ScrollPane>
-                                                                    </children>
-                                                                </VBox>
-                                                            </children>
-                                                        </AnchorPane>
-                                                    </children>
-                                                    <padding>
-                                                        <Insets left="6.0" right="5.0" top="5.0" />
-                                                    </padding>
-                                                </VBox>
-                                            </content>
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <content>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Display 1..." wrappingWidth="419.73677825927734">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Text>
+                                 </content>
                                         </ScrollPane>
                                     </children>
                                 </VBox>
@@ -350,11 +259,6 @@
                         </AnchorPane>
                     </children>
                 </VBox>
-            </children>
-        </AnchorPane>
-        <AnchorPane layoutX="283.0" layoutY="-72.0" prefHeight="36.0" prefWidth="787.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <HBox layoutX="130.0" layoutY="-36.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="-6.0" layoutY="48.0" prefHeight="298.0" prefWidth="49.0" style="-fx-background-color: rgb(142, 143, 250);" stylesheets="@../css/index.css">
@@ -398,9 +302,9 @@
                 </VBox>
             </children>
         </AnchorPane>
-      <VBox fx:id="resultDisplay" layoutX="212.0" layoutY="208.0" prefHeight="36.0" prefWidth="364.0" styleClass="result_display" stylesheets="@../css/index.css" visible="false">
+      <VBox fx:id="resultDisplay" layoutX="182.0" layoutY="208.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css">
          <children>
-            <Label prefHeight="20.0" prefWidth="350.0" style="-fx-background-color: gray;" styleClass="label-style" stylesheets="@../css/index.css" text="Label">
+            <Label prefHeight="20.0" prefWidth="411.0" style="-fx-background-color: gray;" styleClass="label-style" stylesheets="@../css/index.css" text="Label">
                <font>
                   <Font size="14.0" />
                </font></Label>
