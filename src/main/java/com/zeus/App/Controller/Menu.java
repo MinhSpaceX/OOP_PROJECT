@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
+import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.clock.Clock;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
@@ -174,7 +175,7 @@ public class Menu implements Initializable {
     }
 
     private void filterData(String input){
-        temp = sm.searchFilter(input).stream().distinct().collect(Collectors.toList());;
+        temp = sm.searchFilter(input).stream().distinct().collect(Collectors.toList());
         if(temp.isEmpty()){
             Label label = new Label("Hmm...what word is this?");
             label.getStyleClass().add("not-found-style");
@@ -199,6 +200,7 @@ public class Menu implements Initializable {
         WordViewVisible = true;
         tempSearchBar = searchBar;
         searchBar = searchBar2;
+        mediaPlayer = APIHandler.getAudio(label.getText());
         setToDefault();
         searchWord();
     }

@@ -30,8 +30,8 @@ public class SearchManager {
         return searchPath.autoFill(input, 7, 1);
     }
 
-    public Map<String, List<SingleWord>> print(String wordtarget) {
-        Word word = mgp.fetchWord(wordtarget);
+    public Map<String, List<SingleWord>> print(String wordTarget) {
+        Word word = mgp.fetchWord(wordTarget);
         WordFactory wordFactory = new WordFactory(word);
         return wordFactory.getSingleWordMap();
     }
