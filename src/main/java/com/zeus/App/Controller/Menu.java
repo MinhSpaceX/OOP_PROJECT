@@ -218,6 +218,7 @@ public class Menu implements Initializable {
             setToDefault();
             searchWord();
         }
+        mediaPlayer = APIHandler.getAudio(label.getText());
     }
 
     /**
