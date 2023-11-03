@@ -1,7 +1,6 @@
 package com.zeus.App;
 
 import com.zeus.DatabaseManager.MongoPanel;
-import com.zeus.DictionaryManager.WordFactory;
 import com.zeus.utils.trie.Trie;
 import com.zeus.System.System;
 import java.util.List;
