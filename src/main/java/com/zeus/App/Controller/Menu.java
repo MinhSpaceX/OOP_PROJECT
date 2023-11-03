@@ -2,6 +2,7 @@ package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
 import com.zeus.utils.api.APIHandler;
+import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.clock.Clock;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
@@ -10,6 +11,7 @@ import javafx.animation.TranslateTransition;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -96,7 +98,7 @@ public class Menu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadData();
+        BackgroundTask.perform(this::loadData);
         sideNavSlide();
         searchWord();
         Logger.info("finish");
@@ -175,7 +177,6 @@ public class Menu implements Initializable {
             if((keyEvent.getTarget() instanceof TextField)){
                 searchBar.requestFocus();
             }
-            System.out.println(keyEvent.getTarget());
         });
     }
 
@@ -203,6 +204,7 @@ public class Menu implements Initializable {
     }
 
     public void displayLabelContent(Label label){
+        BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         if(!WordViewVisible) {
             wordTargetDisplay.setText(label.getText());
             wordCard.setVisible(true);
@@ -218,7 +220,6 @@ public class Menu implements Initializable {
             setToDefault();
             searchWord();
         }
-        mediaPlayer = APIHandler.getAudio(label.getText());
     }
 
     /**
