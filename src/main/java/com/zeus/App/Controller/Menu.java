@@ -91,14 +91,12 @@ public class Menu implements Initializable {
     boolean findWord = false;
     private  Parent root;
     private Stage stage;
-    SearchManager sm = new SearchManager();
     private List<String> temp = new ArrayList<>();
     boolean canContinue = true;
     MediaPlayer mediaPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        BackgroundTask.perform(this::loadData);
         sideNavSlide();
         searchWord();
         Logger.info("finish");
@@ -163,11 +161,6 @@ public class Menu implements Initializable {
         });
     }
 
-    public void loadData(){
-        System.out.println("LOADING DATABASE");
-        Clock.timer(() -> sm.loadDataFromBase());
-    }
-
     public void searchWord(){
         resultDisplay.setVisible(false);
         Logger.info("called");
@@ -198,7 +191,7 @@ public class Menu implements Initializable {
     }
 
     private void filterData(String input){
-        temp = sm.searchFilter(input).stream().distinct().collect(Collectors.toList());
+        temp = SearchManager.searchFilter(input).stream().distinct().collect(Collectors.toList());
         if(temp.isEmpty()){
             Label label = new Label("Hmm...what word is this?");
             label.getStyleClass().add("not-found-style");

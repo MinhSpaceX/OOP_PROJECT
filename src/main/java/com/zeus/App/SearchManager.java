@@ -1,32 +1,29 @@
 package com.zeus.App;
 
-import com.zeus.DatabaseManager.MongoPanel;
+import com.zeus.DatabaseManager.MongoManager;
 import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.DictionaryManager.WordFactory;
-import com.zeus.utils.trie.Trie;
 import com.zeus.System.System;
+import com.zeus.utils.config.Config;
+import com.zeus.utils.log.Logger;
+import com.zeus.utils.managerfactory.Manager;
+import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.utils.trie.Trie;
+import org.apache.commons.logging.Log;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SearchManager {
+public class SearchManager extends Manager {
 
-    private MongoPanel mgp = null;
-    private Trie searchPath = null;
-
-    public void loadDataFromBase(){
-        mgp = System.getMongoPanel();
-        mgp.fetchDatafromBase();
-        searchPath = mgp.ReturnTrie();
-    }
+    private MongoManager mgp = null;
+    private static Trie searchPath = null;
 
     /**
      * everytime user type a word to input, call this method
      */
-    public List<String> searchFilter(String input) {
+    public static List<String> searchFilter(String input) {
         return searchPath.autoFill(input, 7, 1);
     }
 
@@ -34,5 +31,17 @@ public class SearchManager {
         Word word = mgp.fetchWord(wordTarget);
         WordFactory wordFactory = new WordFactory(word);
         return wordFactory.getSingleWordMap();
+    }
+
+    @Override
+    public void init(Config config) {
+        mgp = SystemManager.getManager(MongoManager.class);
+        searchPath = mgp.ReturnTrie();
+        if (mgp == null) {
+            Logger.error("MongoManager is null.");
+        }
+        if (searchPath == null) {
+            Logger.error("Trie is null.");
+        }
     }
 }

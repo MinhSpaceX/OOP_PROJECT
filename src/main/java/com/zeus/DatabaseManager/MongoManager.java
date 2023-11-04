@@ -3,8 +3,12 @@ package com.zeus.DatabaseManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.*;
 import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.clock.Clock;
+import com.zeus.utils.config.Config;
 import com.zeus.utils.log.Logger;
+import com.zeus.utils.managerfactory.Manager;
 import com.zeus.utils.trie.Trie;
+import org.apache.commons.logging.Log;
 import org.bson.BsonNull;
 import org.bson.Document;
 
@@ -12,28 +16,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MongoManager {
-    private MongoClient client ;
-    private MongoDatabase database;
+public class MongoManager extends Manager {
     private MongoCollection<Document> collection;
-    private Trie trie = new Trie();
-    List<Document> pipeline = Arrays.asList(
-            new Document("$project", new Document("keys", new Document("$objectToArray", "$$ROOT"))),
-            new Document("$unwind", "$keys"),
-            new Document("$group", new Document("_id", null)
-                    .append("allKeys", new Document("$addToSet", "$keys.k")))
-    );
-
-    public MongoManager(String url){
-        client = MongoClients.create(url);
-        database = client.getDatabase("dictionary_metadata");
-        collection = database.getCollection("dictionary");
-    }
+    private Trie trie = null;
+    List<Document> pipeline = null;
 
     /**
      * take data from base then load to trie
      */
-    public void fetchDatafromBase(){
+    private void fetchDatafromBase(){
         int count = 0;
         MongoCursor<Document> cursor = collection.aggregate(pipeline).iterator();
         if(cursor.hasNext()) {
@@ -43,6 +34,9 @@ public class MongoManager {
                 trie.insert(key);
                 count++;
             }
+        }
+        if (trie == null) {
+            Logger.error("Trie is null after fetch.");
         }
         System.out.println(count);
     }
@@ -67,4 +61,22 @@ public class MongoManager {
         return trie;
     }
 
+    @Override
+    public void init(Config config) {
+        try (MongoClient client = MongoClients.create(config.getProperty("mongodbPath", String.class));
+             ) {
+            MongoDatabase database = client.getDatabase("dictionary_metadata");
+            collection = database.getCollection("dictionary");
+            trie = new Trie();
+            pipeline = Arrays.asList(
+                    new Document("$project", new Document("keys", new Document("$objectToArray", "$$ROOT"))),
+                    new Document("$unwind", "$keys"),
+                    new Document("$group", new Document("_id", null)
+                            .append("allKeys", new Document("$addToSet", "$keys.k")))
+            );
+            Clock.timer(this::fetchDatafromBase);
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
+        }
+    }
 }

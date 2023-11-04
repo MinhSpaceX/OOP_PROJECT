@@ -1,33 +1,29 @@
 package com.zeus.App.Window;
 
-import com.zeus.App.SearchManager;
-import com.zeus.DatabaseManager.MongoPanel;
+import com.sun.javafx.application.LauncherImpl;
+import com.zeus.App.Controller.SplashController;
 import com.zeus.utils.config.Config;
-import com.zeus.App.Controller.Menu;
 import com.zeus.utils.file.FileManager;
 
-import com.zeus.utils.trie.Trie;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import javax.crypto.Cipher;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.util.List;
 
 public class App extends Application {
     private static Config window = null;
-    private SearchManager sm = new SearchManager();
     public static void setWindow(Config config) {
         window = config;
+    }
+
+    @Override
+    public void init() throws Exception {
+        SplashController splashController = new SplashController();
+        splashController.init();
     }
 
     /**
@@ -35,7 +31,7 @@ public class App extends Application {
      * @param args User arguments.
      */
     public static void run(String[] args) {
-        launch(args);
+        LauncherImpl.launchApplication(App.class, SplashScreen.class, args);
     }
 
     /**
