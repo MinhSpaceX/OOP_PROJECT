@@ -47,7 +47,6 @@ public class WordView implements Initializable {
     private List<String> temp = new ArrayList<>();
 
     MediaPlayer mediaPlayer;
-    SearchManager sm = new SearchManager();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +59,7 @@ public class WordView implements Initializable {
     }
 
     private void filterData(String input){
-        temp = sm.searchFilter(input).stream().distinct().collect(Collectors.toList());
+        temp = SearchManager.searchFilter(input).stream().distinct().collect(Collectors.toList());
         if(temp.isEmpty()){
             Label label = new Label("Hmm...what word is this?");
             label.getStyleClass().add("not-found-style");

@@ -3,7 +3,6 @@ package com.zeus.App.Controller;
 import com.zeus.App.SearchManager;
 import com.zeus.ConfigFactory.ConfigFactory;
 import com.zeus.DatabaseManager.MongoManager;
-import com.zeus.System.System;
 import com.zeus.utils.managerfactory.ManagerFactory;
 import com.zeus.utils.managerfactory.SystemManager;
 import javafx.application.Platform;

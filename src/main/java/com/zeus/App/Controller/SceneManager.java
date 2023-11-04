@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -47,6 +49,12 @@ public class SceneManager implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sideNavSlide();
         
+    }
+
+    public static void switchScene(Label label) throws IOException {
+        Scene wordView = new Scene(FileManager.loadFXML("/com/zeus/fxml/WordView.fxml"));
+        ((Stage)label.getScene().getWindow()).setScene(wordView);
+        ((Stage)label.getScene().getWindow()).show();
     }
 
     public void sideNavSlide(){

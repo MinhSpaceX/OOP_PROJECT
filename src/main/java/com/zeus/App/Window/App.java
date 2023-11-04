@@ -3,7 +3,6 @@ package com.zeus.App.Window;
 import com.sun.javafx.application.LauncherImpl;
 import com.zeus.App.Controller.SplashController;
 import com.zeus.App.SearchManager;
-import com.zeus.DatabaseManager.MongoPanel;
 import com.zeus.utils.clock.Clock;
 import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
@@ -11,13 +10,6 @@ import com.zeus.utils.file.FileManager;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,11 +43,10 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FileManager.loadFXML("/com/zeus/fxml/ContainerScene.fxml");
+        Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
         initialize(stage);
-        loadData();
         stage.setScene(scene);
         stage.show();
     }
@@ -66,15 +57,6 @@ public class App extends Application {
      */
     private void initialize(Stage stage) throws FileNotFoundException, UnsupportedEncodingException {
         getConfig(stage);
-    }
-
-    public void loadData(){
-        System.out.println("LOADING DATABASE");
-        Clock.timer(() -> sm.loadDataFromBase());
-    }
-
-    public SearchManager getSearchManager(){
-        return sm;
     }
 
     /**

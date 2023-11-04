@@ -22,6 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,6 @@ public class Menu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sideNavSlide();
         searchWord();
         Logger.info("finish");
         searchBar.setOnKeyPressed(event -> {
@@ -117,9 +117,12 @@ public class Menu implements Initializable {
         }
     }
 
-    public void ChangeToWordView(Label label){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zeus/fxml/index.fxml"));
-
+    public void ChangeToWordView(Label label) {
+        try {
+            SceneManager.switchScene(label);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
