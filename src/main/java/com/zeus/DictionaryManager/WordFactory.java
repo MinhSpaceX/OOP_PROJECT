@@ -33,6 +33,11 @@ public class WordFactory {
                 });
                 words.add(new SingleWord(wordTarget, pronoun, type.getName(), meaning.getExplain(), examples));
             });
+            if(type.getName().equalsIgnoreCase("danh từ")) type.setName("noun");
+            if(type.getName().equalsIgnoreCase("động từ")) type.setName("verb");
+            if(type.getName().equalsIgnoreCase("tính từ")) type.setName("adj");
+            if(type.getName().equalsIgnoreCase("trạng từ")) type.setName("adv");
+            if(type.getName().equalsIgnoreCase("ngoại động từ")) type.setName("transitive verb");
             wordMap.put(type.getName(), words);
         });
         return wordMap;

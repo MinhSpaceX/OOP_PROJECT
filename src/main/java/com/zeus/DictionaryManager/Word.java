@@ -129,6 +129,10 @@ public class Word {
                 return name;
             }
 
+            public void setName(String name) {
+                this.name = name;
+            }
+
             public List<Meaning> getMeanings() {
                 return meanings;
             }
