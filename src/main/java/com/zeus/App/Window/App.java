@@ -1,5 +1,6 @@
-package com.zeus.App;
+package com.zeus.App.Window;
 
+import com.zeus.App.SearchManager;
 import com.zeus.DatabaseManager.MongoPanel;
 import com.zeus.utils.clock.Clock;
 import com.zeus.utils.config.Config;
@@ -77,7 +78,7 @@ public class App extends Application {
      * Get configs from JSON config file.
      * @param stage The main stage.
      */
-    private void getConfig(Stage stage) throws FileNotFoundException, UnsupportedEncodingException {
+    static void getConfig(Stage stage) throws FileNotFoundException, UnsupportedEncodingException {
         //Create a config from the target string to get config from config.json then extract properties
         String title = window.getProperty("title", String.class);
         String iconPath = window.getProperty("iconPath", String.class);

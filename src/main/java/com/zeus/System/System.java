@@ -1,6 +1,6 @@
 package com.zeus.System;
 
-import com.zeus.App.App;
+import com.zeus.App.Window.App;
 import com.zeus.ConfigFactory.ConfigFactory;
 import com.zeus.DatabaseManager.MongoPanel;
 import com.zeus.utils.file.FileManager;
