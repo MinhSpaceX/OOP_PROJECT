@@ -66,7 +66,7 @@ public class MongoManager extends Manager {
     @Override
     public void init(Config config) {
         try {
-            MongoClients.create(config.getProperty("mongodbPath", String.class));
+            client = MongoClients.create(config.getProperty("mongodbPath", String.class));
             database = client.getDatabase("dictionary_metadata");
             collection = database.getCollection("dictionary");
             trie = new Trie();
