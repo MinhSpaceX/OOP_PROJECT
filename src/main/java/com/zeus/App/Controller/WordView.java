@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
+import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.log.Logger;
@@ -19,6 +20,7 @@ import javafx.scene.text.Text;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -43,6 +45,8 @@ public class WordView implements Initializable {
 
     @FXML
     VBox resultDisplay2 = new VBox();
+
+    Map<String, List<SingleWord>> result;
 
     private List<String> temp = new ArrayList<>();
 
@@ -135,8 +139,12 @@ public class WordView implements Initializable {
     public void displayLabelContent(Label label){
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
+        /**
+         * lỗi ở dòng 145
+         */
+        result = SearchManager.getWordInstance(label.getText());
+        //explainDisplay.setText("hi");
         setToDefault();
         searchWord();
     }
-
 }

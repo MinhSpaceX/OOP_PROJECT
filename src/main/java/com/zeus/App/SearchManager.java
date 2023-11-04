@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class SearchManager extends Manager {
 
-    private MongoManager mgp = null;
+    private static MongoManager mgp = null;
     private static Trie searchPath = null;
 
     /**
@@ -27,7 +27,7 @@ public class SearchManager extends Manager {
         return searchPath.autoFill(input, 7, 1);
     }
 
-    public Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
+    public static Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
         Word word = mgp.fetchWord(wordTarget);
         WordFactory wordFactory = new WordFactory(word);
         return wordFactory.getSingleWordMap();

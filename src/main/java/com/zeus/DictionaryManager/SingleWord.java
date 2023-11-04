@@ -60,4 +60,12 @@ public class SingleWord {
     public void setExamples(List<Pair<String, String>> examples) {
         this.examples = examples;
     }
+
+    public String toString() {
+        String result = meaning + "\n";
+        for (Pair<String, String> example : examples) {
+            result += example.getKey() + ":" + example.getValue() + "\n";
+        }
+        return result;
+    }
 }
