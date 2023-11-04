@@ -48,7 +48,6 @@ public class SceneManager implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sideNavSlide();
-        
     }
 
     public static void switchScene(Label label) throws IOException {

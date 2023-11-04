@@ -1,12 +1,14 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
+import com.zeus.DatabaseManager.MongoManager;
 import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.log.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.LightBase;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -16,12 +18,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.util.Pair;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class WordView implements Initializable {
@@ -41,16 +41,20 @@ public class WordView implements Initializable {
     private HBox typeContainer;
 
     @FXML
-    private Text explainDisplay;
+    private Text meaningDisplay;
 
     @FXML
     VBox resultDisplay2 = new VBox();
+
+    @FXML
+    Label pronounDisplay;
 
     Map<String, List<SingleWord>> result;
 
     private List<String> temp = new ArrayList<>();
 
     private static Label menuLabel;
+    private Map<String, Boolean> getClickCss = new HashMap<>();
 
     public static void setMenuLabel(Label label) {
         menuLabel = label;
@@ -137,11 +141,55 @@ public class WordView implements Initializable {
     }
 
     public void displayLabelContent(Label label){
+        typeContainer.getChildren().clear();
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
-        //explainDisplay.setText("hi");
+        boolean getFirst = true;
+        for(var i : result.keySet()){
+            Label temp = new Label(i);
+            if(getFirst) {
+                temp.getStyleClass().add("tab-label");
+                DisplayMeaning(temp.getText());
+                getClickCss.put(temp.getText(), true);
+                getFirst = false;
+            }
+            else{
+                temp.getStyleClass().add("unchoose-tab-label");
+                getClickCss.put(temp.getText(), false);
+            }
+            temp.setOnMouseClicked(e -> DisplayMeaning(temp.getText()));
+            typeContainer.getChildren().add(temp);
+        }
         setToDefault();
         searchWord();
     }
+
+    public void DisplayMeaning(String type){
+        int count = 0;
+        getClickCss.put(type, true);
+        for (javafx.scene.Node node : typeContainer.getChildren()) {
+            if (node instanceof Label) {
+                Label temp = (Label) node;
+                if (temp.getText().equals(type)) {
+                    temp.getStyleClass().remove("unchoose-tab-label");
+                    temp.getStyleClass().add("tab-label");
+                } else {
+                    if(temp.getStyleClass().contains("tab-label")) {
+                        temp.getStyleClass().remove("tab-label");
+                        temp.getStyleClass().add("unchoose-tab-label");
+                    }
+                }
+            }
+        }
+        StringBuilder str = new StringBuilder();
+        meaningDisplay.setText("");
+        pronounDisplay.setText("");
+        pronounDisplay.setText("/" + result.get(type).get(0).getPronoun() + "/");
+        for(var i : result.get(type)) {
+            str.append(i.toString());
+        }
+        meaningDisplay.setText(str.toString());
+    }
+
 }

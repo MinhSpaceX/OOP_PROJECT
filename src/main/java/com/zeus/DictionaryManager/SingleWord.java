@@ -62,10 +62,14 @@ public class SingleWord {
     }
 
     public String toString() {
-        String result = meaning + "\n";
+        StringBuilder result = new StringBuilder();
+        result.append("- ").append(getMeaning()).append("\n");
         for (Pair<String, String> example : examples) {
-            result += example.getKey() + ":" + example.getValue() + "\n";
+            result.append("Ex: " + example.getKey())
+                    .append(": ")
+                    .append(example.getValue())
+                    .append("\n");
         }
-        return result;
+        return result.toString();
     }
 }
