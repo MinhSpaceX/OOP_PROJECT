@@ -1,6 +1,7 @@
 package com.zeus.App;
 
 import com.zeus.DatabaseManager.MongoPanel;
+import com.zeus.utils.clock.Clock;
 import com.zeus.utils.config.Config;
 import com.zeus.App.Controller.Menu;
 import com.zeus.utils.file.FileManager;
@@ -8,10 +9,12 @@ import com.zeus.utils.file.FileManager;
 import com.zeus.utils.trie.Trie;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import javax.crypto.Cipher;
@@ -44,22 +47,11 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
+        Parent root = FileManager.loadFXML("/com/zeus/fxml/ContainerScene.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
-        //loadDataFromBase();
-        //List<String> list = searchPath.autoFill("co", 5, 5);
-        /*scene.setOnKeyPressed(event -> {
-            // Get the currently focused node
-            javafx.scene.Node focusedNode = scene.getFocusOwner();
-
-            if (focusedNode != null) {
-                System.out.println("Currently focused node: " + focusedNode);
-            } else {
-                System.out.println("No node currently focused.");
-            }
-        });*/
         initialize(stage);
+        loadData();
         stage.setScene(scene);
         stage.show();
     }
@@ -70,6 +62,15 @@ public class App extends Application {
      */
     private void initialize(Stage stage) throws FileNotFoundException, UnsupportedEncodingException {
         getConfig(stage);
+    }
+
+    public void loadData(){
+        System.out.println("LOADING DATABASE");
+        Clock.timer(() -> sm.loadDataFromBase());
+    }
+
+    public SearchManager getSearchManager(){
+        return sm;
     }
 
     /**

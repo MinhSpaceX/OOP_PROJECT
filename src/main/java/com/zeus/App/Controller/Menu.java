@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
+import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.clock.Clock;
@@ -16,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -35,86 +37,31 @@ import org.apache.commons.logging.Log;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Menu implements Initializable {
 
     @FXML
-    private Button menuButton;
-
-    @FXML
-    private Button audio;
-
-    @FXML
-    private AnchorPane slider;
-
-    @FXML
-    private FontAwesomeIconView menuIcon;
-    @FXML
-    private FontAwesomeIconView searchIcon;
-    @FXML
-    private FontAwesomeIconView translateIcon;
-    @FXML
-    private FontAwesomeIconView gameIcon;
-
-    @FXML
-    private FontAwesomeIconView heartIcon;
-
-    @FXML
-    private FontAwesomeIconView historyIcon;
-
-    @FXML
-    private AnchorPane wordCard;
-    @FXML
-    private AnchorPane menuCard;
-    @FXML
     private TextField searchBar = new TextField();
-    @FXML
-    private TextField searchBar2 = new TextField();
-    TextField tempSearchBar = new TextField();
-    @FXML
-    private HBox typeContainer;
-    @FXML
-    private Text explainDisplay;
-    @FXML
-    private Text wordTargetDisplay;
 
     @FXML
     VBox resultDisplay = new VBox();
 
-    boolean MenuVisible = false;
     boolean WordViewVisible = false;
-    boolean findWord = false;
     private  Parent root;
     private Stage stage;
     SearchManager sm = new SearchManager();
     private List<String> temp = new ArrayList<>();
-    boolean canContinue = true;
-    MediaPlayer mediaPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         BackgroundTask.perform(this::loadData);
-        sideNavSlide();
         searchWord();
         Logger.info("finish");
         searchBar.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.DOWN) {
                 resultDisplay.getChildren().get(0).requestFocus();
-            }
-        });
-        audio.setOnMouseClicked(event -> {
-            try {
-                if (mediaPlayer == null) throw new NullPointerException("Media is null, change word or add data.");
-                mediaPlayer.pause();
-                mediaPlayer.seek(mediaPlayer.getStartTime());
-                mediaPlayer.play();
-            } catch (Exception e) {
-                Logger.error(e.getMessage());
             }
         });
         resultDisplay.setOnKeyPressed(event -> {
@@ -128,39 +75,7 @@ public class Menu implements Initializable {
     }
 
     public void OpenWordCard(ActionEvent event){
-        if(WordViewVisible) {
-            wordCard.setVisible(false);
-            menuCard.setVisible(true);
-            WordViewVisible = false;
-            searchBar = tempSearchBar;
-            setToDefault();
-            searchWord();
-        }
-    }
 
-    public void sideNavSlide(){
-        slider.setTranslateX(-170);
-        menuCard.setVisible(true);
-        wordCard.setVisible(false);
-        DenyIcon();
-        menuButton.setOnMouseClicked(event -> {
-            TranslateTransition slide = new TranslateTransition();
-            slide.setDuration(Duration.seconds(0.4));
-
-            slide.setNode(slider);
-
-            if(MenuVisible) {
-                menuButton.setStyle("-fx-background-color: rgb(119, 82, 254)");
-                slide.setToX(-170);
-                MenuVisible = false;
-            }
-            else{
-                menuButton.setStyle("-fx-background-color: rgb(142, 143, 250)");
-                slide.setToX(0);
-                MenuVisible = true;
-            }
-            slide.play();
-        });
     }
 
     public void loadData(){
@@ -211,43 +126,17 @@ public class Menu implements Initializable {
         for(var i : temp){
             Label label = new Label(i);
             label.getStyleClass().add("label-style");
-            label.setOnMouseClicked(e -> displayLabelContent(label));
+            label.setOnMouseClicked(e -> ChangeToWordView(label));
             label.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.ENTER) displayLabelContent(label);
+                if (event.getCode() == KeyCode.ENTER) ChangeToWordView(label);
             });
             resultDisplay.getChildren().add(label);
         }
     }
 
-    public void displayLabelContent(Label label){
-        BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
-        if(!WordViewVisible) {
-            wordTargetDisplay.setText(label.getText());
-            wordCard.setVisible(true);
-            menuCard.setVisible(false);
-            WordViewVisible = true;
-            setToDefault();
-            tempSearchBar = searchBar;
-            searchBar = searchBar2;
-            searchWord();
-        }
-        if(WordViewVisible){
-            wordTargetDisplay.setText(label.getText());
-            setToDefault();
-            searchWord();
-        }
-    }
+    public void ChangeToWordView(Label label){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/zeus/fxml/index.fxml"));
 
-    /**
-     * Prevent icon from blocking user clicking the button
-     */
-    public void DenyIcon(){
-        menuIcon.setMouseTransparent(true);
-        searchIcon.setMouseTransparent(true);
-        translateIcon.setMouseTransparent(true);
-        gameIcon.setMouseTransparent(true);
-        heartIcon.setMouseTransparent(true);
-        historyIcon.setMouseTransparent(true);
     }
 
 }
