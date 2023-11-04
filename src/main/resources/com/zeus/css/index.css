@@ -62,6 +62,10 @@
     -fx-cursor: hand;
 }
 
+.label-style:focused{
+    -fx-background-color: rgb(185, 180, 199);
+}
+
 .tab-bar-hbox{
 
 }

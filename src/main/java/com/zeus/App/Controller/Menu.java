@@ -102,6 +102,11 @@ public class Menu implements Initializable {
         sideNavSlide();
         searchWord();
         Logger.info("finish");
+        searchBar.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DOWN) {
+                resultDisplay.getChildren().get(0).requestFocus();
+            }
+        });
         audio.setOnMouseClicked(event -> {
             try {
                 if (mediaPlayer == null) throw new NullPointerException("Media is null, change word or add data.");
@@ -110,6 +115,14 @@ public class Menu implements Initializable {
                 mediaPlayer.play();
             } catch (Exception e) {
                 Logger.error(e.getMessage());
+            }
+        });
+        resultDisplay.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.UP) {
+                int currentIndex = resultDisplay.getChildren().indexOf(resultDisplay.getScene().getFocusOwner());
+                int nextIndex = (currentIndex + (event.getCode() == KeyCode.DOWN ? 1 : -1) + resultDisplay.getChildren().size()) % resultDisplay.getChildren().size();
+                resultDisplay.getChildren().get(nextIndex).requestFocus();
+                event.consume();
             }
         });
     }
@@ -199,6 +212,9 @@ public class Menu implements Initializable {
             Label label = new Label(i);
             label.getStyleClass().add("label-style");
             label.setOnMouseClicked(e -> displayLabelContent(label));
+            label.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ENTER) displayLabelContent(label);
+            });
             resultDisplay.getChildren().add(label);
         }
     }

@@ -49,6 +49,16 @@ public class App extends Application {
         scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
         //loadDataFromBase();
         //List<String> list = searchPath.autoFill("co", 5, 5);
+        /*scene.setOnKeyPressed(event -> {
+            // Get the currently focused node
+            javafx.scene.Node focusedNode = scene.getFocusOwner();
+
+            if (focusedNode != null) {
+                System.out.println("Currently focused node: " + focusedNode);
+            } else {
+                System.out.println("No node currently focused.");
+            }
+        });*/
         initialize(stage);
         stage.setScene(scene);
         stage.show();
