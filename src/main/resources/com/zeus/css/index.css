@@ -39,7 +39,8 @@
 .result_display{
     -fx-border-radius: 0 0 5 5;
     -fx-background-radius: 0 0 10 10;
-    -fx-border-width: 0 3 3 3;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-insets: 0 43 0 15;
     -fx-background-color: white;
     -fx-border-color: rgb(119, 82, 254);
 }
@@ -55,15 +56,16 @@
     -fx-font-size: 14px;
     -fx-text-fill: #b1a9a9;
     -fx-background-radius: 5;
+
 }
 
 .label-style:hover{
-    -fx-background-color: rgb(185, 180, 199);
+    -fx-background-color: rgba(172, 165, 204, 0.5);;
     -fx-cursor: hand;
 }
 
 .label-style:focused{
-    -fx-background-color: rgb(185, 180, 199);
+    -fx-background-color: rgba(172, 165, 204, 0.5);;
 }
 
 .tab-bar-hbox{

@@ -1,7 +1,7 @@
 .display-card{
     -fx-background-radius: 10;
     -fx-border: 0;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 20, 0, 9, 10);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 200, 0, 10, 0);
 }
 
 .round-template-inner{
@@ -50,9 +50,11 @@
 }
 
 .search-container{
-    -fx-border-width: 2;
-    -fx-border-radius: 5;
+    -fx-border-image-insets: 0 0 0 0;
+    -fx-padding: 5px;
+    -fx-border-width: 0 0 2 0;
     -fx-border-color: #999;
+
 }
 
 .search-container:focus-within{
