@@ -46,12 +46,32 @@ public class WordView implements Initializable {
 
     private List<String> temp = new ArrayList<>();
 
+    private static Label menuLabel;
+
+    public static void setMenuLabel(Label label) {
+        menuLabel = label;
+    }
+
     MediaPlayer mediaPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         MediaHandler();
         searchWord();
+        searchBar2.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DOWN) {
+                resultDisplay2.getChildren().get(0).requestFocus();
+            }
+        });
+        resultDisplay2.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.UP) {
+                int currentIndex = resultDisplay2.getChildren().indexOf(resultDisplay2.getScene().getFocusOwner());
+                int nextIndex = (currentIndex + (event.getCode() == KeyCode.DOWN ? 1 : -1) + resultDisplay2.getChildren().size()) % resultDisplay2.getChildren().size();
+                resultDisplay2.getChildren().get(nextIndex).requestFocus();
+                event.consume();
+            }
+        });
+        displayLabelContent(menuLabel);
     }
 
     public void setToDefault(){

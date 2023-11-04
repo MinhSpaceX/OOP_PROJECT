@@ -2,8 +2,6 @@ package com.zeus.App.Window;
 
 import com.sun.javafx.application.LauncherImpl;
 import com.zeus.App.Controller.SplashController;
-import com.zeus.App.SearchManager;
-import com.zeus.utils.clock.Clock;
 import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
 
@@ -43,7 +41,7 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FileManager.loadFXML("/com/zeus/fxml/index.fxml");
+        Parent root = FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
         Scene scene = new Scene(root, 787, 492);
         scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
         initialize(stage);
