@@ -49,7 +49,6 @@ public class MongoManager extends Manager {
         try (MongoCursor<Document> cursor = collection.aggregate(tempPipeline).iterator()) {
             if (!cursor.hasNext()) throw new Exception("Query return null.");
             Document wordDoc = cursor.next();
-            Logger.info(wordDoc.toJson());
             if (wordDoc.isEmpty()) throw new Exception("Query return empty.");
             Word word = new Word(wordTarget, objectMapper.convertValue(wordDoc.get(wordTarget, Document.class), Word.Description.class));
             if (word.getDescription() == null) throw new Exception("Fail to fetch word's description.");
