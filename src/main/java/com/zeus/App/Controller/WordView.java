@@ -139,9 +139,6 @@ public class WordView implements Initializable {
     public void displayLabelContent(Label label){
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
-        /**
-         * lỗi ở dòng 145
-         */
         result = SearchManager.getWordInstance(label.getText());
         //explainDisplay.setText("hi");
         setToDefault();

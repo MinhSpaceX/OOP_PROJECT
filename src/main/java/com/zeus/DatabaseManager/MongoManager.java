@@ -44,7 +44,7 @@ public class MongoManager extends Manager {
     }
 
     public Word fetchWord(String wordTarget){
-        List<Document> tempPipeline = Arrays.asList(new Document("$match",new Document(wordTarget,new Document("$exists", true).append("$ne",new BsonNull()))),new Document("$project",new Document("_id", 0L).append("run", 1L)));
+        List<Document> tempPipeline = Arrays.asList(new Document("$match",new Document(wordTarget,new Document("$exists", true).append("$ne",new BsonNull()))),new Document("$project",new Document("_id", 0L).append(wordTarget, 1L)));
         ObjectMapper objectMapper = new ObjectMapper();
         try (MongoCursor<Document> cursor = collection.aggregate(tempPipeline).iterator()) {
             if (!cursor.hasNext()) throw new Exception("Query return null.");
