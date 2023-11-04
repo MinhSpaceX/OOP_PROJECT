@@ -18,6 +18,8 @@ import java.util.List;
 
 public class MongoManager extends Manager {
     private MongoCollection<Document> collection;
+    MongoClient client = null;
+    MongoDatabase database = null;
     private Trie trie = null;
     List<Document> pipeline = null;
 
@@ -63,9 +65,9 @@ public class MongoManager extends Manager {
 
     @Override
     public void init(Config config) {
-        try (MongoClient client = MongoClients.create(config.getProperty("mongodbPath", String.class));
-             ) {
-            MongoDatabase database = client.getDatabase("dictionary_metadata");
+        try {
+            MongoClients.create(config.getProperty("mongodbPath", String.class));
+            database = client.getDatabase("dictionary_metadata");
             collection = database.getCollection("dictionary");
             trie = new Trie();
             pipeline = Arrays.asList(
