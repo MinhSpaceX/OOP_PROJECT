@@ -80,9 +80,6 @@
     -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-font-family: 'Corbel';
-    -fx-pref-width: 147;
-    -fx-pref-height: 34;
-    -fx-alignment: center;
 }
 
 .unchoose-table-label{
@@ -92,10 +89,7 @@
     -fx-background-radius: 5 5 0 0;
     -fx-border-radius: 5 5 0 0;
     -fx-border-width: 2 2 0 2;
-    -fx-font-size: 17px;
-    -fx-font-weight: bold;
-    -fx-font-family: 'Corbel';
-    -fx-pref-width: 147;
-    -fx-pref-height: 34;
-    -fx-alignment: center;
+     -fx-font-size: 17px;
+     -fx-font-weight: bold;
+     -fx-font-family: 'Corbel';
 }
