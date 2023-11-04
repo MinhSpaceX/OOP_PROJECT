@@ -27,7 +27,7 @@ public class SearchManager extends Manager {
         return searchPath.autoFill(input, 7, 1);
     }
 
-    public Map<String, List<SingleWord>> print(String wordTarget) {
+    public Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
         Word word = mgp.fetchWord(wordTarget);
         WordFactory wordFactory = new WordFactory(word);
         return wordFactory.getSingleWordMap();
