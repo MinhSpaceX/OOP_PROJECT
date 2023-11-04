@@ -54,7 +54,7 @@ public class SceneManager implements Initializable {
     public static void switchScene(Label label) throws IOException {
         WordView.setMenuLabel(label);
         Scene wordView = new Scene(FileManager.loadFXML("/com/zeus/fxml/WordView.fxml"));
-        Stage stage = (Stage)label.getScene().getWindow();
+        Stage stage = (Stage)(label.getScene().getWindow());
         stage.setScene(wordView);
         stage.show();
     }

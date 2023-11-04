@@ -44,11 +44,12 @@ public class MongoManager extends Manager {
     }
 
     public Word fetchWord(String wordTarget){
-        List<Document> tempPipeline = Arrays.asList(new Document("$match",new Document("run",new Document("$exists", true).append("$ne",new BsonNull()))),new Document("$project",new Document("_id", 0L).append("run", 1L)));
+        List<Document> tempPipeline = Arrays.asList(new Document("$match",new Document(wordTarget,new Document("$exists", true).append("$ne",new BsonNull()))),new Document("$project",new Document("_id", 0L).append("run", 1L)));
         ObjectMapper objectMapper = new ObjectMapper();
         try (MongoCursor<Document> cursor = collection.aggregate(tempPipeline).iterator()) {
             if (!cursor.hasNext()) throw new Exception("Query return null.");
             Document wordDoc = cursor.next();
+            Logger.info(wordDoc.toJson());
             if (wordDoc.isEmpty()) throw new Exception("Query return empty.");
             Word word = new Word(wordTarget, objectMapper.convertValue(wordDoc.get(wordTarget, Document.class), Word.Description.class));
             if (word.getDescription() == null) throw new Exception("Fail to fetch word's description.");
@@ -58,6 +59,7 @@ public class MongoManager extends Manager {
         }
         return null;
     }
+
 
     public Trie ReturnTrie(){
         return trie;
