@@ -39,7 +39,7 @@
                                     <String fx:value="search-container" />
                                  </styleClass>
                               </TextField>
-                              <ImageView fitHeight="26.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="23.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../icon/searchIcon.png" />
                                  </image>
@@ -91,12 +91,12 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label fx:id="pronounDisplay" prefHeight="15.0" prefWidth="330.0" text="/Pronounciation/" textFill="#b1a9a9">
+                              <Label fx:id="pronounDisplay" prefHeight="37.0" prefWidth="335.0" text="/Pronounciation/" textFill="#b1a9a9">
                                  <padding>
                                     <Insets left="15.0" />
                                  </padding>
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font size="16.0" />
                                  </font>
                               </Label>
                               <HBox fx:id="typeContainer" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="437.0" style="-fx-background-color: white;" styleClass="tab-bar-hbox" stylesheets="@../css/index.css">

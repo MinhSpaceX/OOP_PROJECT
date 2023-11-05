@@ -1,12 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
-import com.zeus.DictionaryManager.SingleWord;
-import com.zeus.utils.api.APIHandler;
-import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.log.Logger;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,21 +9,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.zeus.utils.file.FileManager.getPathFromFile;
 
 public class Menu implements Initializable {
 
@@ -109,20 +103,32 @@ public class Menu implements Initializable {
         for(var i : temp){
             Label label = new Label(i);
             label.getStyleClass().add("label-style");
-            label.setOnMouseClicked(e -> ChangeToWordView(label));
+            label.setOnMouseClicked(e -> {
+                try {
+                    ChangeToWordView(label);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
             label.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.ENTER) ChangeToWordView(label);
+                if (event.getCode() == KeyCode.ENTER) {
+                    try {
+                        ChangeToWordView(label);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
             });
             resultDisplay.getChildren().add(label);
         }
     }
 
-    public void ChangeToWordView(Label label) {
-        try {
-            SceneManager.switchScene(label);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void ChangeToWordView(Label label) throws IOException {
+        WordView.setMenuLabel(label);
+        FXMLLoader loader = new FXMLLoader(new File(getPathFromFile("/com/zeus/fxml/WordView.fxml")).toURI().toURL());
+        SceneContainer sc = loader.getController();
+        System.out.println(sc);
+        //sc.setView("/com/zeus/fxml/WordView.fxml");
     }
 
 }

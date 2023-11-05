@@ -22,7 +22,7 @@
     -fx-border-color: rgb(142, 143, 250);
     -fx-border: 0;
     -fx-border-width: 2 2 2 2;
-    -fx-border-radius: 5 0 5 5;
+    -fx-border-radius: 0 5 5 5;
     -fx-background-insets: 0;
     -fx-background: white;
 }

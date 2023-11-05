@@ -23,9 +23,13 @@ public class SplashController implements Initializable {
     private Label progressText;
 
     @FXML
+    private ProgressBar progressBar;
+
+    @FXML
     private AnchorPane splashScreen;
 
     private static Label progressTextt;
+    private MongoManager mgp;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         progressTextt = progressText;
@@ -35,7 +39,7 @@ public class SplashController implements Initializable {
         ConfigFactory configFactory = SystemManager.getConfigFactory();
         Thread thread2 = new Thread(() -> {
             try {
-                Platform.runLater(() -> progressTextt.setText("Loading mongodb database..."));
+                Platform.runLater(() -> progressTextt.setText("Fetching data..."));
                 ManagerFactory.createManager(MongoManager.class).init(configFactory.getConfig("Database"));
             } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
                      InvocationTargetException e) {
