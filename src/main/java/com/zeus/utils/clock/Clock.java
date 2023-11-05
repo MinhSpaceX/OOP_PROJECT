@@ -1,7 +1,9 @@
 package com.zeus.utils.clock;
 
+import com.zeus.utils.log.Logger;
 import javafx.scene.Parent;
 import javafx.scene.SubScene;
+import org.apache.commons.logging.Log;
 
 public class Clock {
     private static long staticStart = 0;
@@ -14,14 +16,28 @@ public class Clock {
         staticEnd = System.nanoTime();
     }
 
-    public static void printTime() {
-        System.out.printf("Method execution take: %f seconds\n", (staticEnd - staticStart)/1000000000.0f);
+    public static void printTime(String message) {
+        System.out.printf("%s Method execution take: %f seconds\n", message, (staticEnd - staticStart)/1000000000.0f);
     }
 
     public static void timer(Runnable method) {
         long start = System.nanoTime();
         method.run();
         long end = System.nanoTime();
-        System.out.printf("Method execution take: %f seconds\n", (end - start)/1000000000.0f);
+        Logger.info(String.format("Method execution take: %f seconds\n", (end - start)/1000000000.0f));
+    }
+
+    public static void timer(CustomRunnableClass method) {
+        long start = System.nanoTime();
+        method.run();
+        long end = System.nanoTime();
+        Logger.info(String.format("%s Method execution take: %f seconds\n", method.message, (end - start)/1000000000.0f));
+    }
+
+    abstract public static class CustomRunnableClass implements Runnable{
+        private String message;
+        public CustomRunnableClass(String message) {
+            this.message = message;
+        }
     }
 }

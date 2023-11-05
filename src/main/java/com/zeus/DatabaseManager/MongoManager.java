@@ -15,6 +15,7 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MongoManager extends Manager {
     private MongoCollection<Document> collection;
@@ -27,20 +28,28 @@ public class MongoManager extends Manager {
      * take data from base then load to trie
      */
     private void fetchDatafromBase(){
-        int count = 0;
+        AtomicInteger count = new AtomicInteger();
+        Clock.Tick();
         MongoCursor<Document> cursor = collection.aggregate(pipeline).iterator();
-        if(cursor.hasNext()) {
-            Document result = cursor.next();
-            ArrayList<String> keysList = (ArrayList<String>) result.get("allKeys");
-            for(String key : keysList){
-                trie.insert(key);
-                count++;
+        Clock.Tock();
+        Clock.printTime("fetch from mongodb:");
+        Clock.timer(new Clock.CustomRunnableClass("Trie load time") {
+            @Override
+            public void run() {
+                if(cursor.hasNext()) {
+                    Document result = cursor.next();
+                    ArrayList<String> keysList = (ArrayList<String>) result.get("allKeys");
+                    for(String key : keysList){
+                        trie.insert(key);
+                        count.getAndIncrement();
+                    }
+                }
             }
-        }
+        });
         if (trie == null) {
             Logger.error("Trie is null after fetch.");
         }
-        System.out.println(count);
+        Logger.info(String.valueOf(count.get()));
     }
 
     public Word fetchWord(String wordTarget){
@@ -77,7 +86,7 @@ public class MongoManager extends Manager {
                     new Document("$group", new Document("_id", null)
                             .append("allKeys", new Document("$addToSet", "$keys.k")))
             );
-            Clock.timer(this::fetchDatafromBase);
+            fetchDatafromBase();
         } catch (Exception e) {
             Logger.error(e.getMessage());
         }

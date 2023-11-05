@@ -29,6 +29,14 @@ public class FileManager {
         return file;
     }
 
+    public static File getFileFromPath(String filePath) {
+        try {
+            return new File(getPathFromFile(filePath));
+        } catch (UnsupportedEncodingException | FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      *Load a Parent based on fxml path provided
      * @param fxml
@@ -54,15 +62,14 @@ public class FileManager {
         return null;
     }
 
-    public List<Word> deserializeFromFile(String filePath) {
+    public static List<Word> deserializeFromFile(String filePath) {
         List<Word> words = new ArrayList<>();
         ObjectMapper o = new ObjectMapper();
         JsonFactory jsonFactory = new JsonFactory();
-        try (JsonParser jsonParser = jsonFactory.createParser(getPathFromFile(filePath))) {
+        try (JsonParser jsonParser = jsonFactory.createParser(getFileFromPath(filePath))) {
             jsonParser.nextToken();
             while (jsonParser.nextToken() != null) {
                 if (jsonParser.currentToken() == JsonToken.START_OBJECT) {
-                    System.out.println(jsonParser.currentName());
                     Word w = new Word(jsonParser.currentName(), o.readValue(jsonParser, Word.Description.class));
                     words.add(w);
                     jsonParser.skipChildren();

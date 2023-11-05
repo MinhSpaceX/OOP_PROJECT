@@ -14,7 +14,9 @@
     "target": "Database",
     "properties": {
       "mongodbPath": "mongodb+srv://hotmashmallow:SydFj7MBdnl57nID@cluster0.z4stprp.mongodb.net/?retryWrites=true&w=majority",
-      "localDataPath": "/com/zeus/data/dictionary.json"
+      "localDataPath": "/com/zeus/data/dictionary.json",
+      "localSQLitePath": "/com/zeus/data/Dictionary.db",
+      "localTest": "/com/zeus/data/test.json"
     }
   },
   {

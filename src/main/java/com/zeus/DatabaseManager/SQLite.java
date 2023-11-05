@@ -1,39 +1,32 @@
 package com.zeus.DatabaseManager;
 
+import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.DictionaryManager.Word;
+import com.zeus.DictionaryManager.WordFactory;
+import com.zeus.utils.clock.Clock;
+import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
+import com.zeus.utils.log.Logger;
+import com.zeus.utils.managerfactory.Manager;
+import javafx.stage.Stage;
+import javafx.util.Pair;
+import org.apache.commons.logging.Log;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class SQLite {
+public class SQLite extends Manager {
     private String pathToDatabase;
     private String url;
 
-    /**
-     * Constructor for the class.
-     *
-     * @param path path to the database file.
-     */
-    public SQLite(String path) {
-        pathToDatabase = path;
-        url = "jdbc:sqlite:" + pathToDatabase;
-        init();
-        System.out.printf("SQLiteManager created.\n");
-    }
-
-    public static void main(String[] args) {
-        try {
-            SQLite sqLite = new SQLite(FileManager.getPathFromFile("/classes/com/zeus/data/Dictionary.db"));
-        } catch (UnsupportedEncodingException | FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public SQLite() {
+        Logger.info("SQLiteManager created.");
     }
 
     public void setDatabase(String path) {
@@ -42,7 +35,7 @@ public class SQLite {
     }
 
     private int countRow() {
-        String query = "SELECT COUNT(*) FROM EN_VN";
+        String query = "SELECT COUNT(*) FROM WORD";
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             ResultSet result = pstmt.executeQuery();
@@ -59,9 +52,6 @@ public class SQLite {
     /**
      * Functions to execute when create a manager.
      */
-    private void init() {
-        checkExist();
-    }
 
     private void checkExist() {
         try (Connection conn = this.connect()) {
@@ -75,28 +65,58 @@ public class SQLite {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
-            System.out.printf("Connection established.\n");
+            Logger.info("Connection established.");
         } catch (SQLException e) {
             System.out.printf("ERROR: %s\n", e.getMessage());
         }
         return conn;
     }
 
-    public void insert(Word word) {
-        int key = countRow() + 1;
-        String query = "INSERT INTO English(wordID, wordTarget, wordExplain, wordType) VALUES(?, ?, ?, ?)";
-        String wordEN = word.getWordTarget();
-        String wordVN = word.getDescription().getPronoun();
-        String wordType = word.getWordTarget();
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, key);
-            pstmt.setString(2, wordEN);
-            pstmt.setString(3, wordEN);
-            pstmt.setString(4, wordType);
-            pstmt.executeUpdate();
+    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
+        SQLite sqLite = new SQLite();
+        sqLite.pathToDatabase = "/com/zeus/data/Dictionary.db";
+        sqLite.url = "jdbc:sqlite:" + FileManager.getPathFromFile("/com/zeus/data/Dictionary.db");
+        sqLite.checkExist();
+        Clock.timer(() -> sqLite.importFromJson("/com/zeus/data/test.json"));
+    }
+
+    public void insert(Word word, int wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
+        Map<String, List<SingleWord>> wordMap = new WordFactory(word).getSingleWordMap();
+
+        try {
+            sW.setString(1, word.getWordTarget());
+            sW.setString(2, word.getPronoun());
+            //sW.executeUpdate(); //Insert in word table
+            sW.addBatch();//Batch
+            sM.setInt(1, wordID);
+            int meaningID = 0;
+            for (Map.Entry<String, List<SingleWord>> pair : wordMap.entrySet()) {
+                String wordType = pair.getKey();
+                sM.setString(4, wordType);
+                for (SingleWord singleWord : pair.getValue()) {
+                    String wordMeaning = singleWord.getMeaning();
+                    sM.setInt(2, meaningID);
+                    sM.setString(3, wordMeaning);
+                    //sM.executeUpdate(); //Insert in meaning table
+                    sM.addBatch(); // Batch
+                    int exampleID = 0;
+                    for (Pair<String, String> example : singleWord.getExamples()) {
+                        String targetEN = example.getKey();
+                        String targetVN = example.getValue();
+                        sE.setInt(1, wordID);
+                        sE.setInt(2, exampleID);
+                        sE.setInt(3, meaningID);
+                        sE.setString(4, targetEN);
+                        sE.setString(5, targetVN);
+                        //sE.executeUpdate();//
+                        sE.addBatch();
+                        exampleID++;
+                    }
+                    meaningID++;
+                }
+            }
         } catch (SQLException e) {
-            System.out.printf("ERROR: %s\n", e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -112,6 +132,58 @@ public class SQLite {
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void importFromJson(String jsonPath) {
+        int batchSize = 1000;
+        List<Word> wordList = FileManager.deserializeFromFile(jsonPath);
+        String queryWord = "INSERT INTO WORD(target, pronoun) VALUES(?, ?)";
+        String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
+        String queryExample = "INSERT INTO EXAMPLE(wordID, exampleID, meaningID, targetEN, targetVN) VALUES(?, ?, ?, ?, ?)";
+        try(Connection connection = this.connect();
+            PreparedStatement sW = connection.prepareStatement(queryWord);
+            PreparedStatement sM = connection.prepareStatement(queryMeaning);
+            PreparedStatement sE = connection.prepareStatement(queryExample)) {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("DELETE FROM WORD");
+            statement.executeUpdate("DELETE FROM MEANING");
+            statement.executeUpdate("DELETE FROM EXAMPLE");
+            connection.setAutoCommit(false);
+            if (wordList == null) throw new NullPointerException("Null word list.");
+            ResultSet rs = statement.executeQuery("SELECT last_insert_rowid()");
+            int count = rs.getInt(1);
+            for (Word word : wordList) {
+                insert(word, count, sW, sM, sE);
+                count++;
+                if (count % 1000 == 0) {
+                    sW.executeBatch();
+                    sM.executeBatch();
+                    sE.executeBatch();
+                }
+            }
+            sW.executeBatch();
+            sM.executeBatch();
+            sE.executeBatch();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void init(Config config) {
+        pathToDatabase = config.getProperty("localSQLitePath", String.class);
+        try {
+            url = "jdbc:sqlite:" + FileManager.getPathFromFile(pathToDatabase);
+        } catch (UnsupportedEncodingException | FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        checkExist();
+        try {
+            importFromJson(config.getProperty("localTest", String.class));
+        } catch (Exception e) {
+            Logger.error(e.getMessage());
         }
     }
 }

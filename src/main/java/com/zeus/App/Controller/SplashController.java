@@ -3,6 +3,7 @@ package com.zeus.App.Controller;
 import com.zeus.App.SearchManager;
 import com.zeus.ConfigFactory.ConfigFactory;
 import com.zeus.DatabaseManager.MongoManager;
+import com.zeus.DatabaseManager.SQLite;
 import com.zeus.utils.managerfactory.ManagerFactory;
 import com.zeus.utils.managerfactory.SystemManager;
 import javafx.application.Platform;
@@ -50,11 +51,24 @@ public class SplashController implements Initializable {
                 throw new RuntimeException(e);
             }
         });
+
+        Thread thread4 = new Thread(() -> {
+            try {
+                Platform.runLater(() -> progressTextt.setText("Creating SQLite manager..."));
+                ManagerFactory.createManager(SQLite.class).init(configFactory.getConfig("Database"));
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                     InvocationTargetException e) {
+                throw new RuntimeException(e);
+            }
+        });
         try {
             thread2.start();
             thread2.join();
             thread3.start();
             thread3.join();
+            //thread4.start();
+            //thread4.join();
+
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
