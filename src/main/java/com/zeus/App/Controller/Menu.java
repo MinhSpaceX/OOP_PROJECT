@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.App.SearchManager;
+import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -125,9 +126,10 @@ public class Menu implements Initializable {
 
     public void ChangeToWordView(Label label) throws IOException {
         WordView.setMenuLabel(label);
-        FXMLLoader loader = new FXMLLoader(new File(getPathFromFile("/com/zeus/fxml/WordView.fxml")).toURI().toURL());
+        FXMLLoader loader = new FXMLLoader(FileManager.getFileFromPath("/com/zeus/fxml/WordView.fxml").toURI().toURL());
+        Parent root = loader.load();
         SceneContainer sc = loader.getController();
-        System.out.println(sc);
+
         //sc.setView("/com/zeus/fxml/WordView.fxml");
     }
 
