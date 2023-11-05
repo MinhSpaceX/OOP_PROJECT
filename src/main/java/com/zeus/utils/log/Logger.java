@@ -1,6 +1,14 @@
 package com.zeus.utils.log;
 
+import jdk.jfr.StackTrace;
+
+import java.util.Arrays;
+
 public class Logger {
+    private static final String reset = "\u001B[0m";
+    private static final String red = "\u001B[31m";
+    private static final String green = "\u001B[32m";
+    private static final String yellow = "\u001B[33m";
 
     /**
      * Function to log build message.
@@ -18,6 +26,22 @@ public class Logger {
     public static void error(String msg) {
         LineInfo info = getLineInfo();
         System.out.printf("[ERROR]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
+    }
+
+    public static void printStackTrace(Exception e) {
+        System.out.printf("%s[ERROR] %s: %s%s\n", red, e.getClass().getSimpleName(), e.getMessage(), reset);
+        for (StackTraceElement stackTrace : e.getStackTrace()) {
+            System.out.printf("%s     at %s%s\n", red, stackTrace.toString(), reset);
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+                throw new Exception("Damn bro");
+        } catch (Exception e) {
+            printStackTrace(e);
+            e.printStackTrace();
+        }
     }
 
     /**
