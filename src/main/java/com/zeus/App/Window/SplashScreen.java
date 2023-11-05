@@ -2,6 +2,7 @@ package com.zeus.App.Window;
 
 import com.zeus.utils.file.FileManager;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
@@ -18,6 +19,11 @@ public class SplashScreen extends Preloader {
         this.loaderStage = stage;
         Parent root = FileManager.loadFXML("/com/zeus/fxml/splash.fxml");
 
+        stage.setOnCloseRequest(event -> {
+            Platform.exit(); // Close the JavaFX application immediately
+            System.exit(0);
+        });
+
         Scene scene = new Scene(root);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
@@ -28,7 +34,7 @@ public class SplashScreen extends Preloader {
     @Override
     public void handleStateChangeNotification(StateChangeNotification info) {
         if (info.getType() == StateChangeNotification.Type.BEFORE_START) {
-            loaderStage.hide();
+            loaderStage.close();
         }
     }
 }
