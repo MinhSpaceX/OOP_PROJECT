@@ -16,7 +16,7 @@ public class Logger {
      */
     public static void info(String msg) {
         LineInfo info = getLineInfo();
-        System.out.printf("[INFO]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
+        System.out.printf("%s[INFO]: %s Method: %s executed at line: %d in file: %s%s.\n", green, msg, info.getMethod(), info.getLineNumber(), info.getFileName(), reset);
     }
     public static void warn(String msg) {
         LineInfo info = getLineInfo();

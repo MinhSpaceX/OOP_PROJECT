@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="471.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.GameController2">
+    <children>
+        <AnchorPane fx:id="GameMenuCard" layoutY="11.0" prefHeight="470.0" prefWidth="447.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css">
+            <children>
+                <HBox layoutX="26.0" layoutY="44.0" prefHeight="51.0" prefWidth="395.0" style="-fx-background-color: white; -fx-border-width: 0 0 2 0; -fx-border-color: rgb(119, 82, 254);">
+                    <children>
+                        <Label fx:id="questionDisplay" prefHeight="39.0" prefWidth="389.0" text="What is the meaning of ...">
+                            <font>
+                                <Font name="Dubai Medium" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                    <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </padding>
+                </HBox>
+            <VBox fx:id="AnswerContainer" layoutX="24.0" layoutY="125.0" prefHeight="303.0" prefWidth="395.0" spacing="20.0">
+               <children>
+                  <Label prefHeight="58.0" prefWidth="395.0" styleClass="game-mode-button" stylesheets="@../css/application.css" text=" Answer 1" />
+                  <Label prefHeight="58.0" prefWidth="395.0" styleClass="game-mode-button" stylesheets="@../css/application.css" text=" Answer 2" />
+                  <Label prefHeight="58.0" prefWidth="395.0" styleClass="game-mode-button" stylesheets="@../css/application.css" text=" Answer 3" />
+                  <Label prefHeight="58.0" prefWidth="395.0" styleClass="game-mode-button" stylesheets="@../css/application.css" text=" Answer 4" />
+               </children>
+            </VBox>
+            <FontAwesomeIconView fx:id="backToGameMenu" fill="#8e8ffa" glyphName="WINDOW_CLOSE" layoutX="7.0" layoutY="31.0" size="20" styleClass="game-back-to-menu" wrappingWidth="14.399993896484375" />
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

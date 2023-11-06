@@ -52,26 +52,13 @@ public class SceneContainer implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sceneContainer = this;
-        AnchorPane view = new AnchorPane();
-        try {
-            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        viewWindow.getChildren().setAll(view);
+        changeView("/com/zeus/fxml/menu.fxml");
         sideNavSlide();
         Logger.info("Container init -----------------");
     }
 
     public void loadMenuScreen(ActionEvent event) throws IOException {
-        viewWindow.getChildren().clear();
-        AnchorPane view = new AnchorPane();
-        try {
-            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        viewWindow.getChildren().setAll(view);
+        changeView("/com/zeus/fxml/menu.fxml");
     }
 
     public void sideNavSlide(){
@@ -109,16 +96,21 @@ public class SceneContainer implements Initializable {
         historyIcon.setMouseTransparent(true);
     }
 
-    public void setView(){
+    @FXML
+    public void setGameView(ActionEvent event){
+        changeView("/com/zeus/fxml/GameScene.fxml");
+    }
+
+    public void changeView(String FXMLurl){
         viewWindow.getChildren().clear();
         AnchorPane view = new AnchorPane();
         try {
-            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/WordView.fxml");
+            view = (AnchorPane) FileManager.loadFXML(FXMLurl);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         viewWindow.getChildren().setAll(view);
-
-        Logger.info("setView");
+        Logger.info("View changed!");
     }
+
 }

@@ -37,7 +37,7 @@
                                 <Font name="Corbel" size="16.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text="Game" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#setGameView" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text="Game" textFill="WHITE">
                             <font>
                                 <Font name="Corbel" size="16.0" />
                             </font>

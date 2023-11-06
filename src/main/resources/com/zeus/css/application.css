@@ -74,3 +74,75 @@
     -fx-background-radius: 0;
     -fx-border-width: 0;
 }
+
+.game-mode-button{
+    -fx-background-radius: 5;
+    -fx-border-color: rgb(119, 82, 254);
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 1, 0, 3, 2);
+    -fx-text-fill: rgb(142, 143, 250);
+    -fx-font-weight: bold;
+    -fx-font-family: "Corbel";
+    -fx-font-size: 21;
+    -fx-content-display: center;
+    -fx-alignment: center;
+}
+
+.game-mode-button:hover{
+    -fx-cursor: hand;
+    -fx-background-color: rgb(194, 217, 255);
+    -fx-font-size: 21;
+}
+
+.game-mode-choosen{
+    -fx-background-color: rgb(119, 82, 254);
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgb(25, 4, 130), 1, 0, 5, 3);
+    -fx-font-weight: bold;
+    -fx-font-family: "Corbel";
+    -fx-font-size: 21;
+    -fx-content-display: center;
+    -fx-alignment: center;
+}
+
+.game-mode-choosen:hover{
+    -fx-cursor: hand;
+}
+
+.play-button{
+    -fx-background-radius: 5;
+    -fx-border-color: rgb(119, 82, 254);
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 1, 0, 3, 2);
+    -fx-text-fill: rgb(142, 143, 250);
+    -fx-font-weight: bold;
+    -fx-font-size: 22;
+}
+
+.play-button:hover{
+    -fx-cursor: hand;
+    -fx-background-radius: 5;
+    -fx-border-color: rgb(119, 82, 254);
+    -fx-background-color: rgb(119, 82, 254);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 1, 0, 3, 2);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 22;
+}
+
+.game-back-to-menu{
+    -fx-cursor: hand;
+}
+
