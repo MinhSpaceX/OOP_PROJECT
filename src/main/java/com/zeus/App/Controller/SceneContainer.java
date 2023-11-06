@@ -67,7 +67,7 @@ public class SceneContainer implements Initializable {
         viewWindow.getChildren().clear();
         AnchorPane view = new AnchorPane();
         try {
-            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/WordView.fxml");
+            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

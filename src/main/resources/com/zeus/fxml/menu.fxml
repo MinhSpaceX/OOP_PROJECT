@@ -20,7 +20,7 @@
                <children>
                   <AnchorPane prefHeight="58.0" prefWidth="385.0">
                      <children>
-                        <Label alignment="CENTER" layoutX="136.0" layoutY="24.0" prefHeight="54.0" prefWidth="385.0" text="CUBIC DICTIONARY" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Label alignment="CENTER" layoutX="136.0" layoutY="24.0" prefHeight="54.0" prefWidth="446.0" text="CUBIC DICTIONARY" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
                               <ImageView fitHeight="39.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -39,7 +39,7 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="6.0" prefWidth="446.0" style="-fx-pref-height: 100;">
                      <children>
-                        <HBox alignment="CENTER" layoutX="11.0" layoutY="31.0" prefHeight="42.0" prefWidth="354.0" style="-fx-border-width: 0; -fx-min-height: 10;" styleClass="search-container" stylesheets="@../css/application.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                        <HBox alignment="CENTER" layoutX="11.0" layoutY="31.0" prefHeight="42.0" prefWidth="426.0" style="-fx-border-width: 0; -fx-min-height: 10;" styleClass="search-container" stylesheets="@../css/application.css" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
