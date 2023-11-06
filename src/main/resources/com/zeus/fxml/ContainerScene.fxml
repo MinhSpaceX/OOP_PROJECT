@@ -17,7 +17,7 @@
             <children>
                 <VBox alignment="TOP_CENTER" layoutY="57.0" prefHeight="228.0" prefWidth="122.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#loadMenuScreen" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" LookUp" textFill="WHITE">
+                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" LookUp" textFill="WHITE">
                             <font>
                                 <Font name="Corbel" size="16.0" />
                             </font>

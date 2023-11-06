@@ -1,12 +1,14 @@
 package com.zeus.App.Controller;
 
 import com.zeus.utils.file.FileManager;
+import com.zeus.utils.log.Logger;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -44,6 +46,7 @@ public class SceneContainer implements Initializable {
     private AnchorPane viewWindow = new AnchorPane();
 
     boolean MenuVisible = false;
+    boolean openWordCard = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,10 +58,18 @@ public class SceneContainer implements Initializable {
         }
         viewWindow.getChildren().setAll(view);
         sideNavSlide();
+        Logger.info("call");
     }
 
     public void loadMenuScreen(ActionEvent event) throws IOException {
-
+        viewWindow.getChildren().clear();
+        AnchorPane view = new AnchorPane();
+        try {
+            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/WordView.fxml");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        viewWindow.getChildren().setAll(view);
     }
 
     public void sideNavSlide(){
@@ -96,13 +107,16 @@ public class SceneContainer implements Initializable {
         historyIcon.setMouseTransparent(true);
     }
 
-    public void setView(String url){
+    public void setView(){
+        viewWindow.getChildren().clear();
         AnchorPane view = new AnchorPane();
         try {
-            view = (AnchorPane) FileManager.loadFXML(url);
+            view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/WordView.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         viewWindow.getChildren().setAll(view);
+
+        Logger.info("setView");
     }
 }

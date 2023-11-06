@@ -57,10 +57,6 @@ public class Menu implements Initializable {
         });
     }
 
-    public void OpenWordCard(ActionEvent event){
-
-    }
-
     public void searchWord(){
         resultDisplay.setVisible(false);
         Logger.info("called");
@@ -125,12 +121,11 @@ public class Menu implements Initializable {
     }
 
     public void ChangeToWordView(Label label) throws IOException {
-        WordView.setMenuLabel(label);
-        FXMLLoader loader = new FXMLLoader(FileManager.getFileFromPath("/com/zeus/fxml/WordView.fxml").toURI().toURL());
+        FXMLLoader loader = new FXMLLoader(FileManager.getFileFromPath("/com/zeus/fxml/ContainerScene.fxml").toURI().toURL());
         Parent root = loader.load();
         SceneContainer sc = loader.getController();
-
-        //sc.setView("/com/zeus/fxml/WordView.fxml");
+        WordView.setMenuLabel(label);
+        sc.setView();
     }
 
 }
