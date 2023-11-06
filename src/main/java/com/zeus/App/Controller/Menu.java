@@ -41,7 +41,7 @@ public class Menu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchWord();
-        Logger.info("finish");
+        Logger.info("Menu init -----------------");
         searchBar.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.DOWN) {
                 resultDisplay.getChildren().get(0).requestFocus();
@@ -121,9 +121,8 @@ public class Menu implements Initializable {
     }
 
     public void ChangeToWordView(Label label) throws IOException {
-        FXMLLoader loader = new FXMLLoader(FileManager.getFileFromPath("/com/zeus/fxml/ContainerScene.fxml").toURI().toURL());
-        Parent root = loader.load();
-        SceneContainer sc = loader.getController();
+        SceneContainer sc = SceneContainer.sceneContainer;//Here bro
+
         WordView.setMenuLabel(label);
         sc.setView();
     }

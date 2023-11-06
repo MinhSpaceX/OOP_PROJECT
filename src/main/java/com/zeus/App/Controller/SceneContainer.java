@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SceneContainer implements Initializable {
+    public static SceneContainer sceneContainer;
     @FXML
     private FontAwesomeIconView menuIcon;
     @FXML
@@ -50,6 +51,7 @@ public class SceneContainer implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        sceneContainer = this;
         AnchorPane view = new AnchorPane();
         try {
             view = (AnchorPane) FileManager.loadFXML("/com/zeus/fxml/menu.fxml");
@@ -58,7 +60,7 @@ public class SceneContainer implements Initializable {
         }
         viewWindow.getChildren().setAll(view);
         sideNavSlide();
-        Logger.info("call");
+        Logger.info("Container init -----------------");
     }
 
     public void loadMenuScreen(ActionEvent event) throws IOException {

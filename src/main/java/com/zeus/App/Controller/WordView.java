@@ -80,6 +80,7 @@ public class WordView implements Initializable {
             }
         });
         displayLabelContent(menuLabel);
+        Logger.info("WordView init -----------------");
     }
 
     public void setToDefault(){
