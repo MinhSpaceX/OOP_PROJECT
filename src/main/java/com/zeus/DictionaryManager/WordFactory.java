@@ -38,6 +38,7 @@ public class WordFactory {
             if(type.getName().equalsIgnoreCase("tính từ")) type.setName("adj");
             if(type.getName().equalsIgnoreCase("trạng từ")) type.setName("adv");
             if(type.getName().equalsIgnoreCase("ngoại động từ")) type.setName("transitive verb");
+            if(type.getName().equalsIgnoreCase("nội động từ")) type.setName("intransitive verb");
             wordMap.put(type.getName(), words);
         });
         return wordMap;

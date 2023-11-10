@@ -101,3 +101,19 @@
 .unchoose-tab-label:hover{
     -fx-cursor: hand;
 }
+
+.addBox{
+    -fx-border-radius: 10px;
+    -fx-border-color: #7752fe;
+    -fx-border-insets: 10 10 20 10;
+    -fx-border-width: 0 0 0 0;
+}
+
+.addword{
+    -fx-font-size:24;
+    -fx-pref-width: 330;
+}
+
+.addword:focused {
+    -fx-border-color: #9CBEFF;  
+}

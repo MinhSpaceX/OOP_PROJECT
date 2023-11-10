@@ -81,4 +81,16 @@ public class FileManager {
         }
         return null;
     }
+
+    public static void dictionaryExportToFile(Word word) {
+        try (RandomAccessFile raf = new RandomAccessFile(FileManager.getPathFromFile("/com/zeus/data/dictionary.json"), "rw");) {
+            raf.seek(raf.length() - 1);
+            raf.writeBytes(",");
+            raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
+            raf.writeBytes("\n}");
+            Logger.info("Ghi thành công----------");
+        } catch (IOException e) {
+            Logger.warn("Lỗi khi ghi dữ liệu vào tệp JSON: " + e.getMessage());
+        }
+    }
 }
