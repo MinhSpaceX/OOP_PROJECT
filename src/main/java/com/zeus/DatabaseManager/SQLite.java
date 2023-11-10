@@ -72,13 +72,10 @@ public class SQLite extends Manager {
 
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         SQLite sqLite = new SQLite();
-        sqLite.setDatabase("/com/zeus/data/userDatabase.db");
+        sqLite.setDatabase("/com/zeus/data/Dictionary.db");
         sqLite.checkExist();
-        sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt");
-        SingleWord word = new SingleWord("anamorphosis", "somePronoun", "danh từ", "dell biet", null);
-        sqLite.insert(word);
-        //Clock.timer(() -> sqLite.importFromJson("/com/zeus/data/test.json"));
-        //Clock.timer(() -> sqLite.getRandomWords(3, 10));
+        Clock.timer(() -> sqLite.importFromJson("/com/zeus/data/test.json"));
+        Clock.timer(() -> sqLite.getRandomWords(3, 10));
     }
 
     private void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
