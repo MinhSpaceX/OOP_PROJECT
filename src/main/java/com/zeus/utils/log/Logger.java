@@ -30,8 +30,16 @@ public class Logger {
 
     public static void printStackTrace(Exception e) {
         System.out.printf("%s[ERROR] %s: %s%s\n", red, e.getClass().getSimpleName(), e.getMessage(), reset);
-        for (StackTraceElement stackTrace : e.getStackTrace()) {
-            System.out.printf("%s     at %s%s\n", red, stackTrace.toString(), reset);
+        StackTraceElement[] stackTraceElements = getStackTrace();
+        for (int i = 3; i < stackTraceElements.length; i++) {
+            System.out.printf("%s     at %s%s\n", red, stackTraceElements[i].toString(), reset);
+        }
+    }
+
+    public static void printStackTrace(String message) {
+        StackTraceElement[] stackTraceElements = getStackTrace();
+        for (int i = 3; i < stackTraceElements.length; i++) {
+            System.out.printf("%s     at %s%s\n", green, stackTraceElements[i].toString(), reset);
         }
     }
 
@@ -57,5 +65,9 @@ public class Logger {
         int lineNumber = callingMethod.getLineNumber();
         String method = callingMethod.getMethodName();
         return new LineInfo(fileName, lineNumber, method);
+    }
+
+    private static StackTraceElement[] getStackTrace() {
+        return Thread.currentThread().getStackTrace();
     }
 }
