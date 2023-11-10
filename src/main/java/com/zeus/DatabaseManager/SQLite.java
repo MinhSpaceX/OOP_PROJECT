@@ -14,8 +14,7 @@ import javafx.util.Pair;
 import org.apache.commons.logging.Log;
 
 import javax.swing.plaf.nimbus.State;
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.sql.*;
 import java.util.*;
 
@@ -27,8 +26,8 @@ public class SQLite extends Manager {
         Logger.info("SQLiteManager created.");
     }
 
-    public void setDatabase(String path) {
-        this.pathToDatabase = path;
+    private void setDatabase(String path) throws FileNotFoundException, UnsupportedEncodingException {
+        this.pathToDatabase = FileManager.getPathFromFile(path);
         this.url = "jdbc:sqlite:" + this.pathToDatabase;
     }
 
@@ -53,9 +52,9 @@ public class SQLite extends Manager {
 
     private void checkExist() {
         try (Connection conn = this.connect()) {
-            System.out.printf("Database status: EXIST. File path: '%s'.\n", pathToDatabase);
+            Logger.info(String.format("Database status: EXIST. File path: '%s'.\n", pathToDatabase));
         } catch (SQLException e) {
-            System.out.printf("ERROR: %s.\n", e.getMessage());
+            Logger.printStackTrace(e);
         }
     }
 
@@ -63,23 +62,26 @@ public class SQLite extends Manager {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);
-            Logger.info("Connection established.");
+            if (conn == null) throw new NullPointerException("Failed to establish a connection.");
+            Logger.printStackTrace("Connection established.");
         } catch (SQLException e) {
-            System.out.printf("ERROR: %s\n", e.getMessage());
+            Logger.printStackTrace(e);
         }
         return conn;
     }
 
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         SQLite sqLite = new SQLite();
-        sqLite.pathToDatabase = "/com/zeus/data/Dictionary.db";
-        sqLite.url = "jdbc:sqlite:" + FileManager.getPathFromFile("/com/zeus/data/Dictionary.db");
+        sqLite.setDatabase("/com/zeus/data/userDatabase.db");
         sqLite.checkExist();
-        Clock.timer(() -> sqLite.importFromJson("/com/zeus/data/test.json"));
-        Clock.timer(() -> sqLite.getRandomWords(3, 10));
+        sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt");
+        SingleWord word = new SingleWord("anamorphosis", "somePronoun", "danh từ", "dell biet", null);
+        sqLite.insert(word);
+        //Clock.timer(() -> sqLite.importFromJson("/com/zeus/data/test.json"));
+        //Clock.timer(() -> sqLite.getRandomWords(3, 10));
     }
 
-    public void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
+    private void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
         Map<String, List<SingleWord>> wordMap = new WordFactory(word).getSingleWordMap();
 
         try {
@@ -120,18 +122,91 @@ public class SQLite extends Manager {
         }
     }
 
-    void createDatabase(String filePath) {
-        String url = "jdbc:sqlite:" + filePath;
+    public void insert(SingleWord word) {
+        String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
+        String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
+        String queryExample = "INSERT INTO EXAMPLE(wordID, exampleID, meaningID, targetEN, targetVN) VALUES(?, ?, ?, ?, ?)";
+        try (Connection connection = this.connect();
+             PreparedStatement sW = connection.prepareStatement(queryWord);
+             PreparedStatement sM = connection.prepareStatement(queryMeaning);
+             PreparedStatement sE = connection.prepareStatement(queryExample);
+             PreparedStatement sMeaning = connection.prepareStatement("SELECT COUNT(*) FROM MEANING WHERE wordID = ?");
+             PreparedStatement sExample = connection.prepareStatement("SELECT COUNT(*) FROM EXAMPLE WHERE wordID = ? AND meaningID = ?");
+             PreparedStatement checkMeaningExist = connection.prepareStatement("SELECT COUNT(*) FROM MEANING WHERE wordID = ? AND target = ?")) {
+            String wordID = Encoder.encode(word.getWordTarget());
 
-        try (Connection conn = DriverManager.getConnection(url)) {
-            if (conn != null) {
-                DatabaseMetaData meta = conn.getMetaData();
-                System.out.println("ERROR: The driver name is %s.\n" + meta.getDriverName());
-                System.out.printf("ERROR: Database created. Path: '%s'.\n", filePath);
+            //Check if meaning existed
+            checkMeaningExist.setString(1, wordID);
+            checkMeaningExist.setString(2, word.getMeaning());
+            ResultSet meaningExist = checkMeaningExist.executeQuery();
+            if (meaningExist.next() && meaningExist.getInt(1) != 0) throw new Exception("Insert aborted. Meaning existed.");
+
+            // Insert word into WORD table
+            sW.setString(1, wordID);
+            sW.setString(2, word.getWordTarget());
+            sW.setString(3, word.getPronoun());
+            sW.setString(4, wordID);
+            sW.executeUpdate();
+
+            // Count number of meanings and examples to assign ID.
+            Integer meaningID = null;
+            Integer exampleID = null;
+            sMeaning.setString(1, wordID);
+            ResultSet meaningIDCount = sMeaning.executeQuery();
+            if (meaningIDCount.next()) {
+                meaningID = meaningIDCount.getInt(1);
             }
+            if (meaningID == null) throw new NullPointerException("Null meaningID.");
+            sExample.setString(1, wordID);
+            sExample.setInt(2, meaningID);
+            ResultSet exampleIDCount = sExample.executeQuery();
+            if (exampleIDCount.next()) {
+                exampleID = exampleIDCount.getInt(1);
+            }
+            if (exampleID == null) throw new NullPointerException("Null exampleID");
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            // Insert into MEANING table
+            sM.setString(1, wordID);
+            sM.setInt(2, meaningID);
+            sM.setString(3, word.getMeaning());
+            sM.setString(4, word.getType());
+            sM.executeUpdate();
+            if (word.getExamples() != null) {
+                sE.setString(1, wordID);
+                sE.setInt(3, meaningID);
+                for (Pair<String, String> examples : word.getExamples()) {
+                    sE.setInt(2, exampleID);
+                    sE.setString(4, examples.getKey());
+                    sE.setString(5, examples.getValue());
+                    sE.executeUpdate();
+                    exampleID++;
+                }
+            }
+            Logger.info("Insert successful.");
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
+        }
+    }
+
+    private void createDatabaseFromQuery(String filePath) {
+        try (Connection conn = this.connect();
+             BufferedReader bufferedReader = new BufferedReader(new FileReader(FileManager.getFileFromPath(filePath)));
+             PreparedStatement countTables = conn.prepareStatement("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence'")) {
+            ResultSet count = countTables.executeQuery();
+            if (count.next() && count.getInt(1) != 0) {
+                Logger.warn("Cannot create tables, database has many tables already, check the database again or delete the tables in it.");
+            } else {
+                StringBuilder query = new StringBuilder();
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    query.append(line);
+                    query.append('\n');
+                }
+                conn.createStatement().executeUpdate(query.toString());
+                Logger.info("Database created successfully.");
+            }
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
         }
     }
 

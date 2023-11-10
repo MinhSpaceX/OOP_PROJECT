@@ -16,30 +16,31 @@ public class Logger {
      */
     public static void info(String msg) {
         LineInfo info = getLineInfo();
-        System.out.printf("%s[INFO]: %s Method: %s executed at line: %d in file: %s%s.\n", green, msg, info.getMethod(), info.getLineNumber(), info.getFileName(), reset);
+        printLineWithColor(String.format("[INFO]: %s Method: %s executed at line: %d in file: %s.", msg, info.getMethod(), info.getLineNumber(), info.getFileName()), green);
     }
     public static void warn(String msg) {
         LineInfo info = getLineInfo();
-        System.out.printf("[WARNING]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
+        printLineWithColor(String.format("[WARNING]: %s Method: %s executed at line: %d in file: %s.", msg, info.getMethod(), info.getLineNumber(), info.getFileName()), yellow);
     }
 
     public static void error(String msg) {
         LineInfo info = getLineInfo();
-        System.out.printf("[ERROR]: %s Method: %s executed at line: %d in file: %s.\n", msg, info.getMethod(), info.getLineNumber(), info.getFileName());
+        printLineWithColor(String.format("[ERROR]: %s Method: %s executed at line: %d in file: %s.", msg, info.getMethod(), info.getLineNumber(), info.getFileName()), red);
     }
 
     public static void printStackTrace(Exception e) {
-        System.out.printf("%s[ERROR] %s: %s%s\n", red, e.getClass().getSimpleName(), e.getMessage(), reset);
+        printLineWithColor(String.format("[ERROR] %s: %s", e.getClass().getSimpleName(), e.getMessage()), red);
         StackTraceElement[] stackTraceElements = getStackTrace();
         for (int i = 3; i < stackTraceElements.length; i++) {
-            System.out.printf("%s     at %s%s\n", red, stackTraceElements[i].toString(), reset);
+            printLineWithColor(String.format("     at %s", stackTraceElements[i].toString()), red);
         }
     }
 
     public static void printStackTrace(String message) {
         StackTraceElement[] stackTraceElements = getStackTrace();
+        printLineWithColor(String.format("[INFO]: %s", message), green);
         for (int i = 3; i < stackTraceElements.length; i++) {
-            System.out.printf("%s     at %s%s\n", green, stackTraceElements[i].toString(), reset);
+            printLineWithColor(String.format("     at %s", stackTraceElements[i].toString()), green);
         }
     }
 
@@ -50,6 +51,10 @@ public class Logger {
             printStackTrace(e);
             e.printStackTrace();
         }
+    }
+
+    private static void printLineWithColor(String message, String color) {
+        System.out.printf("%s%s%s\n", color, message, reset);
     }
 
     /**
