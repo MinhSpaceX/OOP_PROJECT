@@ -1,7 +1,10 @@
 package com.zeus.App.Controller;
 
+import com.zeus.DatabaseManager.SQLite;
+import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.file.FileManager;
+import com.zeus.utils.managerfactory.SystemManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,21 +43,8 @@ public class addWord {
             pronoun.clear();
             type.clear();
             meaning.clear();
-            Word.Description.Type.Meaning.Example example = new Word.Description.Type.Meaning.Example();
-            example.setExample("", "");
-            List<Word.Description.Type.Meaning.Example> exampleList = new ArrayList<>();
-            Word.Description.Type.Meaning meaning1 = new Word.Description.Type.Meaning();
-            meaning1.setMeaning(Meaning, exampleList);
-            List<Word.Description.Type.Meaning> meaningList = new ArrayList<>();
-            meaningList.add(meaning1);
-            Word.Description.Type type1 = new Word.Description.Type();
-            type1.setType(Type, meaningList);
-            List<Word.Description.Type> typeList = new ArrayList<>();
-            typeList.add(type1);
-            Word.Description description = new Word.Description();
-            description.setDescription(Pronoun, typeList);
-            Word word = new Word(wordtarget, description);
-            FileManager.dictionaryExportToFile(word);
+            SingleWord word = new SingleWord(wordtarget, Pronoun, Type, Meaning, null);
+            SystemManager.getManager(SQLite.class).insert(word);
         }
 
     }
