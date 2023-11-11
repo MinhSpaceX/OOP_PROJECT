@@ -6,7 +6,6 @@ import com.zeus.utils.managerfactory.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +17,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.util.List;
 import java.util.Random;
@@ -53,7 +55,6 @@ public class GameController2 implements Initializable {
     private int Score = 0;
     private int answer = 0;
     private int index = 1;
-    private int secondsRemaining = 30;
     private String gameMode;
     @FXML
     private Button backToMenu;
@@ -67,6 +68,7 @@ public class GameController2 implements Initializable {
     private Text clockCounter;
     @FXML
     private Label clock;
+    private int timeRemaining = 30;
 
 
     GameController gc = GameController.gameController;
@@ -85,11 +87,16 @@ public class GameController2 implements Initializable {
     public void setGameMode(){
         gameMode = gc.getGameMode();
         //Logger.info(gameMode);
-        if(gameMode.equals("Classic")){
-            toClassicMode();
-        }
-        else if(gameMode.equals("Infinity")){
-            toInfinityMode();
+        switch (gameMode) {
+            case "Classic":
+                toClassicMode();
+                break;
+            case "Infinity":
+                toInfinityMode();
+                break;
+            case "Blitz":
+                toBlitzMode();
+                break;
         }
     }
 
@@ -108,7 +115,30 @@ public class GameController2 implements Initializable {
     }
 
     public void toBlitzMode(){
+        scoreDisplay.setText( "Score: " + Score);
+        questIndex.setVisible(false);
+        if(timeRemaining == 30){
+            timeThread();
+        }
+        if(timeRemaining > 0) {
+            setUpAnsAndQues();
+        }
+    }
 
+    public void timeThread(){
+        Timer timer = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                timeRemaining--;
+                clockCounter.setText(String.format("Time: %d",timeRemaining));
+
+                if (timeRemaining <= 0) {
+                    ((Timer) e.getSource()).stop();
+                    ResultCard.setVisible(true);
+                }
+            }
+        });
+        timer.start();
     }
 
     public void setUpAnsAndQues(){
@@ -152,6 +182,9 @@ public class GameController2 implements Initializable {
             if(gameMode.equals("Infinity")){
                 toInfinityMode();
             }
+            if(gameMode.equals("Blitz")){
+                toBlitzMode();
+            }
         }
         else {
             if(gameMode.equals("Classic")){
@@ -161,8 +194,12 @@ public class GameController2 implements Initializable {
             if(gameMode.equals("Infinity")){
                 toInfinityMode();
             }
+            if(gameMode.equals("Blitz")){
+                toBlitzMode();
+            }
         }
-        if(index == 11 && gameMode.equals("Classic")){
+        if((index == 11 && gameMode.equals("Classic")) ||
+                (timeRemaining == 0 && gameMode.equals("Blitz"))){
             ResultCard.setVisible(true);
             finalScore.setText(String.format("%d", Score));
             backToMenu.setOnMouseClicked(e->{
