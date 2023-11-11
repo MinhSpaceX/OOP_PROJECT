@@ -1,13 +1,26 @@
 package com.zeus.App.Controller;
 
+import com.zeus.DatabaseManager.SQLite;
+import com.zeus.utils.log.Logger;
+import com.zeus.utils.managerfactory.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import javafx.util.Pair;
 
 import java.net.URL;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class GameController2 implements Initializable {
@@ -21,15 +34,145 @@ public class GameController2 implements Initializable {
     @FXML
     private Label questionDisplay;
 
+    SQLite sql = null;
+
     @FXML
     private FontAwesomeIconView backToGameMenu;
+    @FXML
+    private Text scoreDisplay;
+    @FXML
+    private Label Answer1;
+    @FXML
+    private Label Answer2;
+    @FXML
+    private Label Answer3;
+    @FXML
+    private Label Answer4;
+    @FXML
+    private Label questIndex;
+    private int Score = 0;
+    private int answer = 0;
+    private int index = 1;
+    private int secondsRemaining = 30;
+    private String gameMode;
+    @FXML
+    private Button backToMenu;
+    @FXML
+    private Button continuePlay;
+    @FXML
+    private Text finalScore;
+    @FXML
+    private AnchorPane ResultCard;
+    @FXML
+    private Text clockCounter;
+    @FXML
+    private Label clock;
+
+
+    GameController gc = GameController.gameController;
+    SceneContainer sc = SceneContainer.sceneContainer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SceneContainer sc = SceneContainer.sceneContainer;
+        sql = SystemManager.getManager(SQLite.class);
+        System.out.println(sql);
         backToGameMenu.setOnMouseClicked(e->{
             sc.changeView("/com/zeus/fxml/GameScene.fxml");
         });
+        setGameMode();
+    }
+
+    public void setGameMode(){
+        gameMode = gc.getGameMode();
+        //Logger.info(gameMode);
+        if(gameMode.equals("Classic")){
+            toClassicMode();
+        }
+        else if(gameMode.equals("Infinity")){
+            toInfinityMode();
+        }
+    }
+
+    public void toClassicMode(){
+        scoreDisplay.setText( "Score: " + Score);
+        clock.setVisible(false);
+        questIndex.setText(index + "/10");
+        setUpAnsAndQues();
+    }
+
+    public void toInfinityMode(){
+        scoreDisplay.setText( "Score: " + Score);
+        clock.setVisible(false);
+        questIndex.setVisible(false);
+        setUpAnsAndQues();
+    }
+
+    public void toBlitzMode(){
+
+    }
+
+    public void setUpAnsAndQues(){
+        List<Pair<String, String>> list = sql.getRandomWords(1, 4);
+        for(int i = 0; i < 4; i++){
+            switch (i){
+                case 0:
+                    Answer1.setText(list.get(i).getValue());
+                    Answer1.setOnMouseClicked(e->{
+                        checkCorrectness(0);
+                    });
+                case 1:
+                    Answer2.setText(list.get(i).getValue());
+                    Answer2.setOnMouseClicked(e->{
+                        checkCorrectness(1);
+                    });
+                case 2:
+                    Answer3.setText(list.get(i).getValue());
+                    Answer3.setOnMouseClicked(e->{
+                        checkCorrectness(2);
+                    });
+                case 3:
+                    Answer4.setText(list.get(i).getValue());
+                    Answer4.setOnMouseClicked(e->{
+                        checkCorrectness(3);
+                    });
+            }
+        }
+        Random ran = new Random();
+        answer = ran.nextInt(4);
+        questionDisplay.setText("What is the meaning of \"" + list.get(answer).getKey() + "\"");
+    }
+
+    public void checkCorrectness(int playerOption){
+        if(playerOption == answer){
+            Score++;
+            if(gameMode.equals("Classic")){
+                index++;
+                toClassicMode();
+            };
+            if(gameMode.equals("Infinity")){
+                toInfinityMode();
+            }
+        }
+        else {
+            if(gameMode.equals("Classic")){
+                index++;
+                toClassicMode();
+            };
+            if(gameMode.equals("Infinity")){
+                toInfinityMode();
+            }
+        }
+        if(index == 11 && gameMode.equals("Classic")){
+            ResultCard.setVisible(true);
+            finalScore.setText(String.format("%d", Score));
+            backToMenu.setOnMouseClicked(e->{
+                sc.changeView("/com/zeus/fxml/GameScene.fxml");
+                Logger.info("call");
+            });
+            continuePlay.setOnMouseClicked(e->{
+                sc.changeView("/com/zeus/fxml/GameScene2.fxml");
+            });
+        }
     }
 
 }

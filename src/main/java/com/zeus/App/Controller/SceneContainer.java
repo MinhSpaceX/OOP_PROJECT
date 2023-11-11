@@ -1,7 +1,9 @@
 package com.zeus.App.Controller;
 
+import com.zeus.DatabaseManager.SQLite;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
+import com.zeus.utils.managerfactory.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -30,6 +32,8 @@ public class SceneContainer implements Initializable {
     private FontAwesomeIconView translateIcon;
     @FXML
     private FontAwesomeIconView gameIcon;
+    @FXML
+    private FontAwesomeIconView updateIcon;
 
     @FXML
     private FontAwesomeIconView heartIcon;
@@ -45,6 +49,25 @@ public class SceneContainer implements Initializable {
 
     @FXML
     private AnchorPane viewWindow = new AnchorPane();
+
+    @FXML
+    private Label shortFav;
+
+    @FXML
+    private Label shortGame;
+
+    @FXML
+    private Label shortHistory;
+
+    @FXML
+    private Label shortSearch;
+
+    @FXML
+    private Label shortTranslate;
+
+    @FXML
+    private Label shortUpdate;
+
 
     boolean MenuVisible = false;
     boolean openWordCard = false;
@@ -94,6 +117,7 @@ public class SceneContainer implements Initializable {
         gameIcon.setMouseTransparent(true);
         heartIcon.setMouseTransparent(true);
         historyIcon.setMouseTransparent(true);
+        updateIcon.setMouseTransparent(true);
     }
 
     @FXML
@@ -102,6 +126,7 @@ public class SceneContainer implements Initializable {
     }
 
     public void changeView(String FXMLurl){
+        setChoosenIcon(FXMLurl);
         viewWindow.getChildren().clear();
         AnchorPane view = new AnchorPane();
         try {
@@ -111,6 +136,40 @@ public class SceneContainer implements Initializable {
         }
         viewWindow.getChildren().setAll(view);
         Logger.info("View changed!");
+    }
+
+    private void setChoosenIcon(String FXMLurl){
+        switch (FXMLurl){
+            case "/com/zeus/fxml/menu.fxml":
+                shortSearch.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                        "-fx-border-width: 0 0 0 2;");
+                shortGame.setStyle("-fx-border-width: 0");
+                shortFav.setStyle("-fx-border-width: 0");
+                shortTranslate.setStyle("-fx-border-width: 0");
+                shortUpdate.setStyle("-fx-border-width: 0");
+                shortHistory.setStyle("-fx-border-width: 0");
+                break;
+            case "/com/zeus/fxml/GameScene.fxml":
+                shortGame.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                        "-fx-border-width: 0 0 0 2;");
+                shortFav.setStyle("-fx-border-width: 0");
+                shortTranslate.setStyle("-fx-border-width: 0");
+                shortUpdate.setStyle("-fx-border-width: 0");
+                shortHistory.setStyle("-fx-border-width: 0");
+                shortSearch.setStyle("-fx-border-width: 0");
+                break;
+            case "/com/zeus/fxml/addWord.fxml":
+                shortUpdate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                        "-fx-border-width: 0 0 0 2;");
+                shortFav.setStyle("-fx-border-width: 0");
+                shortTranslate.setStyle("-fx-border-width: 0");
+                shortGame.setStyle("-fx-border-width: 0");
+                shortHistory.setStyle("-fx-border-width: 0");
+                shortSearch.setStyle("-fx-border-width: 0");
+                break;
+            default:
+                break;
+        }
     }
 
     @FXML

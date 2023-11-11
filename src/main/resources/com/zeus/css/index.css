@@ -19,7 +19,6 @@
 
 .nav-label:hover{
     -fx-cursor: hand;
-    -fx-background-color: rgb(142, 143, 250);
 }
 
 .nav{

@@ -10,12 +10,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="787.0" style="-fx-background-color: #ae9cff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.SceneContainer">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="787.0" style="-fx-background-color: linear-gradient(to right bottom, #7752FE, #C2D9FF);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.SceneContainer">
     <children>
         <AnchorPane fx:id="viewWindow" layoutX="170.0" layoutY="6.0" prefHeight="492.0" prefWidth="617.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <AnchorPane fx:id="slider" layoutX="35.0" layoutY="48.0" prefHeight="298.0" prefWidth="122.0" style="-fx-background-color: rgb(119, 82, 254);" styleClass="navigation-bar" stylesheets="@../css/index.css">
+        <AnchorPane fx:id="slider" layoutX="35.0" layoutY="48.0" prefHeight="330.0" prefWidth="122.0" style="-fx-background-color: rgb(119, 82, 254);" styleClass="navigation-bar" stylesheets="@../css/index.css">
             <children>
-                <VBox alignment="TOP_CENTER" layoutY="57.0" prefHeight="228.0" prefWidth="122.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                <VBox alignment="TOP_CENTER" layoutY="57.0" prefHeight="265.0" prefWidth="122.0" spacing="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                     <children>
                         <Button mnemonicParsing="false" onAction="#loadMenuScreen" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" LookUp" textFill="WHITE">
                             <font>
@@ -32,7 +32,7 @@
                                 <Font name="Corbel" size="16.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#setAddWord" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" History" textFill="WHITE">
+                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" History" textFill="WHITE">
                             <font>
                                 <Font name="Corbel" size="16.0" />
                             </font>
@@ -42,6 +42,11 @@
                                 <Font name="Corbel" size="16.0" />
                             </font>
                         </Button>
+                  <Button mnemonicParsing="false" onAction="#setAddWord" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text="Update" textFill="WHITE">
+                     <font>
+                        <Font name="Corbel" size="16.0" />
+                     </font>
+                  </Button>
                     </children>
                 </VBox>
                 <Label layoutX="40.0" layoutY="14.0" prefHeight="20.0" prefWidth="42.0" text="MENU" textFill="WHITE">
@@ -59,7 +64,7 @@
                 </Separator>
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="-6.0" layoutY="48.0" prefHeight="298.0" prefWidth="49.0" style="-fx-background-color: #ae9cff;" stylesheets="@../css/index.css">
+        <AnchorPane layoutX="-6.0" layoutY="48.0" prefHeight="330.0" prefWidth="50.0" style="-fx-background-color: linear-gradient(to right bottom, #7752FE, #8E8FFA);" stylesheets="@../css/index.css">
             <children>
                 <VBox alignment="TOP_CENTER" layoutX="35.0" layoutY="48.0" prefHeight="298.0" prefWidth="42.0" spacing="27.0" style="-fx-background-color: rgb(119, 82, 254);" styleClass="nav" stylesheets="@../css/index.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="-8.0" AnchorPane.topAnchor="0.0">
                     <children>
@@ -71,31 +76,36 @@
                                 <Insets top="11.0" />
                             </VBox.margin>
                         </Button>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
+                        <Label fx:id="shortSearch" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
                                 <FontAwesomeIconView fx:id="searchIcon" fill="WHITE" glyphName="SEARCH" size="16" wrappingWidth="17.257134437561035" />
                             </graphic>
                         </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="30.0" styleClass="nav-label" stylesheets="@../css/index.css">
+                        <Label fx:id="shortTranslate" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="30.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
                                 <FontAwesomeIconView fx:id="translateIcon" fill="WHITE" glyphName="LANGUAGE" size="16" wrappingWidth="18.51430368423462" />
                             </graphic>
                         </Label>
-                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
+                        <Label fx:id="shortFav" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
                                 <FontAwesomeIconView fx:id="heartIcon" fill="WHITE" glyphName="HEART" selectionEnd="0" size="16" text="" />
                             </graphic>
                         </Label>
-                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
+                        <Label fx:id="shortHistory" alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
                                 <FontAwesomeIconView fx:id="historyIcon" fill="WHITE" glyphName="SHARE" size="16" wrappingWidth="20.000030517578125" />
                             </graphic>
                         </Label>
-                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
+                        <Label fx:id="shortGame" alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
                                 <FontAwesomeIconView fx:id="gameIcon" fill="WHITE" glyphName="GAMEPAD" size="16" />
                             </graphic>
                         </Label>
+                  <Label fx:id="shortUpdate" alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="updateIcon" fill="WHITE" glyphName="PLUS" size="16" />
+                     </graphic>
+                  </Label>
                     </children>
                 </VBox>
             </children>

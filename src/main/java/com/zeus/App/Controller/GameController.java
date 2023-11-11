@@ -1,5 +1,6 @@
 package com.zeus.App.Controller;
 
+import com.zeus.utils.log.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 
 public class GameController implements Initializable {
 
+    public static GameController gameController;
     @FXML
     private Button BlitzMode;
 
@@ -27,10 +29,11 @@ public class GameController implements Initializable {
     @FXML
     private Button PlayButton;
 
-    String gameMode;
+    String gameMode = "Classic";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        gameController = this;
         setGameMode();
     }
 
@@ -61,11 +64,16 @@ public class GameController implements Initializable {
             InfinityMode.getStyleClass().add("game-mode-choosen");
             BlitzMode.getStyleClass().add("game-mode-button");
             ClassicMode.getStyleClass().add("game-mode-button");
-            gameMode = "Classic";
+            gameMode = "Infinity";
         });
         PlayButton.setOnMouseClicked(e -> {
             sc.changeView("/com/zeus/fxml/GameScene2.fxml");
         });
+    }
+
+    public String getGameMode(){
+        //Logger.info(gameMode);
+        return gameMode;
     }
 
 }
