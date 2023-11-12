@@ -31,7 +31,7 @@ public class Clock {
         long start = System.nanoTime();
         method.run();
         long end = System.nanoTime();
-        Logger.printStackTrace(String.format("%s Method execution take: %f seconds\n", method.message, (end - start)/1000000000.0f));
+        Logger.printStackTrace(String.format("%s Method execution take: %f seconds", method.message, (end - start)/1000000000.0f));
     }
 
     abstract public static class CustomRunnableClass implements Runnable{
