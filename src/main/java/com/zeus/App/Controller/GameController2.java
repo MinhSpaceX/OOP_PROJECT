@@ -148,7 +148,7 @@ public class GameController2 implements Initializable {
 
     public void setUpAnsAndQues(){
         if (list.size() <= 8) {
-            Clock.timer(() -> BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 40*4))));
+            Clock.timer(() -> BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 100*4))));
         }
         for(int i = 0; i < 4; i++){
             switch (i){
