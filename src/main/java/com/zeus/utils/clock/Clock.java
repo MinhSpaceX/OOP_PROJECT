@@ -16,6 +16,10 @@ public class Clock {
         staticEnd = System.nanoTime();
     }
 
+    public static long elapse() {
+        return staticEnd - staticStart;
+    }
+
     public static void printTime(String message) {
         System.out.printf("%s Method execution take: %f seconds\n", message, (staticEnd - staticStart)/1000000000.0f);
     }

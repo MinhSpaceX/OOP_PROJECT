@@ -18,10 +18,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.apache.commons.logging.Log;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -73,7 +71,7 @@ public class GameController2 implements Initializable {
     private Text clockCounter;
     @FXML
     private Label clock;
-    private int timeRemaining = 30;
+    private double timeRemaining = 30;
     private List<Pair<String, String>> list = new ArrayList<>();
 
 
@@ -121,11 +119,8 @@ public class GameController2 implements Initializable {
         setUpAnsAndQues();
     }
 
-    public void setScoreForBlitz(){
-        scoreDisplay.setText( "Score: " + Score);
-    }
-
     public void toBlitzMode(){
+        scoreDisplay.setText( "Score: " + Score);
         questIndex.setVisible(false);
         if(timeRemaining == 30){
             timeThread();
@@ -136,24 +131,44 @@ public class GameController2 implements Initializable {
     }
 
     public void timeThread(){
+        BackgroundTask.perform(() -> {
+            timeRemaining = 29.99999999f;
+            Clock.Tick();
+            Clock.Tock();
+            double elapse = Clock.elapse()/1000000000.0f;
+            while(elapse <= 30) {
+                Clock.Tock();
+                elapse = Clock.elapse()/1000000000.0f;
+                if (elapse >= 0.1) {
+                    Clock.Tick();
+                    if (timeRemaining < 0) break;
+                    System.out.println(timeRemaining);
+                    timeRemaining -= elapse;
+                    clockCounter.setText(String.format("Time: %d",(int)timeRemaining));
+                }
 
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+            }
+            timeRemaining = 30;
+            ResultCard.setVisible(true);
+
+        });
+        /*Timer timer = new Timer(1000, new ActionListener() {
             @Override
-            public void run() {
+            public void actionPerformed(ActionEvent e) {
                 timeRemaining--;
-                clockCounter.setText(String.format("Time: %d", timeRemaining));
+                clockCounter.setText(String.format("Time: %d",(int)timeRemaining));
 
                 if (timeRemaining <= 0) {
-                    timer.cancel(); // Stop the timer
-                    showEndMenu();
+                    ((Timer) e.getSource()).stop();
+                    ResultCard.setVisible(true);
                 }
             }
-        }, 1000, 1000);
+        });
+        timer.start();*/
     }
 
     public void setUpAnsAndQues(){
-        if (list.size() <= 8) {
+        if (list.size() <= 4*8) {
             Clock.timer(() -> BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 100*4))));
         }
         for(int i = 0; i < 4; i++){
@@ -197,7 +212,7 @@ public class GameController2 implements Initializable {
                 toInfinityMode();
             }
             if(gameMode.equals("Blitz")){
-                setScoreForBlitz();
+                toBlitzMode();
             }
         }
         else {
@@ -212,20 +227,18 @@ public class GameController2 implements Initializable {
                 toBlitzMode();
             }
         }
-        if((index == 11 && gameMode.equals("Classic"))){
-            showEndMenu();
+        if((index == 11 && gameMode.equals("Classic")) ||
+                (timeRemaining == 0 && gameMode.equals("Blitz"))){
+            ResultCard.setVisible(true);
+            finalScore.setText(String.format("%d", Score));
+            backToMenu.setOnMouseClicked(e->{
+                sc.changeView("/com/zeus/fxml/GameScene.fxml");
+                Logger.info("call");
+            });
+            continuePlay.setOnMouseClicked(e->{
+                sc.changeView("/com/zeus/fxml/GameScene2.fxml");
+            });
         }
-    }
-
-    public void showEndMenu(){
-        ResultCard.setVisible(true);
-        finalScore.setText(String.format("%d", Score));
-        backToMenu.setOnMouseClicked(e->{
-            sc.changeView("/com/zeus/fxml/GameScene.fxml");
-        });
-        continuePlay.setOnMouseClicked(e->{
-            sc.changeView("/com/zeus/fxml/GameScene2.fxml");
-        });
     }
 
 }
