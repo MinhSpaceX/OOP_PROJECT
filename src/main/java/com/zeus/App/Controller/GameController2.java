@@ -81,7 +81,8 @@ public class GameController2 implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sql = SystemManager.getManager(SQLite.class);
-        list = sql.getRandomWords(1, 8);
+        list = sql.getRandomWords(1, 4*8);
+        BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 100*4)));
         System.out.println(sql);
         backToGameMenu.setOnMouseClicked(e->{
             sc.changeView("/com/zeus/fxml/GameScene.fxml");
@@ -142,7 +143,6 @@ public class GameController2 implements Initializable {
                 if (elapse >= 0.1) {
                     Clock.Tick();
                     if (timeRemaining < 0) break;
-                    System.out.println(timeRemaining);
                     timeRemaining -= elapse;
                     clockCounter.setText(String.format("Time: %d",(int)timeRemaining));
                 }
@@ -168,7 +168,7 @@ public class GameController2 implements Initializable {
     }
 
     public void setUpAnsAndQues(){
-        if (list.size() <= 4*8) {
+        if (list.size() <= 4*10) {
             Clock.timer(() -> BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 100*4))));
         }
         for(int i = 0; i < 4; i++){
