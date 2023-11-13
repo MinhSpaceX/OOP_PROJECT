@@ -1,6 +1,8 @@
 package com.zeus.App.Controller;
 
 import com.zeus.DatabaseManager.SQLite;
+import com.zeus.utils.background.BackgroundTask;
+import com.zeus.utils.clock.Clock;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -21,6 +23,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -69,6 +72,7 @@ public class GameController2 implements Initializable {
     @FXML
     private Label clock;
     private int timeRemaining = 30;
+    private List<Pair<String, String>> list = new ArrayList<>();
 
 
     GameController gc = GameController.gameController;
@@ -77,6 +81,7 @@ public class GameController2 implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sql = SystemManager.getManager(SQLite.class);
+        list = sql.getRandomWords(1, 8);
         System.out.println(sql);
         backToGameMenu.setOnMouseClicked(e->{
             sc.changeView("/com/zeus/fxml/GameScene.fxml");
@@ -142,7 +147,9 @@ public class GameController2 implements Initializable {
     }
 
     public void setUpAnsAndQues(){
-        List<Pair<String, String>> list = sql.getRandomWords(1, 4);
+        if (list.size() <= 8) {
+            Clock.timer(() -> BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 40*4))));
+        }
         for(int i = 0; i < 4; i++){
             switch (i){
                 case 0:
@@ -167,6 +174,7 @@ public class GameController2 implements Initializable {
                     });
             }
         }
+        list.subList(0, 3).clear();
         Random ran = new Random();
         answer = ran.nextInt(4);
         questionDisplay.setText("What is the meaning of \"" + list.get(answer).getKey() + "\"");
