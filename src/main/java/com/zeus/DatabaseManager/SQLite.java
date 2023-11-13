@@ -1,5 +1,6 @@
 package com.zeus.DatabaseManager;
 
+import com.sun.javafx.iio.gif.GIFImageLoader2;
 import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.DictionaryManager.WordFactory;
@@ -9,17 +10,20 @@ import com.zeus.utils.encode.Encoder;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.Manager;
+import com.zeus.utils.managerfactory.SystemManager;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.commons.logging.Log;
 
 import javax.swing.plaf.nimbus.State;
+import java.awt.desktop.UserSessionEvent;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
 
 public class SQLite extends Manager {
     private String pathToDatabase;
+    private String userDatabase;
     private String url;
 
     public SQLite() {
@@ -63,7 +67,19 @@ public class SQLite extends Manager {
         try {
             conn = DriverManager.getConnection(url);
             if (conn == null) throw new NullPointerException("Failed to establish a connection.");
-            Logger.printStackTrace("Connection established.");
+            Logger.info("Connection established.");
+        } catch (SQLException e) {
+            Logger.printStackTrace(e);
+        }
+        return conn;
+    }
+
+    private Connection connect(String path) {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection("jdbc:sqlite:" + path);
+            if (conn == null) throw new NullPointerException("Failed to establish a connection.");
+            Logger.info("Connection established.");
         } catch (SQLException e) {
             Logger.printStackTrace(e);
         }
@@ -72,10 +88,13 @@ public class SQLite extends Manager {
 
     public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
         SQLite sqLite = new SQLite();
-        sqLite.setDatabase("/com/zeus/data/Dictionary.db");
+        sqLite.setDatabase("/com/zeus/data/userDatabase.db");
         sqLite.checkExist();
-        Clock.timer(() -> sqLite.importFromJson("/com/zeus/data/test.json"));
-        Clock.timer(() -> sqLite.getRandomWords(3, 10));
+        sqLite.userDatabase = FileManager.getPathFromFile("/com/zeus/data/userDatabase.db");
+        sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt");
+        SingleWord singleWord = new SingleWord("damn", "what the fuck", "damn", "damn", null);
+        SingleWord newsingleWord = new SingleWord("damn", "new What?", "new type bro", "damn just kidding", null);
+        sqLite.updateWord(singleWord, newsingleWord);
     }
 
     private void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
@@ -123,7 +142,7 @@ public class SQLite extends Manager {
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
         String queryExample = "INSERT INTO EXAMPLE(wordID, exampleID, meaningID, targetEN, targetVN) VALUES(?, ?, ?, ?, ?)";
-        try (Connection connection = this.connect();
+        try (Connection connection = this.connect(userDatabase);
              PreparedStatement sW = connection.prepareStatement(queryWord);
              PreparedStatement sM = connection.prepareStatement(queryMeaning);
              PreparedStatement sE = connection.prepareStatement(queryExample);
@@ -262,9 +281,62 @@ public class SQLite extends Manager {
         return result;
     }
 
+    public void updateWord(SingleWord oldWord, SingleWord newWord) {
+        try (Connection connection = this.connect();
+             PreparedStatement updateWORD = connection.prepareStatement("UPDATE WORD SET pronoun = ? WHERE wordID = ?");
+             PreparedStatement updateMEANING = connection.prepareStatement("UPDATE MEANING SET target = ?, type = ? WHERE wordID = ? AND target = ? AND type = ?");
+             PreparedStatement updateEXAMPLE = connection.prepareStatement("UPDATE EXAMPLE SET targetEN = ?, targetVN = ? WHERE wordID = ? AND meaningID = ? AND targetEN = ? AND targetVN = ?");
+             PreparedStatement getExampleID = connection.prepareStatement("SELECT meaningID FROM MEANING WHERE wordID = ? AND target = ? AND type = ?")) {
+            String wordID = Encoder.encode(newWord.getWordTarget());
+            if (!Objects.equals(oldWord.getWordTarget(), newWord.getWordTarget())) throw new Exception(String.format("Old word target(%s) must be the same as new word target(%s)", oldWord.getWordTarget(), newWord.getWordTarget()));
+            getExampleID.setString(1, wordID);
+            getExampleID.setString(2, oldWord.getMeaning());
+            getExampleID.setString(3, oldWord.getType());
+            ResultSet resultSet = getExampleID.executeQuery();
+            if (!resultSet.next()) throw new Exception(String.format("There is no word(wordID: %s) with meaning: %s and type: %s.", wordID, oldWord.getMeaning(), oldWord.getType()));
+
+            updateWORD.setString(1, newWord.getPronoun());
+            updateWORD.setString(2, wordID);
+            updateWORD.executeUpdate();
+
+            updateMEANING.setString(1, newWord.getMeaning());
+            updateMEANING.setString(2, newWord.getType());
+            updateMEANING.setString(3, wordID);
+            updateMEANING.setString(4, oldWord.getMeaning());
+            updateMEANING.setString(5, oldWord.getType());
+            updateMEANING.executeUpdate();
+
+            updateEXAMPLE.setString(3, wordID);
+            updateEXAMPLE.setInt(4, resultSet.getInt(1));
+            List<Pair<String, String>> oldExamples = oldWord.getExamples();
+            List<Pair<String, String>> newExamples = newWord.getExamples();
+            if (oldExamples != null && newExamples != null) {
+                if (oldExamples.size() != newExamples.size()) throw new Exception(String.format("Old word examples array(%d) must be of same size as new word examples array(%d).", oldExamples.size(), newExamples.size()));
+                for (int i = 0; i < oldExamples.size(); i++) {
+                    Pair<String, String> oldPair = oldExamples.get(i);
+                    Pair<String, String> newPair = newExamples.get(i);
+                    if (!newPair.equals(oldPair)) {
+                        updateEXAMPLE.setString(1, newPair.getKey());
+                        updateEXAMPLE.setString(2, newPair.getValue());
+                        updateEXAMPLE.setString(5, oldPair.getKey());
+                        updateEXAMPLE.setString(6, oldPair.getValue());
+                        updateEXAMPLE.executeUpdate();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
+        }
+    }
+
     @Override
     public void init(Config config) {
         pathToDatabase = config.getProperty("localSQLitePath", String.class);
+        try {
+            userDatabase = FileManager.getPathFromFile(config.getProperty("localUserDatabase", String.class));
+        } catch (UnsupportedEncodingException | FileNotFoundException e) {
+            Logger.printStackTrace(e);
+        }
         try {
             url = "jdbc:sqlite:" + FileManager.getPathFromFile(pathToDatabase);
         } catch (UnsupportedEncodingException | FileNotFoundException e) {
