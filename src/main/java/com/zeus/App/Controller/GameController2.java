@@ -18,8 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import org.apache.commons.logging.Log;
 
-import javax.swing.*;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -119,8 +121,11 @@ public class GameController2 implements Initializable {
         setUpAnsAndQues();
     }
 
-    public void toBlitzMode(){
+    public void setScoreForBlitz(){
         scoreDisplay.setText( "Score: " + Score);
+    }
+
+    public void toBlitzMode(){
         questIndex.setVisible(false);
         if(timeRemaining == 30){
             timeThread();
@@ -131,19 +136,20 @@ public class GameController2 implements Initializable {
     }
 
     public void timeThread(){
-        Timer timer = new Timer(1000, new ActionListener() {
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void run() {
                 timeRemaining--;
-                clockCounter.setText(String.format("Time: %d",timeRemaining));
+                clockCounter.setText(String.format("Time: %d", timeRemaining));
 
                 if (timeRemaining <= 0) {
-                    ((Timer) e.getSource()).stop();
-                    ResultCard.setVisible(true);
+                    timer.cancel(); // Stop the timer
+                    showEndMenu();
                 }
             }
-        });
-        timer.start();
+        }, 1000, 1000);
     }
 
     public void setUpAnsAndQues(){
@@ -191,7 +197,7 @@ public class GameController2 implements Initializable {
                 toInfinityMode();
             }
             if(gameMode.equals("Blitz")){
-                toBlitzMode();
+                setScoreForBlitz();
             }
         }
         else {
@@ -206,18 +212,20 @@ public class GameController2 implements Initializable {
                 toBlitzMode();
             }
         }
-        if((index == 11 && gameMode.equals("Classic")) ||
-                (timeRemaining == 0 && gameMode.equals("Blitz"))){
-            ResultCard.setVisible(true);
-            finalScore.setText(String.format("%d", Score));
-            backToMenu.setOnMouseClicked(e->{
-                sc.changeView("/com/zeus/fxml/GameScene.fxml");
-                Logger.info("call");
-            });
-            continuePlay.setOnMouseClicked(e->{
-                sc.changeView("/com/zeus/fxml/GameScene2.fxml");
-            });
+        if((index == 11 && gameMode.equals("Classic"))){
+            showEndMenu();
         }
+    }
+
+    public void showEndMenu(){
+        ResultCard.setVisible(true);
+        finalScore.setText(String.format("%d", Score));
+        backToMenu.setOnMouseClicked(e->{
+            sc.changeView("/com/zeus/fxml/GameScene.fxml");
+        });
+        continuePlay.setOnMouseClicked(e->{
+            sc.changeView("/com/zeus/fxml/GameScene2.fxml");
+        });
     }
 
 }
