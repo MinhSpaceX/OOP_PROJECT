@@ -149,7 +149,7 @@ public class GameController2 implements Initializable {
 
             }
             timeRemaining = 30;
-            ResultCard.setVisible(true);
+            openEndScene();
 
         });
         /*Timer timer = new Timer(1000, new ActionListener() {
@@ -227,18 +227,21 @@ public class GameController2 implements Initializable {
                 toBlitzMode();
             }
         }
-        if((index == 11 && gameMode.equals("Classic")) ||
-                (timeRemaining == 0 && gameMode.equals("Blitz"))){
-            ResultCard.setVisible(true);
-            finalScore.setText(String.format("%d", Score));
-            backToMenu.setOnMouseClicked(e->{
-                sc.changeView("/com/zeus/fxml/GameScene.fxml");
-                Logger.info("call");
-            });
-            continuePlay.setOnMouseClicked(e->{
-                sc.changeView("/com/zeus/fxml/GameScene2.fxml");
-            });
+        if((index == 11 && gameMode.equals("Classic"))){
+           openEndScene();
         }
+    }
+
+    public void openEndScene(){
+        ResultCard.setVisible(true);
+        finalScore.setText(String.format("%d", Score));
+        backToMenu.setOnMouseClicked(e->{
+            sc.changeView("/com/zeus/fxml/GameScene.fxml");
+            Logger.info("call");
+        });
+        continuePlay.setOnMouseClicked(e->{
+            sc.changeView("/com/zeus/fxml/GameScene2.fxml");
+        });
     }
 
 }
