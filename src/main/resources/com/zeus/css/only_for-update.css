@@ -1,0 +1,17 @@
+.result-display-update{
+    -fx-border-radius: 0 0 5 5;
+    -fx-background-radius: 0 0 5 5;
+}
+
+.result-display-label-style{
+    -fx-text-fill: white;
+    -fx-font-size: 15;
+    -fx-pref-width: 206;
+    -fx-background-radius: 5;
+    -fx-padding: 0 0 0 5;
+}
+
+.result-display-label-style:hover{
+    -fx-background-color: white;
+    -fx-text-fill: rgb(142, 143, 250);
+}

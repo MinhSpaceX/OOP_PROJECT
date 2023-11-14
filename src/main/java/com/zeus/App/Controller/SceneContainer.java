@@ -1,21 +1,15 @@
 package com.zeus.App.Controller;
 
-import com.zeus.DatabaseManager.SQLite;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
-import com.zeus.utils.managerfactory.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -158,7 +152,7 @@ public class SceneContainer implements Initializable {
                 shortHistory.setStyle("-fx-border-width: 0");
                 shortSearch.setStyle("-fx-border-width: 0");
                 break;
-            case "/com/zeus/fxml/addWord.fxml":
+            case "/com/zeus/fxml/UpdateScene.fxml":
                 shortUpdate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
                         "-fx-border-width: 0 0 0 2;");
                 shortFav.setStyle("-fx-border-width: 0");
@@ -174,6 +168,6 @@ public class SceneContainer implements Initializable {
 
     @FXML
     public void setAddWord(ActionEvent event) {
-        changeView("/com/zeus/fxml/addWord.fxml");
+        changeView("/com/zeus/fxml/UpdateScene.fxml");
     }
 }

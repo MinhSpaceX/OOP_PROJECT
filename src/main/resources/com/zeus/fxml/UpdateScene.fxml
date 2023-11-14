@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="471.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.UpdateController">
+   <children>
+      <AnchorPane layoutY="11.0" prefHeight="470.0" prefWidth="447.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css">
+         <children>
+            <VBox layoutX="-1.0" layoutY="89.0" prefHeight="375.0" prefWidth="447.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="447.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="pronounDisplay" prefHeight="26.0" prefWidth="124.0" text="Pronounciation" textFill="#b1a9a9">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="292.0" style="-fx-border-color: rgb(142, 143, 250); -fx-border-radius: 5;">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <graphic>
+                              <TextField fx:id="getPronoun" prefHeight="32.0" prefWidth="140.0" promptText="Previous pronoun" style="-fx-background-color: transparent;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="46.0" prefWidth="447.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="pronounDisplay2" prefHeight="26.0" prefWidth="124.0" text="Type" textFill="#b1a9a9">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label prefHeight="34.0" prefWidth="212.0" style="-fx-border-color: rgb(142, 143, 250); -fx-border-radius: 5;">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <graphic>
+                              <TextField fx:id="getType" prefHeight="32.0" prefWidth="293.0" promptText="Previous type" style="-fx-background-color: transparent;">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </graphic>
+                        </Label>
+                        <Label fx:id="anotherType" prefHeight="18.0" prefWidth="73.0" text="Other type">
+                           <font>
+                              <Font name="Corbel" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="84.0" prefWidth="447.0" spacing="5.0">
+                     <children>
+                        <Label fx:id="pronounDisplay21" prefHeight="26.0" prefWidth="68.0" text="Meaning" textFill="#b1a9a9">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Label prefHeight="84.0" prefWidth="354.0" style="-fx-border-color: rgb(142, 143, 250); -fx-border-radius: 5;">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <graphic>
+                              <TextField fx:id="getMEaning" alignment="TOP_LEFT" prefHeight="82.0" prefWidth="369.0" promptText="Previous meaning" style="-fx-background-color: transparent;">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </TextField>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="199.0" prefWidth="447.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="pronounDisplay211" prefHeight="26.0" prefWidth="61.0" text="Example" textFill="#b1a9a9">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="15.0" />
+                           </HBox.margin>
+                        </Label>
+                        <VBox prefHeight="199.0" prefWidth="353.0" spacing="3.0">
+                           <children>
+                              <AnchorPane prefHeight="17.0" prefWidth="354.0">
+                                 <children>
+                                    <Label fx:id="anotherEx" layoutX="190.0" layoutY="1.0" prefHeight="12.0" prefWidth="164.0" text="Choose another example">
+                                       <font>
+                                          <Font name="Corbel" size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <Label layoutY="1.0" prefHeight="11.0" prefWidth="99.0" text="English">
+                                       <font>
+                                          <Font name="Corbel" size="15.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </AnchorPane>
+                              <Label prefHeight="75.0" prefWidth="358.0" style="-fx-border-color: rgb(142, 143, 250); -fx-border-radius: 5;">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <graphic>
+                                    <TextField fx:id="getEnglishExample" alignment="TOP_LEFT" prefHeight="92.0" prefWidth="342.0" promptText="Previous example" style="-fx-background-color: transparent;">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </graphic>
+                              </Label>
+                              <Label prefHeight="22.0" prefWidth="99.0" text="Vietnamese">
+                                 <font>
+                                    <Font name="Corbel" size="15.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="88.0" prefWidth="356.0" style="-fx-border-color: rgb(142, 143, 250); -fx-border-radius: 5;">
+                                 <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                 </padding>
+                                 <graphic>
+                                    <TextField fx:id="getVieExample" alignment="TOP_LEFT" prefHeight="104.0" prefWidth="342.0" promptText="Previous type" style="-fx-background-color: transparent;">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </TextField>
+                                 </graphic>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Label fx:id="wordTargetDisplay" layoutX="14.0" layoutY="62.0" prefHeight="26.0" prefWidth="118.0" text="Word_target">
+               <font>
+                  <Font name="Corbel" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="addWordButton" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="153.0" styleClass="addword-button" text="Add a new word">
+               <graphic>
+                  <FontAwesomeIconView fill="#8e8ffa" glyphName="PLUS" />
+               </graphic>
+            </Button>
+            <HBox alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="234.0">
+               <children>
+                  <TextField fx:id="searchBar" prefHeight="34.0" prefWidth="215.0" promptText="Find the word you want" stylesheets="@../css/application.css">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <styleClass>
+                        <String fx:value="transparent-template" />
+                        <String fx:value="search-container" />
+                     </styleClass>
+                  </TextField>
+                  <ImageView fitHeight="34.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/searchIcon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <Button fx:id="updateButton" layoutX="365.0" layoutY="61.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="74.0" styleClass="update-button" text="Update" />
+            <VBox fx:id="searchResultDisplay" layoutX="13.0" layoutY="47.0" prefHeight="27.0" prefWidth="206.0" spacing="5.0" style="-fx-background-color: rgb(142, 143, 250);" styleClass="result-display-update" stylesheets="@../css/only_for-update.css">
+               <children>
+                  <Label prefHeight="27.0" prefWidth="206.0" styleClass="result-display-label-style" stylesheets="@../css/only_for-update.css" text="Label">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
