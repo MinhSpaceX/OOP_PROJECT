@@ -104,7 +104,7 @@
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>
                               </HBox>
-                              <ScrollPane prefHeight="399.0" prefWidth="437.0">
+                              <ScrollPane prefHeight="399.0" prefWidth="437.0" styleClass="scroll-pane-wordview">
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>

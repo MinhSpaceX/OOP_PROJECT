@@ -17,7 +17,7 @@
     -fx-background-radius: 5;
 }
 
-.scroll-pane {
+.scroll-pane-wordview {
     -fx-hbar-policy: never;
     -fx-border-color: rgb(142, 143, 250);
     -fx-border: 0;
@@ -27,24 +27,24 @@
     -fx-background: white;
 }
 
-.scroll-pane .scroll-bar:vertical {
+.scroll-pane-wordview .scroll-bar:vertical {
     -fx-pref-width: 7px;
     -fx-background-color: transparent;
     -fx-padding-bottom: 100;
 }
 
-.scroll-pane .thumb{
+.scroll-pane-wordview .thumb{
     -fx-background-color: rgb(119, 82, 254);
 }
 
-.scroll-pane .increment-button, .decrement-button{
+.scroll-pane-wordview .increment-button, .decrement-button{
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-background-insets: 0;
     -fx-pref-width: 10;
 }
 
-.scroll-pane .increment-arrow, .decrement-arrow{
+.scroll-pane-wordview .increment-arrow, .decrement-arrow{
     -fx-shape: " ";
     -fx-padding:0;
 }
@@ -179,4 +179,14 @@
 .addword-button:hover{
     -fx-background-color: rgb(156, 190, 255, 0.2);
     -fx-cursor: hand;
+}
+
+.other-meaning-label{
+
+}
+
+.other-meaning-label:hover{
+    -fx-cursor: hand;
+    -fx-text-fill: rgb(142, 143, 250);
+    -fx-underline: true;
 }

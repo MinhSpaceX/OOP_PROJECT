@@ -43,7 +43,7 @@ public class Menu implements Initializable {
         searchWord();
         Logger.info("Menu init -----------------");
         searchBar.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DOWN) {
+            if (event.getCode() == KeyCode.DOWN && !resultDisplay.getChildren().isEmpty()) {
                 resultDisplay.getChildren().get(0).requestFocus();
             }
         });

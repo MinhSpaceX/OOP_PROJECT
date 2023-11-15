@@ -54,7 +54,6 @@ public class WordView implements Initializable {
     private List<String> temp = new ArrayList<>();
 
     private static Label menuLabel;
-    private Map<String, Boolean> getClickCss = new HashMap<>();
 
     public static void setMenuLabel(Label label) {
         menuLabel = label;
@@ -111,7 +110,6 @@ public class WordView implements Initializable {
 
     public void searchWord(){
         resultDisplay2.setVisible(false);
-        Logger.info("called");
         searchBar2.setOnKeyReleased(keyEvent -> {
             temp.clear();
             resultDisplay2.getChildren().clear();
@@ -152,12 +150,12 @@ public class WordView implements Initializable {
             if(getFirst) {
                 temp.getStyleClass().add("tab-label");
                 DisplayMeaning(temp.getText());
-                getClickCss.put(temp.getText(), true);
+                //getClickCss.put(temp.getText(), true);
                 getFirst = false;
             }
             else{
                 temp.getStyleClass().add("unchoose-tab-label");
-                getClickCss.put(temp.getText(), false);
+                //getClickCss.put(temp.getText(), false);
             }
             temp.setOnMouseClicked(e -> DisplayMeaning(temp.getText()));
             typeContainer.getChildren().add(temp);
@@ -168,7 +166,7 @@ public class WordView implements Initializable {
 
     public void DisplayMeaning(String type){
         int count = 0;
-        getClickCss.put(type, true);
+        //getClickCss.put(type, true);
         for (javafx.scene.Node node : typeContainer.getChildren()) {
             if (node instanceof Label) {
                 Label temp = (Label) node;
