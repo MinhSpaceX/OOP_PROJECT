@@ -275,7 +275,7 @@ public class UpdateController implements Initializable {
     public void applyUserUpdate(ActionEvent event){
         if(!getType.getText().isEmpty()) {
             SingleWord newSingleWord = getNewSingleWord(currentExample);
-            //sql.updateWord(oldSingleWord, newSingleWord);
+            sql.updateWord(oldSingleWord, newSingleWord);
             refreshInfo();
         }
     }

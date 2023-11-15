@@ -22,8 +22,8 @@ import java.sql.*;
 import java.util.*;
 
 public class SQLite extends Manager {
-    private String pathToDatabase;
-    private String userDatabase;
+    public static String pathToDatabase;
+    public static String userDatabase;
     private String url;
 
     public SQLite() {
@@ -91,9 +91,10 @@ public class SQLite extends Manager {
         sqLite.setDatabase("/com/zeus/data/Dictionary.db");
         sqLite.checkExist();
         sqLite.userDatabase = FileManager.getPathFromFile("/com/zeus/data/userDatabase.db");
-        sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt");
+        sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt", SQLite.userDatabase);
         SingleWord singleWord = new SingleWord("damn", "what the fuck", "damn", "damn", null);
-        SingleWord newsingleWord = new SingleWord("damn", "new What?", "new type bro", "damn just kidding", null);
+        SingleWord newsingleWord = new SingleWord("damn", "new What?", null, "damn just kidding", null);
+        sqLite.insert(singleWord);
         sqLite.updateWord(singleWord, newsingleWord);
     }
 
@@ -138,7 +139,7 @@ public class SQLite extends Manager {
         }
     }
 
-    public void insert(SingleWord word) {
+    public boolean insert(SingleWord word) {
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
         String queryExample = "INSERT INTO EXAMPLE(wordID, exampleID, meaningID, targetEN, targetVN) VALUES(?, ?, ?, ?, ?)";
@@ -201,11 +202,13 @@ public class SQLite extends Manager {
             Logger.info("Insert successful.");
         } catch (Exception e) {
             Logger.printStackTrace(e);
+            return false;
         }
+        return true;
     }
 
-    private void createDatabaseFromQuery(String filePath) {
-        try (Connection conn = this.connect();
+    private void createDatabaseFromQuery(String filePath, String database) {
+        try (Connection conn = this.connect(database);
              BufferedReader bufferedReader = new BufferedReader(new FileReader(FileManager.getFileFromPath(filePath)));
              PreparedStatement countTables = conn.prepareStatement("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence'")) {
             ResultSet count = countTables.executeQuery();
@@ -282,17 +285,17 @@ public class SQLite extends Manager {
     }
 
     public void updateWord(SingleWord oldWord, SingleWord newWord) {
-        try (Connection connection = this.connect();
+        try (Connection connection = this.connect(userDatabase);
              PreparedStatement updateWORD = connection.prepareStatement("UPDATE WORD SET pronoun = ? WHERE wordID = ?");
              PreparedStatement updateMEANING = connection.prepareStatement("UPDATE MEANING SET target = ?, type = ? WHERE wordID = ? AND target = ? AND type = ?");
              PreparedStatement updateEXAMPLE = connection.prepareStatement("UPDATE EXAMPLE SET targetEN = ?, targetVN = ? WHERE wordID = ? AND meaningID = ? AND targetEN = ? AND targetVN = ?");
-             PreparedStatement getExampleID = connection.prepareStatement("SELECT meaningID FROM MEANING WHERE wordID = ? AND target = ? AND type = ?")) {
+             PreparedStatement getMeaningID = connection.prepareStatement("SELECT meaningID FROM MEANING WHERE wordID = ? AND target = ? AND type = ?")) {
             String wordID = Encoder.encode(newWord.getWordTarget());
             if (!Objects.equals(oldWord.getWordTarget(), newWord.getWordTarget())) throw new Exception(String.format("Old word target(%s) must be the same as new word target(%s)", oldWord.getWordTarget(), newWord.getWordTarget()));
-            getExampleID.setString(1, wordID);
-            getExampleID.setString(2, oldWord.getMeaning());
-            getExampleID.setString(3, oldWord.getType());
-            ResultSet resultSet = getExampleID.executeQuery();
+            getMeaningID.setString(1, wordID);
+            getMeaningID.setString(2, oldWord.getMeaning());
+            getMeaningID.setString(3, oldWord.getType());
+            ResultSet resultSet = getMeaningID.executeQuery();
             if (!resultSet.next()) throw new Exception(String.format("There is no word(wordID: %s) with meaning: %s and type: %s.", wordID, oldWord.getMeaning(), oldWord.getType()));
 
             updateWORD.setString(1, newWord.getPronoun());
