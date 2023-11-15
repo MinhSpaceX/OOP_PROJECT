@@ -103,7 +103,7 @@ public class FileManager {
              BufferedWriter bw = new BufferedWriter(fw)) {
 
             for (String a : wordTarget) {
-                bw.write(a.toString());
+                bw.write(a.toString()+ "\n");
             }
         } catch (IOException e) {
             System.out.printf("%s", e.getMessage());

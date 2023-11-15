@@ -140,6 +140,7 @@ public class WordView implements Initializable {
     }
 
     public void displayLabelContent(Label label){
+        History.historyList.add(label.getText());
         typeContainer.getChildren().clear();
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
