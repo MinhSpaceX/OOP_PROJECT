@@ -125,6 +125,10 @@ public class Word {
                 this.meanings = meanings;
             }
 
+            public void setMeanings(List<Meaning> meanings) {
+                this.meanings = meanings;
+            }
+
             public String getName() {
                 return name;
             }
