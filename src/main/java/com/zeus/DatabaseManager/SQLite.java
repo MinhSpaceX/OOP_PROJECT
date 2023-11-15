@@ -140,6 +140,7 @@ public class SQLite extends Manager {
     }
 
     public boolean insert(SingleWord word) {
+        boolean success = true;
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
         String queryExample = "INSERT INTO EXAMPLE(wordID, exampleID, meaningID, targetEN, targetVN) VALUES(?, ?, ?, ?, ?)";
@@ -202,9 +203,9 @@ public class SQLite extends Manager {
             Logger.info("Insert successful.");
         } catch (Exception e) {
             Logger.printStackTrace(e);
-            return false;
+            success = false;
         }
-        return true;
+        return success;
     }
 
     private void createDatabaseFromQuery(String filePath, String database) {
@@ -333,7 +334,7 @@ public class SQLite extends Manager {
     }
 
     public List<SingleWord> getWord(String wordTarget) {
-        try (Connection connection = this.connect();
+        try (Connection connection = this.connect(userDatabase);
              PreparedStatement getWORD = connection.prepareStatement("SELECT WORD.pronoun, MEANING.type ,MEANING.target, EXAMPLE.targetEN, EXAMPLE.targetVN FROM WORD LEFT JOIN MEANING ON WORD.wordID = MEANING.wordID LEFT JOIN EXAMPLE ON WORD.wordID = EXAMPLE.wordID AND EXAMPLE.meaningID = MEANING.meaningID WHERE WORD.wordID = ?")) {
             String wordID = Encoder.encode(wordTarget);
             getWORD.setString(1, wordID);
