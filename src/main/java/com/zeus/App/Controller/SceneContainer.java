@@ -170,4 +170,9 @@ public class SceneContainer implements Initializable {
     public void setAddWord(ActionEvent event) {
         changeView("/com/zeus/fxml/UpdateScene.fxml");
     }
+
+    @FXML
+    public void setHistory(ActionEvent event) {
+        changeView("/com/zeus/fxml/history.fxml");
+    }
 }

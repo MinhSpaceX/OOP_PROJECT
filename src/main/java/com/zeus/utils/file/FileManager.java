@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zeus.App.Controller.History;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
@@ -82,15 +83,30 @@ public class FileManager {
         return null;
     }
 
-    public static void dictionaryExportToFile(Word word) {
-        try (RandomAccessFile raf = new RandomAccessFile(FileManager.getPathFromFile("/com/zeus/data/dictionary.json"), "rw");) {
-            raf.seek(raf.length() - 1);
-            raf.writeBytes(",");
-            raf.write(word.toString().getBytes(StandardCharsets.UTF_8));
-            raf.writeBytes("\n}");
-            Logger.info("Ghi thành công----------");
+    public static void insertFromFile() {
+        try (InputStream is = new FileInputStream(getPathFromFile("/com/zeus/data/history.txt"));
+             BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                History.historyList.add(line);
+            }
+            Logger.info("inserted");
         } catch (IOException e) {
-            Logger.warn("Lỗi khi ghi dữ liệu vào tệp JSON: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public static  void dictionaryExportToFile(ArrayList<String> wordTarget) {
+        try (FileWriter fw = new FileWriter(FileManager.getPathFromFile("/com/zeus/data/history.txt"));
+             BufferedWriter bw = new BufferedWriter(fw)) {
+
+            for (String a : wordTarget) {
+                bw.write(a.toString());
+            }
+        } catch (IOException e) {
+            System.out.printf("%s", e.getMessage());
         }
     }
 }
