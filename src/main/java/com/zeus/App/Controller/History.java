@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -24,7 +25,10 @@ public class History implements Initializable {
 
     public void displayHistory() {
         for(String i : historyList){
+            HBox hBox = new HBox();
             Label label = new Label(i);
+            hBox.getChildren().add(label);//HERE
+            hBox.getChildren().add(new Label(i));//HERE
             label.setText(i);
             label.getStyleClass().add("label-style");
             label.setOnMouseClicked(e -> {
@@ -33,7 +37,7 @@ public class History implements Initializable {
                 historyList.remove(i);
                 sc.changeView("/com/zeus/fxml/WordView.fxml");
             });
-            historyDisplay.getChildren().add(label);
+            historyDisplay.getChildren().add(hBox);
         }
     }
 
