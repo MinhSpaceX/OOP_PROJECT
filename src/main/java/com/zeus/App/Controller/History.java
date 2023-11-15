@@ -29,7 +29,6 @@ public class History implements Initializable {
             Label label = new Label(i);
             hBox.getChildren().add(label);//HERE
             hBox.getChildren().add(new Label(i));//HERE
-            label.setText(i);
             label.getStyleClass().add("label-style");
             label.setOnMouseClicked(e -> {
                 SceneContainer sc = SceneContainer.sceneContainer;
