@@ -234,6 +234,7 @@ public class UpdateController implements Initializable {
                 if(getFirst){
                     getEngExample.setText(i.getKey());
                     getVieExample.setText(i.getValue());
+                    currentExample = getEngExample.getText();
                     getFirst = false;
                 }
                 temp.getStyleClass().add("label-style");
@@ -265,6 +266,7 @@ public class UpdateController implements Initializable {
                 newExampleList.set(i, newExamplePair);
             }
         }
+        System.out.println(newExampleList);
         return new SingleWord(wordTargetDisplay.getText(), getPronoun.getText(),
                 getType.getText(), getMeaning.getText(), newExampleList);
     }
@@ -273,11 +275,13 @@ public class UpdateController implements Initializable {
     public void applyUserUpdate(ActionEvent event){
         if(!getType.getText().isEmpty()) {
             SingleWord newSingleWord = getNewSingleWord(currentExample);
-            sql.updateWord(oldSingleWord, newSingleWord);
+            //sql.updateWord(oldSingleWord, newSingleWord);
+            refreshInfo();
         }
     }
 
     public void refreshInfo(){
+        getPronoun.clear();
         exampleDisplay.getChildren().clear();
         getEngExample.clear();
         getVieExample.clear();
