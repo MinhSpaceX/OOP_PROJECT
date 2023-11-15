@@ -73,13 +73,14 @@ public class UpdateController implements Initializable {
     private List<SingleWord> singleWordList = new ArrayList<>();
     private boolean openMeaning = false;
     private boolean openExample = false;
-    private String currentMeaning;
+    private String currentExample;
     private SingleWord oldSingleWord;
-    private SingleWord newSingleWord;
+    SQLite sql = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         searchWord();
+        sql = SystemManager.getManager(SQLite.class);
         if(!searchResultDisplay.getChildren().isEmpty()) {
             searchBar.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.DOWN && !searchResultDisplay.getChildren().isEmpty()) {
@@ -161,7 +162,6 @@ public class UpdateController implements Initializable {
                 getType.setText(i.getType());
                 getMeaning.setText(i.getMeaning());
                 getFirst = false;
-                currentMeaning = i.getMeaning();
                 if(!i.getExamples().isEmpty()){
                     displaySingleWord(i);
                 }
@@ -246,6 +246,7 @@ public class UpdateController implements Initializable {
     }
 
     public void switchExample(String engExample){
+        currentExample = engExample;
         for(var i : oldSingleWord.getExamples()){
             if(i.getKey().equals(engExample)){
                 getEngExample.setText(i.getKey());
@@ -256,16 +257,24 @@ public class UpdateController implements Initializable {
         }
     }
 
-    public void getNewSingleWord(){
-        /*List<Pair<String, String>> newExamples = new ArrayList<>();
-
-        newSingleWord = new SingleWord(wordTargetDisplay.getText(), getPronoun.getText(),
-                getType.getText(), getMeaning.getText(), );*/
+    public SingleWord getNewSingleWord(String exampleKey){
+        Pair<String, String> newExamplePair = new Pair<>(getEngExample.getText(), getVieExample.getText());
+        List<Pair<String, String>> newExampleList = new ArrayList<>(oldSingleWord.getExamples());
+        for(int i = 0; i < newExampleList.size(); i++){
+            if(newExampleList.get(i).getKey().equals(exampleKey)){
+                newExampleList.set(i, newExamplePair);
+            }
+        }
+        return new SingleWord(wordTargetDisplay.getText(), getPronoun.getText(),
+                getType.getText(), getMeaning.getText(), newExampleList);
     }
 
     @FXML
     public void applyUserUpdate(ActionEvent event){
-
+        if(!getType.getText().isEmpty()) {
+            SingleWord newSingleWord = getNewSingleWord(currentExample);
+            sql.updateWord(oldSingleWord, newSingleWord);
+        }
     }
 
     public void refreshInfo(){
