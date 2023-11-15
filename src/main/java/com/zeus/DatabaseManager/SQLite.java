@@ -96,6 +96,7 @@ public class SQLite extends Manager {
         SingleWord newsingleWord = new SingleWord("damn", "new What?", null, "damn just kidding", null);
         sqLite.insert(singleWord);
         sqLite.updateWord(singleWord, newsingleWord);
+        sqLite.getWord("in").forEach((s, singleWords) -> System.out.println(singleWords));
     }
 
     private void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
@@ -333,13 +334,13 @@ public class SQLite extends Manager {
         }
     }
 
-    public List<SingleWord> getWord(String wordTarget) {
+    public Map<String, List<SingleWord>> getWord(String wordTarget) {
         try (Connection connection = this.connect(userDatabase);
              PreparedStatement getWORD = connection.prepareStatement("SELECT WORD.pronoun, MEANING.type ,MEANING.target, EXAMPLE.targetEN, EXAMPLE.targetVN FROM WORD LEFT JOIN MEANING ON WORD.wordID = MEANING.wordID LEFT JOIN EXAMPLE ON WORD.wordID = EXAMPLE.wordID AND EXAMPLE.meaningID = MEANING.meaningID WHERE WORD.wordID = ?")) {
             String wordID = Encoder.encode(wordTarget);
             getWORD.setString(1, wordID);
             ResultSet wordRs = getWORD.executeQuery();
-            List<SingleWord> words = new ArrayList<>();
+            Map<String, List<SingleWord>> words = new HashMap<>();
             Map<String, List<Pair<String, String>>> examples = new HashMap<>();
             while (wordRs.next()) {
                 String pronoun = wordRs.getString(1);
@@ -352,7 +353,10 @@ public class SQLite extends Manager {
                     List<Pair<String, String>> tempExample = new ArrayList<>();
                     SingleWord singleWord = new SingleWord(wordTarget, pronoun, type, meaning, tempExample);
                     examples.put(meaning, tempExample);
-                    words.add(singleWord);
+                    if (!words.containsKey(type)) {
+                        words.put(type, new ArrayList<>());
+                    }
+                    words.get(type).add(singleWord);
                 }
                 examples.get(meaning).add(example);
             }
