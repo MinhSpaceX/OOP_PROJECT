@@ -11,6 +11,7 @@ import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.Manager;
 import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.utils.trie.Trie;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import org.apache.commons.logging.Log;
@@ -394,6 +395,21 @@ public class SQLite extends Manager {
                 examples.get(meaning).add(example);
             }
             return words;
+        } catch (SQLException e) {
+            Logger.printStackTrace(e);
+        }
+        return null;
+    }
+
+    public Trie loadTrieFromUserDb() {
+        try (Connection connection = this.connect(userDatabase);
+             PreparedStatement getWords = connection.prepareStatement("SELECT target FROM WORD")) {
+            Trie trie = new Trie();
+            ResultSet resultSet = getWords.executeQuery();
+            while (resultSet.next()) {
+                trie.insert(resultSet.getString(1));
+            }
+            return trie;
         } catch (SQLException e) {
             Logger.printStackTrace(e);
         }

@@ -68,10 +68,10 @@ public class SplashController implements Initializable {
         try {
             thread2.start();
             thread2.join();
+            thread4.start();
+            thread4.join();
             thread3.start();
             thread3.join();
-            thread4.start();
-                thread4.join();
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
