@@ -49,11 +49,15 @@ public class WordView implements Initializable {
     @FXML
     Label pronounDisplay;
 
+    @FXML
+    Label userBelongLabel;
+
     Map<String, List<SingleWord>> result;
 
     private List<String> temp = new ArrayList<>();
 
     private static Label menuLabel;
+    private boolean belongToUser;
 
     public static void setMenuLabel(Label label) {
         menuLabel = label;
@@ -145,6 +149,14 @@ public class WordView implements Initializable {
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
+        if(SearchManager.getUserTrie().search(label.getText())){
+            belongToUser = true;
+            userBelongLabel.setVisible(true);
+        }
+        else {
+            belongToUser = false;
+            userBelongLabel.setVisible(false);
+        }
         //System.out.println(result);
         boolean getFirst = true;
         for(var i : result.keySet()){

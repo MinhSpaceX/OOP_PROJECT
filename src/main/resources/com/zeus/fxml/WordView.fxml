@@ -57,7 +57,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="33.0" prefWidth="330.0" spacing="10.0">
                                  <children>
-                                    <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="343.736697435379">
+                                    <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="281.33670353889465">
                                        <font>
                                           <Font name="Corbel" size="18.0" />
                                        </font>
@@ -65,18 +65,11 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Text>
-                                    <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="19.0" styleClass="transparent-template" stylesheets="@../css/application.css">
-                                       <graphic>
-                                          <ImageView fitHeight="16.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../icon/pen-to-square-solid.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <HBox.margin>
-                                          <Insets />
-                                       </HBox.margin>
-                                    </Button>
+                                    <Label fx:id="userBelongLabel" alignment="CENTER" prefHeight="18.0" prefWidth="89.0" style="-fx-background-color: rgb(142, 143, 250); -fx-background-radius: 5;" text="User's word" textFill="WHITE" visible="false">
+                                       <font>
+                                          <Font name="Corbel Bold" size="15.0" />
+                                       </font>
+                                    </Label>
                                     <Button fx:id="audio" mnemonicParsing="false" styleClass="transparent-template" stylesheets="@../css/application.css">
                                        <graphic>
                                           <ImageView fitHeight="16.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
@@ -127,7 +120,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <VBox fx:id="resultDisplay2" layoutX="15.0" layoutY="64.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css">
+      <VBox fx:id="resultDisplay2" layoutX="15.0" layoutY="64.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css" visible="false">
          <children>
             <Label prefHeight="20.0" prefWidth="379.0" style="-fx-background-color: gray;" styleClass="label-style" stylesheets="@../css/index.css" text="Label">
                <font>
