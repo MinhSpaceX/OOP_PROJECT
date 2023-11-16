@@ -75,6 +75,7 @@ public class UpdateController implements Initializable {
     private boolean openExample = false;
     private String currentExample;
     private SingleWord oldSingleWord;
+    private static Label updateLabel;
     SQLite sql = null;
 
     @Override
@@ -97,8 +98,12 @@ public class UpdateController implements Initializable {
             });
         }
         setFunction();
+        getSingleWord(updateLabel);
     }
 
+    public static void SetUpdateLabel(Label label){
+        updateLabel = label;
+    }
 
     public void searchWord(){
         searchResultDisplay.setVisible(false);
@@ -119,7 +124,7 @@ public class UpdateController implements Initializable {
     }
 
     private void filterData(String input){
-        searchPane = SearchManager.searchFilter(input).stream().distinct().collect(Collectors.toList());
+        searchPane = SearchManager.searchFilterUserDb(input).stream().distinct().collect(Collectors.toList());
         if(searchPane.isEmpty()){
             Label label = new Label("Hmm...what word is this?");
             label.getStyleClass().add("not-found-style");
@@ -182,7 +187,8 @@ public class UpdateController implements Initializable {
         anotherEx.getStyleClass().add("other-meaning-label");
         anotherMeaning.setOnMouseClicked(e->{
             Logger.info(Boolean.toString(openMeaning));
-            if(!openMeaning){
+            if(!openMeaning)
+            {
                 meaningContainer.setVisible(true);
                 openMeaning = true;
                 exampleContainer.setVisible(false);
@@ -208,7 +214,6 @@ public class UpdateController implements Initializable {
     }
 
     public void changeMeaningInfo(String meaning){
-        Logger.info(meaning);
         for(var i : singleWordList){
             if(i.getMeaning().equals(meaning)){
                 displaySingleWord(i);
@@ -262,7 +267,7 @@ public class UpdateController implements Initializable {
 
     public SingleWord getNewSingleWord(String exampleKey){
         Pair<String, String> newExamplePair = new Pair<>(getEngExample.getText(), getVieExample.getText());
-        List<Pair<String, String>> newExampleList = new ArrayList<>(oldSingleWord.getExamples());
+        List<Pair<String, String>> newExampleList = oldSingleWord.getExamples() == null ? null : new ArrayList<>(oldSingleWord.getExamples());
         for(int i = 0; i < newExampleList.size(); i++){
             if(newExampleList.get(i).getKey().equals(exampleKey)){
                 newExampleList.set(i, newExamplePair);
@@ -278,11 +283,11 @@ public class UpdateController implements Initializable {
         if(!getType.getText().isEmpty()) {
             SingleWord newSingleWord = getNewSingleWord(currentExample);
             sql.updateWord(oldSingleWord, newSingleWord);
-            refreshInfo();
+            getSingleWord(new Label(newSingleWord.getWordTarget()));
         }
     }
 
-    public void refreshInfo(){
+    public void refreshInfo() {
         getPronoun.clear();
         exampleDisplay.getChildren().clear();
         getEngExample.clear();
@@ -294,6 +299,12 @@ public class UpdateController implements Initializable {
         meaningDisplay.getChildren().clear();
         meaningContainer.setVisible(false);
         singleWordList.clear();
+    }
+
+    @FXML
+    public void backToAddScene(ActionEvent event){
+        SceneContainer sc = SceneContainer.sceneContainer;
+        sc.changeView("/com/zeus/fxml/UpdateLobby.fxml");
     }
 
 }

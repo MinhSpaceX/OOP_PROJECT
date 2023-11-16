@@ -1,6 +1,7 @@
 package com.zeus.DatabaseManager;
 
 import com.sun.javafx.iio.gif.GIFImageLoader2;
+import com.zeus.App.SearchManager;
 import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.DictionaryManager.WordFactory;
@@ -142,6 +143,7 @@ public class SQLite extends Manager {
     }
 
     public boolean insert(SingleWord word) {
+        SearchManager.getUserTrie().insert(word.getWordTarget());
         boolean success = true;
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
@@ -349,7 +351,8 @@ public class SQLite extends Manager {
                 String meaning = wordRs.getString(3);
                 String targetEN = wordRs.getString(4);
                 String targetVN = wordRs.getString(5);
-                Pair<String, String> example = new Pair<>(targetEN, targetVN);
+                Pair<String, String> example = null;
+                if (targetEN != null && targetVN != null) example = new Pair<>(targetEN, targetVN);
                 if (!examples.containsKey(meaning)) {
                     List<Pair<String, String>> tempExample = new ArrayList<>();
                     SingleWord singleWord = new SingleWord(wordTarget, pronoun, type, meaning, tempExample);
@@ -359,7 +362,7 @@ public class SQLite extends Manager {
                     }
                     words.get(type).add(singleWord);
                 }
-                examples.get(meaning).add(example);
+                if (example != null) examples.get(meaning).add(example);
             }
             return words;
         } catch (SQLException e) {
@@ -401,19 +404,24 @@ public class SQLite extends Manager {
         return null;
     }
 
-    public Trie loadTrieFromUserDb() {
+    public void loadTrieFromUserDb(Trie searchTrie, Trie userTrie) {
         try (Connection connection = this.connect(userDatabase);
+             Connection connection1 = this.connect();
+             PreparedStatement getWords1 = connection1.prepareStatement("SELECT target FROM WORD");
              PreparedStatement getWords = connection.prepareStatement("SELECT target FROM WORD")) {
-            Trie trie = new Trie();
             ResultSet resultSet = getWords.executeQuery();
+            ResultSet resultSet1 = getWords1.executeQuery();
             while (resultSet.next()) {
-                trie.insert(resultSet.getString(1));
+                String word = resultSet.getString(1);
+                userTrie.insert(word);
+                searchTrie.insert(word);
             }
-            return trie;
+            while (resultSet1.next()) {
+                searchTrie.insert(resultSet1.getString(1));
+            }
         } catch (SQLException e) {
             Logger.printStackTrace(e);
         }
-        return null;
     }
 
     @Override

@@ -19,8 +19,8 @@ public class SearchManager extends Manager {
 
     private static MongoManager mgp = null;
     private static SQLite sqLite = null;
-    private static Trie searchPath = null;
-    private static Trie userTrie = null;
+    private static Trie searchPath = new Trie();
+    private static Trie userTrie = new Trie();
 
     /**
      * everytime user type a word to input, call this method
@@ -29,8 +29,16 @@ public class SearchManager extends Manager {
         return searchPath.autoFill(input, 7, 1);
     }
 
+    public static List<String> searchFilterUserDb(String input) {
+        return userTrie.autoFill(input, 7, 1);
+    }
+
+
     public static Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
         Word word = mgp.fetchWord(wordTarget);
+        if(word == null){
+            return sqLite.getWordFromDb(wordTarget);
+        }
         WordFactory wordFactory = new WordFactory(word);
         return wordFactory.getSingleWordMap();
     }
@@ -38,9 +46,8 @@ public class SearchManager extends Manager {
     @Override
     public void init(Config config) {
         mgp = SystemManager.getManager(MongoManager.class);
-        searchPath = mgp.ReturnTrie();
         sqLite = SystemManager.getManager(SQLite.class);
-        userTrie = sqLite.loadTrieFromUserDb();
+        sqLite.loadTrieFromUserDb(searchPath, userTrie);
         if (sqLite == null) {
             Logger.error("SQLite is null.");
         }
@@ -51,4 +58,9 @@ public class SearchManager extends Manager {
             Logger.error("Trie is null.");
         }
     }
+
+    public static Trie getUserTrie(){
+        return userTrie;
+    }
+
 }

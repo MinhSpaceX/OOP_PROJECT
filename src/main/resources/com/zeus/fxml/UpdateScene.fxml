@@ -148,10 +148,13 @@
                   <Font name="Corbel" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="addWordButton" layoutX="289.0" layoutY="14.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="153.0" styleClass="addword-button" text="Add a new word">
+            <Button fx:id="addWordButton" layoutX="328.0" layoutY="63.0" mnemonicParsing="false" onAction="#backToAddScene" prefHeight="23.0" prefWidth="110.0" style="-fx-font-size: 10;" styleClass="addword-button" text="Add a new word">
                <graphic>
                   <FontAwesomeIconView fill="#8e8ffa" glyphName="PLUS" />
                </graphic>
+               <font>
+                  <Font size="10.0" />
+               </font>
             </Button>
             <HBox alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="34.0" prefWidth="234.0">
                <children>
@@ -174,7 +177,10 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button fx:id="updateButton" layoutX="365.0" layoutY="61.0" mnemonicParsing="false" onAction="#applyUserUpdate" prefHeight="20.0" prefWidth="74.0" styleClass="update-button" text="Update" />
+            <Button fx:id="updateButton" layoutX="291.0" layoutY="9.0" mnemonicParsing="false" onAction="#applyUserUpdate" prefHeight="43.0" prefWidth="146.0" style="-fx-font-size: 15;" styleClass="update-button" text="Update">
+               <font>
+                  <Font size="13.0" />
+               </font></Button>
             <VBox fx:id="searchResultDisplay" layoutX="13.0" layoutY="47.0" prefHeight="27.0" prefWidth="206.0" spacing="5.0" style="-fx-background-color: rgb(142, 143, 250);" styleClass="result-display-update" stylesheets="@../css/only_for-update.css" visible="false">
                <children>
                   <Label prefHeight="27.0" prefWidth="206.0" styleClass="result-display-label-style" stylesheets="@../css/only_for-update.css" text="Label">

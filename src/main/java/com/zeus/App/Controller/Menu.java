@@ -121,7 +121,7 @@ public class Menu implements Initializable {
     }
 
     public void ChangeToWordView(Label label) throws IOException {
-        SceneContainer sc = SceneContainer.sceneContainer;//Here bro
+        SceneContainer sc = SceneContainer.sceneContainer;
         WordView.setMenuLabel(label);
         sc.changeView("/com/zeus/fxml/WordView.fxml");
     }

@@ -58,6 +58,12 @@
 
 }
 
+.not-found-style-update{
+    -fx-font-size: 12px;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+}
+
 .label-style:hover{
     -fx-background-color: rgba(172, 165, 204, 0.5);;
     -fx-cursor: hand;

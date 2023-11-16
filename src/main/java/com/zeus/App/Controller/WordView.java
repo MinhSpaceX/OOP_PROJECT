@@ -145,6 +145,7 @@ public class WordView implements Initializable {
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
+        //System.out.println(result);
         boolean getFirst = true;
         for(var i : result.keySet()){
             Label temp = new Label(i);
