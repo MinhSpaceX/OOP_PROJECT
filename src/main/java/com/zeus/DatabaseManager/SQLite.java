@@ -92,10 +92,10 @@ public class SQLite extends Manager {
         sqLite.checkExist();
         sqLite.userDatabase = FileManager.getPathFromFile("/com/zeus/data/userDatabase.db");
         sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt", SQLite.userDatabase);
-        SingleWord singleWord = new SingleWord("damn", "what the fuck", "damn", "damn", null);
-        SingleWord newsingleWord = new SingleWord("damn", "new What?", null, "damn just kidding", null);
-        sqLite.insert(singleWord);
-        sqLite.updateWord(singleWord, newsingleWord);
+        //SingleWord singleWord = new SingleWord("damn", "what the fuck", "damn", "damn", null);
+        //SingleWord newsingleWord = new SingleWord("damn", "new What?", null, "damn just kidding", null);
+        //sqLite.insert(singleWord);
+        //sqLite.updateWord(singleWord, newsingleWord);
         sqLite.getWord("in").forEach((s, singleWords) -> System.out.println(singleWords));
     }
 

@@ -102,7 +102,6 @@ public class UpdateController implements Initializable {
 
     public void searchWord(){
         searchResultDisplay.setVisible(false);
-        Logger.info("called");
         searchBar.setOnKeyReleased(keyEvent -> {
             searchPane.clear();
             searchResultDisplay.getChildren().clear();
@@ -150,7 +149,7 @@ public class UpdateController implements Initializable {
         boolean getFirst = true;
         //display word target
         wordTargetDisplay.setText(label.getText());
-        result = SearchManager.getWordInstance(label.getText());
+        result = sql.getWord(label.getText());
         // get all the single word meaning according to the type key
         for(var i : result.keySet()){
             singleWordList.addAll(result.get(i));
@@ -182,6 +181,7 @@ public class UpdateController implements Initializable {
         anotherMeaning.getStyleClass().add("other-meaning-label");
         anotherEx.getStyleClass().add("other-meaning-label");
         anotherMeaning.setOnMouseClicked(e->{
+            Logger.info(Boolean.toString(openMeaning));
             if(!openMeaning){
                 meaningContainer.setVisible(true);
                 openMeaning = true;
@@ -220,6 +220,7 @@ public class UpdateController implements Initializable {
     public void displaySingleWord(SingleWord word){
         oldSingleWord = word;
         meaningContainer.setVisible(false);
+        openMeaning = false;
         getVieExample.clear();
         getEngExample.clear();
         getType.setText(word.getType());
@@ -253,6 +254,7 @@ public class UpdateController implements Initializable {
                 getEngExample.setText(i.getKey());
                 getVieExample.setText(i.getValue());
                 exampleContainer.setVisible(false);
+                openExample = false;
                 return;
             }
         }
