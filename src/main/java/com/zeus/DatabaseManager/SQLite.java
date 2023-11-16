@@ -367,6 +367,39 @@ public class SQLite extends Manager {
         return null;
     }
 
+    public Map<String, List<SingleWord>> getWordFromDb(String wordTarget) {
+        try (Connection connection = this.connect();
+             PreparedStatement getWORD = connection.prepareStatement("SELECT WORD.pronoun, MEANING.type ,MEANING.target, EXAMPLE.targetEN, EXAMPLE.targetVN FROM WORD LEFT JOIN MEANING ON WORD.wordID = MEANING.wordID LEFT JOIN EXAMPLE ON WORD.wordID = EXAMPLE.wordID AND EXAMPLE.meaningID = MEANING.meaningID WHERE WORD.wordID = ?")) {
+            String wordID = Encoder.encode(wordTarget);
+            getWORD.setString(1, wordID);
+            ResultSet wordRs = getWORD.executeQuery();
+            Map<String, List<SingleWord>> words = new HashMap<>();
+            Map<String, List<Pair<String, String>>> examples = new HashMap<>();
+            while (wordRs.next()) {
+                String pronoun = wordRs.getString(1);
+                String type = wordRs.getString(2);
+                String meaning = wordRs.getString(3);
+                String targetEN = wordRs.getString(4);
+                String targetVN = wordRs.getString(5);
+                Pair<String, String> example = new Pair<>(targetEN, targetVN);
+                if (!examples.containsKey(meaning)) {
+                    List<Pair<String, String>> tempExample = new ArrayList<>();
+                    SingleWord singleWord = new SingleWord(wordTarget, pronoun, type, meaning, tempExample);
+                    examples.put(meaning, tempExample);
+                    if (!words.containsKey(type)) {
+                        words.put(type, new ArrayList<>());
+                    }
+                    words.get(type).add(singleWord);
+                }
+                examples.get(meaning).add(example);
+            }
+            return words;
+        } catch (SQLException e) {
+            Logger.printStackTrace(e);
+        }
+        return null;
+    }
+
     @Override
     public void init(Config config) {
         pathToDatabase = config.getProperty("localSQLitePath", String.class);
