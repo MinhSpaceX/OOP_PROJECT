@@ -49,6 +49,39 @@
     -fx-padding:0;
 }
 
+.scroll-type {
+    -fx-vbar-policy: never;
+    -fx-border-color: transparent;
+    -fx-border: 0;
+    -fx-border-width: 1;
+    -fx-border-radius: 0;
+    -fx-background-insets: 0;
+    -fx-background: white;
+    -fx-pref-height: 150px;
+}
+
+.scroll-type .scroll-bar:horizontal {
+    -fx-pref-height: 7px;
+    -fx-background-color: transparent;
+    -fx-padding-bottom: 100;
+}
+
+.scroll-type .thumb{
+    -fx-background-color: rgb(119, 82, 254);
+}
+
+.scroll-type .increment-button, .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-pref-width: 10;
+}
+
+.scroll-type .increment-arrow, .decrement-arrow{
+    -fx-shape: " ";
+    -fx-padding:0;
+}
+
 .search-container{
     -fx-border-image-insets: 0 0 0 0;
     -fx-padding: 5px;

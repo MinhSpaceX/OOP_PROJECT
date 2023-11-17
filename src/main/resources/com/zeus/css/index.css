@@ -83,8 +83,8 @@
     -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-font-family: 'Corbel';
-    -fx-pref-width: 147;
     -fx-pref-height: 34;
+    -fx-min-width: 50;
     -fx-alignment: center;
 }
 
@@ -98,8 +98,8 @@
     -fx-font-size: 17px;
     -fx-font-weight: bold;
     -fx-font-family: 'Corbel';
-    -fx-pref-width: 147;
     -fx-pref-height: 34;
+    -fx-min-width: 50;
     -fx-alignment: center;
 }
 

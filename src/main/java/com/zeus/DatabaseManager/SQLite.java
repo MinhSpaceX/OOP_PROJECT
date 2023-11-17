@@ -385,7 +385,8 @@ public class SQLite extends Manager {
                 String meaning = wordRs.getString(3);
                 String targetEN = wordRs.getString(4);
                 String targetVN = wordRs.getString(5);
-                Pair<String, String> example = new Pair<>(targetEN, targetVN);
+                Pair<String, String> example = null;
+                if (targetEN != null && targetVN != null) example = new Pair<>(targetEN, targetVN);
                 if (!examples.containsKey(meaning)) {
                     List<Pair<String, String>> tempExample = new ArrayList<>();
                     SingleWord singleWord = new SingleWord(wordTarget, pronoun, type, meaning, tempExample);
@@ -395,7 +396,7 @@ public class SQLite extends Manager {
                     }
                     words.get(type).add(singleWord);
                 }
-                examples.get(meaning).add(example);
+                if (example != null) examples.get(meaning).add(example);
             }
             return words;
         } catch (SQLException e) {

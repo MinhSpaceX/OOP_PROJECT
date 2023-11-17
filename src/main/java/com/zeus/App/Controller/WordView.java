@@ -6,18 +6,22 @@ import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.log.Logger;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.LightBase;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -86,7 +90,7 @@ public class WordView implements Initializable {
                 event.consume();
             }
         });
-        displayLabelContent(menuLabel);
+        Platform.runLater(() -> displayLabelContent(menuLabel));
         Logger.info("WordView init -----------------");
     }
 
@@ -163,21 +167,29 @@ public class WordView implements Initializable {
         }
         //System.out.println(result);
         boolean getFirst = true;
-        for(var i : result.keySet()){
+        for(var i : result.keySet()) {
             Label temp = new Label(i);
-            if(getFirst) {
+            if (getFirst) {
                 temp.getStyleClass().add("tab-label");
                 DisplayMeaning(temp.getText());
                 //getClickCss.put(temp.getText(), true);
                 getFirst = false;
-            }
-            else{
+            } else {
                 temp.getStyleClass().add("unchoose-tab-label");
                 //getClickCss.put(temp.getText(), false);
             }
             temp.setOnMouseClicked(e -> DisplayMeaning(temp.getText()));
             typeContainer.getChildren().add(temp);
         }
+        Platform.runLater(() -> {
+            double width = 0;
+            for (Node child : typeContainer.getChildren()) {
+                if (child.isVisible()) {
+                    width += child.getBoundsInParent().getWidth();
+                }
+            }
+            typeContainer.setPrefWidth(width);
+        });
         setToDefault();
         searchWord();
     }
@@ -189,11 +201,11 @@ public class WordView implements Initializable {
             if (node instanceof Label) {
                 Label temp = (Label) node;
                 if (temp.getText().equals(type)) {
-                    temp.getStyleClass().remove("unchoose-tab-label");
+                    temp.getStyleClass().clear();
                     temp.getStyleClass().add("tab-label");
                 } else {
                     if(temp.getStyleClass().contains("tab-label")) {
-                        temp.getStyleClass().remove("tab-label");
+                        temp.getStyleClass().clear();
                         temp.getStyleClass().add("unchoose-tab-label");
                     }
                 }

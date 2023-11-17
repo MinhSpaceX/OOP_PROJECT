@@ -46,11 +46,11 @@ public class Menu implements Initializable {
             if (event.getCode() == KeyCode.DOWN && !resultDisplay.getChildren().isEmpty()) {
                 resultDisplay.getChildren().get(0).requestFocus();
             }
-            if(event.getCode() == KeyCode.ENTER && !resultDisplay.getChildren().isEmpty()){
+            if(event.getCode() == KeyCode.ENTER && !temp.isEmpty()){
                 try {
                     ChangeToWordView((Label) resultDisplay.getChildren().get(0));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    Logger.printStackTrace(e);
                 }
             }
         });

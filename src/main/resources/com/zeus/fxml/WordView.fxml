@@ -92,11 +92,11 @@
                                     <Font size="16.0" />
                                  </font>
                               </Label>
-                              <HBox fx:id="typeContainer" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="437.0" style="-fx-background-color: white;" styleClass="tab-bar-hbox" stylesheets="@../css/index.css">
-                                 <VBox.margin>
-                                    <Insets left="5.0" right="5.0" />
-                                 </VBox.margin>
-                              </HBox>
+                              <ScrollPane prefHeight="86.0" prefWidth="447.0" styleClass="scroll-type">
+                                 <content>
+                                    <HBox fx:id="typeContainer" alignment="CENTER_LEFT" maxWidth="1055.0" prefHeight="17.0" prefWidth="1055.0" style="-fx-background-color: white; -fx-pref-height: 34; -fx-max-width: 1000;" stylesheets="@../css/index.css" />
+                                 </content>
+                              </ScrollPane>
                               <ScrollPane prefHeight="399.0" prefWidth="437.0" styleClass="scroll-pane-wordview" stylesheets="@../css/application.css">
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />

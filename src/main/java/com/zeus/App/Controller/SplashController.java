@@ -66,8 +66,8 @@ public class SplashController implements Initializable {
             }
         });
         try {
-            thread2.start();
-            thread2.join();
+            /*thread2.start();
+            thread2.join();*/
             thread4.start();
             thread4.join();
             thread3.start();

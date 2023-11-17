@@ -35,12 +35,9 @@ public class SearchManager extends Manager {
 
 
     public static Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
-        Word word = mgp.fetchWord(wordTarget);
-        if(word == null){
-            return sqLite.getWord(wordTarget);
-        }
-        WordFactory wordFactory = new WordFactory(word);
-        return wordFactory.getSingleWordMap();
+        Map<String, List<SingleWord>> result =sqLite.getWordFromDb(wordTarget);
+        result.putAll(sqLite.getWord(wordTarget));
+        return result;
     }
 
     @Override
