@@ -20,7 +20,7 @@ import java.util.List;
 
 public class APIHandler {
     private static final String api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
-    private static final String translateAPI = "https://api.mymemory.translated.net/get?q=";
+    private static final String translateAPI = "https://api.mymemory.translated.net/get?";
     public static MediaPlayer getAudio(String wordTarget) {
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
@@ -45,12 +45,13 @@ public class APIHandler {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        System.out.println(translate("The Hell"));
+        System.out.println(translate("The - Hell"));
     }
 
     public static List<String> translate(String english) throws IOException, InterruptedException {
         List<String> translates = new ArrayList<>();
-        english = new StringBuilder()
+        String url = new StringBuilder()
+                .append(translateAPI)
                 .append("q=")
                 .append(URLEncoder.encode(english, StandardCharsets.UTF_8))
                 .append("&langpair=en")
@@ -61,7 +62,6 @@ public class APIHandler {
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(10))
                     .build();
-            String url = translateAPI + english;
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
