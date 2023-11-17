@@ -1,11 +1,9 @@
 package com.zeus.App.Controller;
 
-import com.zeus.DatabaseManager.SQLite;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
-import com.zeus.utils.managerfactory.SystemManager;
 import com.zeus.utils.stackset.StackSet;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,20 +13,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class History implements Initializable {
@@ -45,9 +37,13 @@ public class History implements Initializable {
 
     public void displayHistory() {
         listView.setItems(items);
+        listView.getStyleClass().add("scroll-pane-wordview");
+        remove.setVisible(false);
         for(String i : historyList){
-            HBox hBox = new HBox();
+            HBox hBox = new HBox(15);
+            hBox.getStyleClass().add("hbox");
             CheckBox checkBox = new CheckBox();
+            checkBox.getStyleClass().add("checkbox");
             hBox.getChildren().add(checkBox);
             Label label = new Label(i);
             label.getStyleClass().add("history");
@@ -67,34 +63,46 @@ public class History implements Initializable {
             button.getStyleClass().add("audioHistory");
             hBox.getChildren().add(button);//HERE
             items.add(hBox);
-            //historyDisplay.getChildren().add(hBox);
             listView.refresh();
             MediaHandler(button, label);
-            //button.requestFocus();
             label.setOnMouseClicked(e -> {
                 SceneContainer sc = SceneContainer.sceneContainer;
                 WordView.setMenuLabel(label);
                 sc.changeView("/com/zeus/fxml/WordView.fxml");
             });
+            ObservableList<HBox> itemsToRemove = FXCollections.observableArrayList();
 
-            remove.setOnMouseClicked(event-> {
-                ObservableList<HBox> itemsToRemove = FXCollections.observableArrayList();
+            for (HBox hbox : items) {
+                ((CheckBox) hbox.getChildren().get(0)).setOnAction(event -> {
+                    // Kiểm tra xem có ít nhất một CheckBox được chọn hay không
+                    boolean atLeastOneSelected = false;
+                    for (HBox hb : items) {
+                        CheckBox cb = (CheckBox) hb.getChildren().get(0);
+                        if (cb.isSelected()) {
+                            atLeastOneSelected = true;
+                            break;
+                        }
+                    }
 
-                for (HBox hbox : items) {
-                    //CheckBox checkBox = (CheckBox) hbox.getChildren().get(0); // Giả sử CheckBox là phần tử đầu tiên trong HBox
                     if (((CheckBox)hbox.getChildren().get(0)).isSelected()) {
                         itemsToRemove.add(hbox);
                         historyList.remove(((Label)hbox.getChildren().get(1)).getText());
                     }
-                }
 
-                // Xóa các HBox đã được chọn từ danh sách
+                    remove.setVisible(atLeastOneSelected);
+                });
+            }
+
+            remove.setOnMouseClicked(event-> {
+
                 items.removeAll(itemsToRemove);
 
-                // Cập nhật giao diện người dùng
                 listView.refresh();
+                remove.setVisible(false);
             });
+
         }
+
         historyDisplay.getChildren().addAll(listView);
     }
 

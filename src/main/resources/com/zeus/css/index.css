@@ -129,7 +129,7 @@
     -fx-background-color: white;
     -fx-font-size: 20px;
     -fx-text-color: black;
-    -fx-pref-width: 355;
+    -fx-pref-width: 300;
     -fx-pref-height:30;
     -fx-background-radius: 10;
     -fx-padding: 0 0 0 5;
@@ -148,4 +148,17 @@
 
 .audioHistory :hover{
     -fx-cursor: hand;
+}
+
+.hbox {
+    -fx-border-radius: 5px;
+    -fx-border-color: #7752fe; 
+    -fx-border-width: 2px;
+    -fx-pref-height: 40; 
+    -fx-aligment: center;
+    -fx-padding: 2 8 2 8;
+}
+.checkbox {
+    -fx-pref-height:31;
+    -fx-pref-width:17;
 }
