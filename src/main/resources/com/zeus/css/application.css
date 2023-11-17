@@ -58,6 +58,7 @@
     -fx-background-insets: 0;
     -fx-background: white;
     -fx-pref-height: 150px;
+    -fx-pannable: true;
 }
 
 .scroll-type .scroll-bar:horizontal {
@@ -79,7 +80,7 @@
 
 .scroll-type .increment-arrow, .decrement-arrow{
     -fx-shape: " ";
-    -fx-padding:0;
+    -fx-padding: 0;
 }
 
 .search-container{
