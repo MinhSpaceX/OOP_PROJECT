@@ -122,3 +122,30 @@
 .addword:focused {
     -fx-border-color: #9CBEFF;  
 }
+
+.history {
+    -fx-border-radius: 10px;
+    -fx-border-color: #7752fe;
+    -fx-background-color: white;
+    -fx-font-size: 20px;
+    -fx-text-color: black;
+    -fx-pref-width: 355;
+    -fx-pref-height:30;
+    -fx-background-radius: 10;
+    -fx-padding: 0 0 0 5;
+}
+
+.history:hover {
+    -fx-cursor: hand;
+    -fx-background-color: rgb(0, 213, 255);
+}
+
+.audioHistory {
+
+    -fx-pref-height:30;
+    -fx-background-radius: 10;
+}
+
+.audioHistory :hover{
+    -fx-cursor: hand;
+}

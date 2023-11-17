@@ -22,7 +22,7 @@
     -fx-border-color: rgb(142, 143, 250);
     -fx-border: 0;
     -fx-border-width: 2 2 2 2;
-    -fx-border-radius: 0 5 5 5;
+    -fx-border-radius: 5 5 5 0;
     -fx-background-insets: 0;
     -fx-background: white;
 }
@@ -189,4 +189,20 @@
     -fx-cursor: hand;
     -fx-text-fill: rgb(142, 143, 250);
     -fx-underline: true;
+}
+
+.scroll-pane-history {
+    -fx-hbar-policy: never;
+    -fx-border-color: rgb(142, 143, 250);
+    -fx-border: 0;
+    -fx-border-width: 2 2 2 2;
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-insets: 0;
+    -fx-background: white;
+}
+
+.scroll-pane-history .scroll-bar:vertical {
+    -fx-pref-width: 7px;
+    -fx-background-color: transparent;
+    -fx-padding-bottom: 100;
 }

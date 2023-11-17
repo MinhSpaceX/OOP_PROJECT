@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeus.App.Controller.History;
 import com.zeus.DictionaryManager.Word;
 import com.zeus.utils.log.Logger;
+import com.zeus.utils.stackset.StackSet;
 import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -16,6 +17,7 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class FileManager {
@@ -98,7 +100,7 @@ public class FileManager {
         }
     }
 
-    public static  void dictionaryExportToFile(ArrayList<String> wordTarget) {
+    public static  void dictionaryExportToFile(StackSet<String> wordTarget) {
         try (FileWriter fw = new FileWriter(FileManager.getPathFromFile("/com/zeus/data/history.txt"));
              BufferedWriter bw = new BufferedWriter(fw)) {
 
