@@ -68,7 +68,6 @@ public class APIHandler {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.body());
-            System.out.println(response.body());
             for (JsonNode node : jsonNode.get("matches")) {
                 translates.add(new String(node.get("translation").toString().getBytes(), StandardCharsets.UTF_8));
             }
