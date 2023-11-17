@@ -70,6 +70,7 @@ public class SceneContainer implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sceneContainer = this;
         changeView("/com/zeus/fxml/menu.fxml");
+        setMenuButtonFunction();
         sideNavSlide();
         Logger.info("Container init -----------------");
     }
@@ -132,6 +133,27 @@ public class SceneContainer implements Initializable {
         Logger.info("View changed!");
     }
 
+    public void setMenuButtonFunction(){
+        shortSearch.setOnMouseClicked(e->{
+            changeView("/com/zeus/fxml/menu.fxml");
+        });
+        shortTranslate.setOnMouseClicked(e->{
+            //changeView("");
+        });
+        shortFav.setOnMouseClicked(e->{
+            //changeView("");
+        });
+        shortHistory.setOnMouseClicked(e->{
+            changeView("/com/zeus/fxml/history.fxml");
+        });
+        shortGame.setOnMouseClicked(e->{
+            changeView("/com/zeus/fxml/GameScene.fxml");
+        });
+        shortUpdate.setOnMouseClicked(e->{
+            changeView("/com/zeus/fxml/UpdateLobby.fxml");
+        });
+    }
+
     private void setChoosenIcon(String FXMLurl){
         switch (FXMLurl){
             case "/com/zeus/fxml/menu.fxml":
@@ -152,7 +174,7 @@ public class SceneContainer implements Initializable {
                 shortHistory.setStyle("-fx-border-width: 0");
                 shortSearch.setStyle("-fx-border-width: 0");
                 break;
-            case "/com/zeus/fxml/UpdateScene.fxml":
+            case "/com/zeus/fxml/UpdateLobby.fxml":
                 shortUpdate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
                         "-fx-border-width: 0 0 0 2;");
                 shortFav.setStyle("-fx-border-width: 0");
@@ -161,6 +183,14 @@ public class SceneContainer implements Initializable {
                 shortHistory.setStyle("-fx-border-width: 0");
                 shortSearch.setStyle("-fx-border-width: 0");
                 break;
+            case "/com/zeus/fxml/history.fxml":
+                shortHistory.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                        "-fx-border-width: 0 0 0 2;");
+                shortFav.setStyle("-fx-border-width: 0");
+                shortTranslate.setStyle("-fx-border-width: 0");
+                shortGame.setStyle("-fx-border-width: 0");
+                shortUpdate.setStyle("-fx-border-width: 0");
+                shortSearch.setStyle("-fx-border-width: 0");
             default:
                 break;
         }
@@ -170,8 +200,6 @@ public class SceneContainer implements Initializable {
     public void setAddWord(ActionEvent event) {
         changeView("/com/zeus/fxml/UpdateLobby.fxml");
     }
-
-
 
     @FXML
     public void setHistory(ActionEvent event) {

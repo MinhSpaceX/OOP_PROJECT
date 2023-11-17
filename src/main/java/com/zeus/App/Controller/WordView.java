@@ -20,6 +20,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.util.Pair;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -70,8 +71,11 @@ public class WordView implements Initializable {
         MediaHandler();
         searchWord();
         searchBar2.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DOWN) {
+            if (event.getCode() == KeyCode.DOWN && !resultDisplay2.getChildren().isEmpty()) {
                 resultDisplay2.getChildren().get(0).requestFocus();
+            }
+            if(event.getCode() == KeyCode.ENTER && !resultDisplay2.getChildren().isEmpty()){
+                displayLabelContent((Label) resultDisplay2.getChildren().get(0));
             }
         });
         resultDisplay2.setOnKeyPressed(event -> {

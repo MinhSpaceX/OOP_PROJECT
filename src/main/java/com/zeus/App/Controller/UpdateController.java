@@ -87,7 +87,11 @@ public class UpdateController implements Initializable {
                 if (event.getCode() == KeyCode.DOWN && !searchResultDisplay.getChildren().isEmpty()) {
                     searchResultDisplay.getChildren().get(0).requestFocus();
                 }
+                if(event.getCode() == KeyCode.ENTER && !searchResultDisplay.getChildren().isEmpty()){
+                    getSingleWord((Label) searchResultDisplay.getChildren().get(0));
+                }
             });
+
             searchResultDisplay.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.UP) {
                     int currentIndex = searchResultDisplay.getChildren().indexOf(searchResultDisplay.getScene().getFocusOwner());
