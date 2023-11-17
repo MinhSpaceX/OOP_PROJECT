@@ -123,11 +123,11 @@ public class SceneContainer implements Initializable {
     public void changeView(String FXMLurl){
         setChoosenIcon(FXMLurl);
         viewWindow.getChildren().clear();
-        AnchorPane view = new AnchorPane();
+        AnchorPane view = null;
         try {
             view = (AnchorPane) FileManager.loadFXML(FXMLurl);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Logger.printStackTrace(e);
         }
         viewWindow.getChildren().setAll(view);
         Logger.info("View changed!");

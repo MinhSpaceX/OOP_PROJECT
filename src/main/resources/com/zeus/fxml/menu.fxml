@@ -69,13 +69,6 @@
                      </VBox.margin>
                   </AnchorPane>
                   <VBox fx:id="resultDisplay" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css">
-                     <children>
-                        <Label prefHeight="0.0" prefWidth="411.0" style="-fx-background-color: gray;" styleClass="label-style" stylesheets="@../css/index.css" text="Label">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </padding>

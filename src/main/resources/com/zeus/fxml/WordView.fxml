@@ -27,7 +27,7 @@
                               <Insets />
                            </opaqueInsets>
                            <children>
-                              <TextField fx:id="searchBar2" prefHeight="36.0" prefWidth="383.0" promptText="Type a word here..." stylesheets="@../css/application.css">
+                              <TextField fx:id="searchBar" prefHeight="36.0" prefWidth="383.0" promptText="Type a word here..." stylesheets="@../css/application.css">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -120,13 +120,7 @@
             </VBox>
          </children>
       </AnchorPane>
-      <VBox fx:id="resultDisplay2" layoutX="15.0" layoutY="64.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css" visible="false">
-         <children>
-            <Label prefHeight="20.0" prefWidth="379.0" style="-fx-background-color: gray;" styleClass="label-style" stylesheets="@../css/index.css" text="Label">
-               <font>
-                  <Font size="14.0" />
-               </font></Label>
-         </children>
+      <VBox fx:id="resultDisplay" layoutX="15.0" layoutY="64.0" prefHeight="36.0" prefWidth="425.0" styleClass="result_display" stylesheets="@../css/index.css" visible="false">
          <padding>
             <Insets bottom="5.0" left="5.0" top="5.0" />
          </padding>

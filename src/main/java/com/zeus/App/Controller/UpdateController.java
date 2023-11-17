@@ -3,6 +3,7 @@ package com.zeus.App.Controller;
 import com.zeus.App.SearchManager;
 import com.zeus.DatabaseManager.SQLite;
 import com.zeus.DictionaryManager.SingleWord;
+import com.zeus.utils.controller.SearchController;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.SystemManager;
 import javafx.event.ActionEvent;
@@ -22,7 +23,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class UpdateController implements Initializable {
+public class UpdateController extends SearchController {
     @FXML
     private Button addWordButton;
 
@@ -46,12 +47,6 @@ public class UpdateController implements Initializable {
 
     @FXML
     private TextArea getVieExample;
-
-    @FXML
-    private TextField searchBar;
-
-    @FXML
-    private VBox searchResultDisplay;
 
     @FXML
     private Button updateButton;
@@ -79,78 +74,19 @@ public class UpdateController implements Initializable {
     SQLite sql = null;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        searchWord();
+    public void initialize() {
         sql = SystemManager.getManager(SQLite.class);
-        if(!searchResultDisplay.getChildren().isEmpty()) {
-            searchBar.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.DOWN && !searchResultDisplay.getChildren().isEmpty()) {
-                    searchResultDisplay.getChildren().get(0).requestFocus();
-                }
-                if(event.getCode() == KeyCode.ENTER && !searchResultDisplay.getChildren().isEmpty()){
-                    getSingleWord((Label) searchResultDisplay.getChildren().get(0));
-                }
-            });
-
-            searchResultDisplay.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.UP) {
-                    int currentIndex = searchResultDisplay.getChildren().indexOf(searchResultDisplay.getScene().getFocusOwner());
-                    int nextIndex = (currentIndex + (event.getCode() == KeyCode.DOWN ? 1 : -1) + searchResultDisplay.getChildren().size()) % searchResultDisplay.getChildren().size();
-                    searchResultDisplay.getChildren().get(nextIndex).requestFocus();
-                    event.consume();
-                }
-            });
-        }
         setFunction();
         getSingleWord(updateLabel);
     }
 
+    @Override
+    protected void displayWordFromLabel(Label label) {
+        getSingleWord(label);
+    }
+
     public static void SetUpdateLabel(Label label){
         updateLabel = label;
-    }
-
-    public void searchWord(){
-        searchResultDisplay.setVisible(false);
-        searchBar.setOnKeyReleased(keyEvent -> {
-            searchPane.clear();
-            searchResultDisplay.getChildren().clear();
-            if (!searchBar.getText().isEmpty()) {
-                searchResultDisplay.setVisible(true);
-                String input = searchBar.getText();
-                filterData(input);
-            } else {
-                searchResultDisplay.setVisible(false);
-            }
-            if((keyEvent.getTarget() instanceof TextField)){
-                searchBar.requestFocus();
-            }
-        });
-    }
-
-    private void filterData(String input){
-        searchPane = SearchManager.searchFilterUserDb(input).stream().distinct().collect(Collectors.toList());
-        if(searchPane.isEmpty()){
-            Label label = new Label("Hmm...what word is this?");
-            label.getStyleClass().add("not-found-style");
-            searchResultDisplay.getChildren().add(label);
-            return;
-        }
-        if(searchPane.size() == 2){
-            searchPane.remove(0);
-        }
-        for(var i : searchPane){
-            Label label = new Label(i);
-            label.getStyleClass().add("result-display-label-style");
-            label.setOnMouseClicked(e -> {
-                getSingleWord(label);
-            });
-            label.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.ENTER) {
-                    getSingleWord(label);
-                }
-            });
-            searchResultDisplay.getChildren().add(label);
-        }
     }
 
     public void getSingleWord(Label label){
@@ -296,7 +232,7 @@ public class UpdateController implements Initializable {
         exampleDisplay.getChildren().clear();
         getEngExample.clear();
         getVieExample.clear();
-        searchResultDisplay.setVisible(false);
+        resultDisplay.setVisible(false);
         searchBar.clear();
         getType.clear();
         getMeaning.clear();

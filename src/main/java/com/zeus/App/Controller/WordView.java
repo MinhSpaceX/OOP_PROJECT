@@ -5,6 +5,7 @@ import com.zeus.DatabaseManager.MongoManager;
 import com.zeus.DictionaryManager.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
+import com.zeus.utils.controller.SearchController;
 import com.zeus.utils.log.Logger;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -29,10 +30,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class WordView implements Initializable {
-    @FXML
-    private TextField searchBar2 = new TextField();
-
+public class WordView extends SearchController {
     @FXML
     private AnchorPane wordCard;
 
@@ -49,9 +47,6 @@ public class WordView implements Initializable {
     private Text meaningDisplay;
 
     @FXML
-    VBox resultDisplay2 = new VBox();
-
-    @FXML
     Label pronounDisplay;
 
     @FXML
@@ -59,10 +54,15 @@ public class WordView implements Initializable {
 
     Map<String, List<SingleWord>> result;
 
-    private List<String> temp = new ArrayList<>();
-
     private static Label menuLabel;
     private boolean belongToUser;
+    @Override
+    protected void initialize() {
+        trie = SearchManager.searchPath;
+        MediaHandler();
+        Platform.runLater(() -> displayLabelContent(menuLabel));
+    }
+    
 
     public static void setMenuLabel(Label label) {
         menuLabel = label;
@@ -71,71 +71,8 @@ public class WordView implements Initializable {
     MediaPlayer mediaPlayer;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        MediaHandler();
-        searchWord();
-        searchBar2.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DOWN && !resultDisplay2.getChildren().isEmpty()) {
-                resultDisplay2.getChildren().get(0).requestFocus();
-            }
-            if(event.getCode() == KeyCode.ENTER && !resultDisplay2.getChildren().isEmpty()){
-                displayLabelContent((Label) resultDisplay2.getChildren().get(0));
-            }
-        });
-        resultDisplay2.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.DOWN || event.getCode() == KeyCode.UP) {
-                int currentIndex = resultDisplay2.getChildren().indexOf(resultDisplay2.getScene().getFocusOwner());
-                int nextIndex = (currentIndex + (event.getCode() == KeyCode.DOWN ? 1 : -1) + resultDisplay2.getChildren().size()) % resultDisplay2.getChildren().size();
-                resultDisplay2.getChildren().get(nextIndex).requestFocus();
-                event.consume();
-            }
-        });
-        Platform.runLater(() -> displayLabelContent(menuLabel));
-        Logger.info("WordView init -----------------");
-    }
-
-    public void setToDefault(){
-        searchBar2.clear();
-    }
-
-    private void filterData(String input){
-        temp = SearchManager.searchFilter(input).stream().distinct().collect(Collectors.toList());
-        if(temp.isEmpty()){
-            Label label = new Label("Hmm...what word is this?");
-            label.getStyleClass().add("not-found-style");
-            resultDisplay2.getChildren().add(label);
-            return;
-        }
-        if(temp.size() == 2){
-            temp.remove(0);
-        }
-        for(var i : temp){
-            Label label = new Label(i);
-            label.getStyleClass().add("label-style");
-            label.setOnMouseClicked(e -> displayLabelContent(label));
-            label.setOnKeyPressed(event -> {
-                if (event.getCode() == KeyCode.ENTER) displayLabelContent(label);
-            });
-            resultDisplay2.getChildren().add(label);
-        }
-    }
-
-    public void searchWord(){
-        resultDisplay2.setVisible(false);
-        searchBar2.setOnKeyReleased(keyEvent -> {
-            temp.clear();
-            resultDisplay2.getChildren().clear();
-            if (!searchBar2.getText().isEmpty()) {
-                resultDisplay2.setVisible(true);
-                String input = searchBar2.getText();
-                filterData(input);
-            } else {
-                resultDisplay2.setVisible(false);
-            }
-            if((keyEvent.getTarget() instanceof TextField)){
-                searchBar2.requestFocus();
-            }
-        });
+    protected void displayWordFromLabel(Label label) {
+        displayLabelContent(label);
     }
 
     public void MediaHandler(){
@@ -152,6 +89,7 @@ public class WordView implements Initializable {
     }
 
     public void displayLabelContent(Label label){
+        typeContainer.setPrefWidth(1000);
         History.historyList.add(label.getText());
         typeContainer.getChildren().clear();
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
@@ -168,18 +106,18 @@ public class WordView implements Initializable {
         //System.out.println(result);
         boolean getFirst = true;
         for(var i : result.keySet()) {
-            Label temp = new Label(i);
+            Label autoFillList = new Label(i);
             if (getFirst) {
-                temp.getStyleClass().add("tab-label");
-                DisplayMeaning(temp.getText());
-                //getClickCss.put(temp.getText(), true);
+                autoFillList.getStyleClass().add("tab-label");
+                DisplayMeaning(autoFillList.getText());
+                //getClickCss.put(autoFillList.getText(), true);
                 getFirst = false;
             } else {
-                temp.getStyleClass().add("unchoose-tab-label");
-                //getClickCss.put(temp.getText(), false);
+                autoFillList.getStyleClass().add("unchoose-tab-label");
+                //getClickCss.put(autoFillList.getText(), false);
             }
-            temp.setOnMouseClicked(e -> DisplayMeaning(temp.getText()));
-            typeContainer.getChildren().add(temp);
+            autoFillList.setOnMouseClicked(e -> DisplayMeaning(autoFillList.getText()));
+            typeContainer.getChildren().add(autoFillList);
         }
         Platform.runLater(() -> {
             double width = 0;
@@ -190,8 +128,6 @@ public class WordView implements Initializable {
             }
             typeContainer.setPrefWidth(width);
         });
-        setToDefault();
-        searchWord();
     }
 
     public void DisplayMeaning(String type){
@@ -199,14 +135,14 @@ public class WordView implements Initializable {
         //getClickCss.put(type, true);
         for (javafx.scene.Node node : typeContainer.getChildren()) {
             if (node instanceof Label) {
-                Label temp = (Label) node;
-                if (temp.getText().equals(type)) {
-                    temp.getStyleClass().clear();
-                    temp.getStyleClass().add("tab-label");
+                Label autoFillList = (Label) node;
+                if (autoFillList.getText().equals(type)) {
+                    autoFillList.getStyleClass().clear();
+                    autoFillList.getStyleClass().add("tab-label");
                 } else {
-                    if(temp.getStyleClass().contains("tab-label")) {
-                        temp.getStyleClass().clear();
-                        temp.getStyleClass().add("unchoose-tab-label");
+                    if(autoFillList.getStyleClass().contains("tab-label")) {
+                        autoFillList.getStyleClass().clear();
+                        autoFillList.getStyleClass().add("unchoose-tab-label");
                     }
                 }
             }
@@ -220,5 +156,4 @@ public class WordView implements Initializable {
         }
         meaningDisplay.setText(str.toString());
     }
-
 }
