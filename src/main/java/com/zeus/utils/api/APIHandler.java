@@ -15,6 +15,8 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class APIHandler {
     private static final String api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
@@ -43,11 +45,11 @@ public class APIHandler {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        translate("Hello");
+        System.out.println(translate("The Hell"));
     }
 
-    public static String translate(String english) throws IOException, InterruptedException {
-        String result = null;
+    public static List<String> translate(String english) throws IOException, InterruptedException {
+        List<String> translates = new ArrayList<>();
         english = new StringBuilder()
                 .append("q=")
                 .append(URLEncoder.encode(english, StandardCharsets.UTF_8))
@@ -59,17 +61,21 @@ public class APIHandler {
             HttpClient client = HttpClient.newBuilder()
                     .connectTimeout(Duration.ofSeconds(10))
                     .build();
-            String url = "https://api.mymemory.translated.net/get?" + english;
+            String url = translateAPI + english;
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .build();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.body());
-            return jsonNode.get("responseData").get("translatedText").toString();
+            System.out.println(response.body());
+            for (JsonNode node : jsonNode.get("matches")) {
+                translates.add(new String(node.get("translation").toString().getBytes(), StandardCharsets.UTF_8));
+            }
+            return translates;
         }catch (Exception e) {
             Logger.printStackTrace(e);
         }
-        return result;
+        return null;
     }
 }
