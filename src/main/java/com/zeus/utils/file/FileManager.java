@@ -92,7 +92,7 @@ public class FileManager {
             String line;
 
             while ((line = br.readLine()) != null) {
-                History.historyList.add(line);
+                History.historyList.addFromFile(line);
             }
             Logger.info("inserted");
         } catch (IOException e) {

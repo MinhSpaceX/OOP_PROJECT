@@ -84,6 +84,7 @@ public class History implements Initializable {
                     //CheckBox checkBox = (CheckBox) hbox.getChildren().get(0); // Giả sử CheckBox là phần tử đầu tiên trong HBox
                     if (((CheckBox)hbox.getChildren().get(0)).isSelected()) {
                         itemsToRemove.add(hbox);
+                        historyList.remove(((Label)hbox.getChildren().get(1)).getText());
                     }
                 }
 
