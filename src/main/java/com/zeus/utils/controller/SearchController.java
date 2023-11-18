@@ -43,6 +43,7 @@ public abstract class SearchController implements Initializable {
             if (event.getCode() == KeyCode.DOWN && !resultDisplay.getChildren().isEmpty()) {
                 resultDisplay.getChildren().get(0).requestFocus();
             }
+
             if(event.getCode() == KeyCode.ENTER && !autoFillList.isEmpty()){
                 try {
                     resultDisplay.setVisible(false);
@@ -83,9 +84,14 @@ public abstract class SearchController implements Initializable {
         for(var i : autoFillList){
             Label label = new Label(i);
             label.getStyleClass().add("label-style");
-            label.setOnMouseClicked(e -> displayWordFromLabel(label));
+            label.setOnMouseClicked(e -> {
+                resultDisplay.setVisible(false);
+                searchBar.clear();
+                displayWordFromLabel(label);
+            });
             label.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
+                    resultDisplay.setVisible(false);
                     searchBar.clear();
                     displayWordFromLabel(label);
                 }
