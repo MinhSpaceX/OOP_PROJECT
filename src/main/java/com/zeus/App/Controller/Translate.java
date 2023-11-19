@@ -22,14 +22,19 @@ public class Translate implements Initializable {
     Button erase;
     public void Translate() {
         translate.setOnMouseClicked(e -> {
-            if (SearchManager.search(word.getText())) {
-                SceneContainer sc = SceneContainer.sceneContainer;
-                Label label = new Label(word.getText().toLowerCase());
-                WordView.setMenuLabel(label);
-                sc.changeView("/com/zeus/fxml/WordView.fxml");
-            } else {
+            if (word.getText().length() == 0) {
                 result.setVisible(true);
-                result.setText(APIHandler.translate(word.getText()).get(0).toString());
+                result.setText("Sa rang hê ô");
+            } else {
+                if (SearchManager.search(word.getText())) {
+                    SceneContainer sc = SceneContainer.sceneContainer;
+                    Label label = new Label(word.getText().toLowerCase());
+                    WordView.setMenuLabel(label);
+                    sc.changeView("/com/zeus/fxml/WordView.fxml");
+                } else {
+                    result.setVisible(true);
+                    result.setText(APIHandler.translate(word.getText()).get(0).toString());
+                }
             }
         });
         erase.setOnMouseClicked(e -> {
