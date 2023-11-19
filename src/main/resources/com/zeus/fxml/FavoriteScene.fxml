@@ -17,7 +17,7 @@
             <children>
                 <HBox prefHeight="63.0" prefWidth="447.0">
                     <children>
-                        <Label alignment="CENTER" prefHeight="54.0" prefWidth="446.0" text="HISTORY">
+                        <Label alignment="CENTER" prefHeight="54.0" prefWidth="446.0" text="FAVORITE WORDS">
                             <graphic>
                                 <ImageView fitHeight="39.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

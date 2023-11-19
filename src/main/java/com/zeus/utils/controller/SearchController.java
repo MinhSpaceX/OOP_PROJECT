@@ -23,9 +23,6 @@ public abstract class SearchController implements Initializable {
 
     @FXML
     protected VBox resultDisplay;
-
-    @FXML
-    ImageView findButton;
     
     protected List<String> autoFillList;
 
