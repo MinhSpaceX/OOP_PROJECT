@@ -66,4 +66,8 @@ public class SearchManager extends Manager {
         return userTrie;
     }
 
+    public static boolean search(String word) {
+        return searchPath.search(word.toLowerCase());
+    }
+
 }
