@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
+import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,6 +23,9 @@ public abstract class SearchController implements Initializable {
 
     @FXML
     protected VBox resultDisplay;
+
+    @FXML
+    ImageView findButton;
     
     protected List<String> autoFillList;
 

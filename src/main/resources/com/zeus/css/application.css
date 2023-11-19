@@ -224,3 +224,32 @@
     -fx-text-fill: rgb(142, 143, 250);
     -fx-underline: true;
 }
+
+.listview-style {
+    -fx-selection-bar: transparent;
+    -fx-focus-color: white;
+    -fx-hbar-policy: never;
+    -fx-border-color: rgb(142, 143, 250);
+    -fx-border: 0;
+    -fx-border-width: 2 2 2 2;
+    -fx-border-radius: 5 5 5 5;
+    -fx-background-insets: 0;
+    -fx-background: white;
+}
+
+.listview-style .scroll-bar:vertical {
+    -fx-pref-width: 7px;
+    -fx-background-color: transparent;
+    -fx-padding-bottom: 100;
+}
+
+.listview-style .thumb{
+    -fx-background-color: rgb(119, 82, 254);
+}
+
+.listview-style .increment-button, .decrement-button{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-background-insets: 0;
+    -fx-pref-width: 10;
+}

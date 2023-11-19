@@ -33,18 +33,20 @@ public class FavoriteController implements Initializable {
     private Button remove;
     public static StackSet<String> FavoriteList = new StackSet<>();
 
-    ListView<HBox> listView = new ListView<>();
-    ObservableList<HBox> items = FXCollections.observableArrayList();
+    SceneContainer sc = SceneContainer.sceneContainer;
+
+    //ListView<HBox> listView = new ListView<>();
+    //ObservableList<HBox> items = FXCollections.observableArrayList();
 
 
     public void displayFavorite() {
         ArrayList<String> stringToRemove = new ArrayList<>();
-        listView.setItems(items);
-        listView.getStyleClass().add("scroll-pane-wordview");
+        //listView.setItems(items);
+        //listView.getStyleClass().add("listview-style");
         remove.setVisible(false);
-        for(String i : FavoriteList){
+        for(String i : FavoriteList) {
             HBox hBox = new HBox(15);
-            hBox.getStyleClass().add("hbox");
+            hBox.getStyleClass().add("hbox-style");
             CheckBox checkBox = new CheckBox();
             checkBox.getStyleClass().add("checkbox");
             hBox.getChildren().add(checkBox);
@@ -65,46 +67,55 @@ public class FavoriteController implements Initializable {
             }
             button.getStyleClass().add("audioHistory");
             hBox.getChildren().add(button);//HERE
-            items.add(hBox);
-            listView.refresh();
+            FavoriteDisplay.getChildren().add(hBox);
+            //items.add(hBox);
+            //listView.refresh();
             MediaHandler(button, label);
-            label.setOnMouseClicked(e -> {
-                SceneContainer sc = SceneContainer.sceneContainer;
+            hBox.setOnMouseClicked(e -> {
                 WordView.setMenuLabel(label);
                 sc.changeView("/com/zeus/fxml/WordView.fxml");
             });
             ObservableList<HBox> itemsToRemove = FXCollections.observableArrayList();
 
-            for (HBox hbox : items) {
-                ((CheckBox) hbox.getChildren().get(0)).setOnAction(event -> {
-                    // Kiểm tra xem có ít nhất một CheckBox được chọn hay không
-                    boolean atLeastOneSelected = false;
-                    for (HBox hb : items) {
-                        CheckBox cb = (CheckBox) hb.getChildren().get(0);
-                        if (cb.isSelected()) {
-                            atLeastOneSelected = true;
-                            break;
+            for (var hbox : FavoriteDisplay.getChildren()) {
+                if (hbox instanceof HBox) {
+                    HBox temp = (HBox) hbox;
+                    ((CheckBox) temp.getChildren().get(0)).setOnAction(event -> {
+                        // Kiểm tra xem có ít nhất một CheckBox được chọn hay không
+                        boolean atLeastOneSelected = false;
+                        for (var hb : FavoriteDisplay.getChildren()) {
+                            if (hb instanceof HBox) {
+                                HBox temp2 = (HBox) hb;
+                                CheckBox cb = (CheckBox) temp2.getChildren().get(0);
+                                if (cb.isSelected()) {
+                                    atLeastOneSelected = true;
+                                    break;
+                                }
+                            }
                         }
-                    }
 
-                    if (((CheckBox)hbox.getChildren().get(0)).isSelected()) {
-                        itemsToRemove.add(hbox);
-                        stringToRemove.add(((Label)hbox.getChildren().get(1)).getText());
-                    }
+                        if (((CheckBox) temp.getChildren().get(0)).isSelected()) {
+                            itemsToRemove.add((HBox) hbox);
+                            stringToRemove.add(((Label) temp.getChildren().get(1)).getText());
+                        }
 
-                    remove.setVisible(atLeastOneSelected);
-                });
+                        remove.setVisible(atLeastOneSelected);
+                    });
+                }
             }
-            remove.setOnMouseClicked(event-> {
+
+            remove.setOnMouseClicked(event -> {
                 FavoriteList.removeAll(stringToRemove);
+                FavoriteDisplay.getChildren().removeAll(itemsToRemove);
                 stringToRemove.clear();
-                items.removeAll(itemsToRemove);
-                listView.refresh();
+                //items.removeAll(itemsToRemove);
+                //listView.refresh();
                 remove.setVisible(false);
             });
 
         }
-        FavoriteDisplay.getChildren().addAll(listView);
+
+        //FavoriteDisplay.getChildren().addAll(listView);
     }
 
     public void MediaHandler(Button button, Label label){

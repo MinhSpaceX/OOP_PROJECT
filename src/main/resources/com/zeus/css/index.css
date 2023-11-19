@@ -124,7 +124,7 @@
 }
 
 .history {
-    -fx-border-radius: 10px;
+    -fx-border-width: 0;
     -fx-border-color: #7752fe;
     -fx-background-color: white;
     -fx-font-size: 20px;
@@ -137,28 +137,54 @@
 
 .history:hover {
     -fx-cursor: hand;
-    -fx-background-color: rgb(0, 213, 255);
 }
 
 .audioHistory {
-
     -fx-pref-height:30;
-    -fx-background-radius: 10;
+    -fx-background-color: transparent;
 }
 
 .audioHistory :hover{
     -fx-cursor: hand;
 }
 
-.hbox {
-    -fx-border-radius: 5px;
+.hbox-style {
+    -fx-alignment: center;
     -fx-border-color: #7752fe; 
-    -fx-border-width: 2px;
+    -fx-border-width: 0px;
     -fx-pref-height: 40; 
     -fx-aligment: center;
     -fx-padding: 2 8 2 8;
+    -fx-background-radius: 5;
 }
-.checkbox {
-    -fx-pref-height:31;
-    -fx-pref-width:17;
+
+.hbox-style:hover .history{
+    -fx-background-color: rgb(225, 221, 221);
+}
+
+.hbox-style:hover{
+    -fx-cursor: hand;
+    -fx-background-color: rgb(225, 221, 221);
+}
+
+.checkbox{
+    -fx-background-color: transparent;
+}
+
+.checkbox .box{
+    -fx-margin: 10;
+    -fx-background-color: white;
+    -fx-border-color: rgb(142, 143, 250);
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 20;
+    -fx-background-insets: 0;
+}
+
+.checkbox:selected .box{
+    -fx-background-color: rgb(142, 143, 250);
+}
+
+.checkbox:selected .mark{
+    -fx-background-color: white;
 }

@@ -15,6 +15,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.text.html.ImageView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 import static com.zeus.utils.file.FileManager.getPathFromFile;
 
 public class Menu extends SearchController {
+
     @Override
     protected void displayWordFromLabel(Label label) {
         try {
