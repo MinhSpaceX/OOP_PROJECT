@@ -7,6 +7,7 @@ import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.controller.SearchController;
 import com.zeus.utils.log.Logger;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,9 +22,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.util.Pair;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -52,6 +57,10 @@ public class WordView extends SearchController {
     @FXML
     Label userBelongLabel;
 
+    @FXML
+    FontAwesomeIconView addToFavorite;
+    private boolean isFavoriteWord = false;
+
     Map<String, List<SingleWord>> result;
 
     private static Label menuLabel;
@@ -61,6 +70,8 @@ public class WordView extends SearchController {
         trie = SearchManager.searchPath;
         MediaHandler();
         Platform.runLater(() -> displayLabelContent(menuLabel));
+        checkIfLiked(menuLabel.getText());
+        getLikingFunction();
     }
     
 
@@ -88,10 +99,42 @@ public class WordView extends SearchController {
         });
     }
 
+    public void checkIfLiked(String target){
+        System.out.println(FavoriteController.FavoriteList);
+        if(FavoriteController.FavoriteList.contains(target)){
+            //System.out.println("call");
+            addToFavorite.setFill(Color.rgb(142, 143, 250));
+            isFavoriteWord = true;
+            return;
+        }
+        isFavoriteWord = false;
+        addToFavorite.setFill(Color.rgb(225, 221, 221));
+    }
+
+    public void getLikingFunction(){
+        addToFavorite.setOnMouseClicked(e->{
+            if(!isFavoriteWord) {
+                FavoriteController.FavoriteList.add(menuLabel.getText());
+                addToFavorite.setFill(Color.rgb(142, 143, 250));
+                isFavoriteWord = true;
+                System.out.println(FavoriteController.FavoriteList);
+            }
+            else {
+                FavoriteController.FavoriteList.remove(menuLabel.getText());
+                addToFavorite.setFill(Color.rgb(225, 221, 221));
+                isFavoriteWord = false;
+                System.out.println(FavoriteController.FavoriteList);
+            }
+        });
+    }
+
     public void displayLabelContent(Label label){
+        menuLabel = label;
         typeContainer.setPrefWidth(1000);
         History.historyList.add(label.getText());
         typeContainer.getChildren().clear();
+        checkIfLiked(label.getText());
+        getLikingFunction();
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());

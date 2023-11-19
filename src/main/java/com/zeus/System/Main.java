@@ -1,5 +1,6 @@
 package com.zeus.System;
 
+import com.zeus.App.Controller.FavoriteController;
 import com.zeus.App.Controller.History;
 import com.zeus.App.Window.App;
 import com.zeus.utils.file.FileManager;
@@ -14,11 +15,13 @@ public class Main {
         // Shutdown function when the program end.
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                FileManager.dictionaryExportToFile(History.historyList);
+                FileManager.dictionaryExportToFile(History.historyList, "/com/zeus/data/history.txt");
+                FileManager.dictionaryExportToFile(FavoriteController.FavoriteList, "/com/zeus/data/favorite.txt");
                 Logger.info("GOODBYE");
             }
         });
-        FileManager.insertFromFile();
+        FileManager.insertFromFile("/com/zeus/data/history.txt", History.historyList);
+        FileManager.insertFromFile("/com/zeus/data/favorite.txt", FavoriteController.FavoriteList);
         ManagerFactory.createManager(SystemManager.class).init(null);
         App.run(args);
     }

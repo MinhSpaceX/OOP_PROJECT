@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -57,7 +58,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="33.0" prefWidth="330.0" spacing="10.0">
                                  <children>
-                                    <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="281.33670353889465">
+                                    <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="259.7366669178009">
                                        <font>
                                           <Font name="Corbel" size="18.0" />
                                        </font>
@@ -70,6 +71,11 @@
                                           <Font name="Corbel Bold" size="15.0" />
                                        </font>
                                     </Label>
+                                    <FontAwesomeIconView fx:id="addToFavorite" fill="#e1dddd" glyphName="HEART" size="15">
+                                       <font>
+                                          <Font size="88.0" />
+                                       </font>
+                                    </FontAwesomeIconView>
                                     <Button fx:id="audio" mnemonicParsing="false" styleClass="transparent-template" stylesheets="@../css/application.css">
                                        <graphic>
                                           <ImageView fitHeight="16.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">

@@ -85,14 +85,14 @@ public class FileManager {
         return null;
     }
 
-    public static void insertFromFile() {
-        try (InputStream is = new FileInputStream(getPathFromFile("/com/zeus/data/history.txt"));
+    public static void insertFromFile(String url, StackSet<String> target) {
+        try (InputStream is = new FileInputStream(getPathFromFile(url));
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 
             String line;
 
             while ((line = br.readLine()) != null) {
-                History.historyList.addFromFile(line);
+                target.addFromFile(line);
             }
             Logger.info("inserted");
         } catch (IOException e) {
@@ -100,8 +100,8 @@ public class FileManager {
         }
     }
 
-    public static  void dictionaryExportToFile(StackSet<String> wordTarget) {
-        try (FileWriter fw = new FileWriter(FileManager.getPathFromFile("/com/zeus/data/history.txt"));
+    public static  void dictionaryExportToFile(StackSet<String> wordTarget, String url) {
+        try (FileWriter fw = new FileWriter(FileManager.getPathFromFile(url));
              BufferedWriter bw = new BufferedWriter(fw)) {
 
             for (String a : wordTarget) {

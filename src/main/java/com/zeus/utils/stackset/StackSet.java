@@ -24,4 +24,5 @@ public class StackSet <T> extends ArrayList<T> {
         super.add(t);
         return true;
     }
+
 }

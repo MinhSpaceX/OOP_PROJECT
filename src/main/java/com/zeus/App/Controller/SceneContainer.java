@@ -81,7 +81,6 @@ public class SceneContainer implements Initializable {
 
     public void sideNavSlide(){
         slider.setTranslateX(-170);
-        DenyIcon();
         menuButton.setOnMouseClicked(event -> {
             TranslateTransition slide = new TranslateTransition();
             slide.setDuration(Duration.seconds(0.4));
@@ -100,19 +99,6 @@ public class SceneContainer implements Initializable {
             }
             slide.play();
         });
-    }
-
-    /**
-     * Prevent icon from blocking user clicking the button
-     */
-    public void DenyIcon(){
-        menuIcon.setMouseTransparent(true);
-        searchIcon.setMouseTransparent(true);
-        translateIcon.setMouseTransparent(true);
-        gameIcon.setMouseTransparent(true);
-        heartIcon.setMouseTransparent(true);
-        historyIcon.setMouseTransparent(true);
-        updateIcon.setMouseTransparent(true);
     }
 
     @FXML
@@ -141,7 +127,7 @@ public class SceneContainer implements Initializable {
             //changeView("");
         });
         shortFav.setOnMouseClicked(e->{
-            //changeView("");
+            changeView("/com/zeus/fxml/FavoriteScene.fxml");
         });
         shortHistory.setOnMouseClicked(e->{
             changeView("/com/zeus/fxml/history.fxml");
@@ -191,6 +177,16 @@ public class SceneContainer implements Initializable {
                 shortGame.setStyle("-fx-border-width: 0");
                 shortUpdate.setStyle("-fx-border-width: 0");
                 shortSearch.setStyle("-fx-border-width: 0");
+                break;
+            case "/com/zeus/fxml/FavoriteScene.fxml":
+                shortFav.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                        "-fx-border-width: 0 0 0 2;");
+                shortHistory.setStyle("-fx-border-width: 0");
+                shortTranslate.setStyle("-fx-border-width: 0");
+                shortGame.setStyle("-fx-border-width: 0");
+                shortUpdate.setStyle("-fx-border-width: 0");
+                shortSearch.setStyle("-fx-border-width: 0");
+                break;
             default:
                 break;
         }
@@ -205,4 +201,7 @@ public class SceneContainer implements Initializable {
     public void setHistory(ActionEvent event) {
         changeView("/com/zeus/fxml/history.fxml");
     }
+
+    @FXML
+    public void setFavorite(ActionEvent event){ changeView("/com/zeus/fxml/FavoriteScene.fxml");}
 }

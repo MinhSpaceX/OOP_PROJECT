@@ -152,19 +152,6 @@ public class GameController2 implements Initializable {
             openEndScene();
 
         });
-        /*Timer timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timeRemaining--;
-                clockCounter.setText(String.format("Time: %d",(int)timeRemaining));
-
-                if (timeRemaining <= 0) {
-                    ((Timer) e.getSource()).stop();
-                    ResultCard.setVisible(true);
-                }
-            }
-        });
-        timer.start();*/
     }
 
     public void setUpAnsAndQues(){

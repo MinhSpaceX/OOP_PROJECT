@@ -24,24 +24,25 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class History implements Initializable {
-    @FXML
-    VBox historyDisplay = new VBox();
+public class FavoriteController implements Initializable {
 
     @FXML
-    Button remove;
-    public static StackSet<String> historyList = new StackSet<>();
+    private VBox FavoriteDisplay;
+
+    @FXML
+    private Button remove;
+    public static StackSet<String> FavoriteList = new StackSet<>();
 
     ListView<HBox> listView = new ListView<>();
     ObservableList<HBox> items = FXCollections.observableArrayList();
 
 
-    public void displayHistory() {
+    public void displayFavorite() {
         ArrayList<String> stringToRemove = new ArrayList<>();
         listView.setItems(items);
         listView.getStyleClass().add("scroll-pane-wordview");
         remove.setVisible(false);
-        for(String i : historyList){
+        for(String i : FavoriteList){
             HBox hBox = new HBox(15);
             hBox.getStyleClass().add("hbox");
             CheckBox checkBox = new CheckBox();
@@ -94,9 +95,8 @@ public class History implements Initializable {
                     remove.setVisible(atLeastOneSelected);
                 });
             }
-
             remove.setOnMouseClicked(event-> {
-                historyList.removeAll(stringToRemove);
+                FavoriteList.removeAll(stringToRemove);
                 stringToRemove.clear();
                 items.removeAll(itemsToRemove);
                 listView.refresh();
@@ -104,8 +104,7 @@ public class History implements Initializable {
             });
 
         }
-
-        historyDisplay.getChildren().addAll(listView);
+        FavoriteDisplay.getChildren().addAll(listView);
     }
 
     public void MediaHandler(Button button, Label label){
@@ -127,6 +126,6 @@ public class History implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {
-        displayHistory();
+        displayFavorite();
     }
 }

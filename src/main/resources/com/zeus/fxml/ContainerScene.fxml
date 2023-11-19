@@ -27,7 +27,7 @@
                                 <Font name="Corbel" size="16.0" />
                             </font>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" Favorite" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#setFavorite" prefHeight="36.0" prefWidth="96.0" styleClass="task-button" stylesheets="@../css/index.css" text=" Favorite" textFill="WHITE">
                             <font>
                                 <Font name="Corbel" size="16.0" />
                             </font>
@@ -78,32 +78,32 @@
                         </Button>
                         <Label fx:id="shortSearch" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
-                                <FontAwesomeIconView fx:id="searchIcon" fill="WHITE" glyphName="SEARCH" size="16" wrappingWidth="17.257134437561035" />
+                                <FontAwesomeIconView fx:id="searchIcon" fill="WHITE" glyphName="SEARCH" mouseTransparent="true" size="17" wrappingWidth="17.257134437561035" />
                             </graphic>
                         </Label>
                         <Label fx:id="shortTranslate" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="30.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
-                                <FontAwesomeIconView fx:id="translateIcon" fill="WHITE" glyphName="LANGUAGE" size="16" wrappingWidth="18.51430368423462" />
+                                <FontAwesomeIconView fx:id="translateIcon" fill="WHITE" glyphName="LANGUAGE" mouseTransparent="true" size="17" wrappingWidth="18.51430368423462" />
                             </graphic>
                         </Label>
                         <Label fx:id="shortFav" alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
-                                <FontAwesomeIconView fx:id="heartIcon" fill="WHITE" glyphName="HEART" selectionEnd="0" size="16" text="" />
+                                <FontAwesomeIconView fx:id="heartIcon" fill="WHITE" glyphName="HEART" selectionEnd="0" size="16" text="" wrappingWidth="20.00000023841858" />
                             </graphic>
                         </Label>
                         <Label fx:id="shortHistory" alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
-                                <FontAwesomeIconView fx:id="historyIcon" fill="WHITE" glyphName="SHARE" size="16" wrappingWidth="20.000030517578125" />
+                                <FontAwesomeIconView fx:id="historyIcon" fill="WHITE" glyphName="HISTORY" mouseTransparent="true" size="17" wrappingWidth="18.4000244140625" />
                             </graphic>
                         </Label>
                         <Label fx:id="shortGame" alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                             <graphic>
-                                <FontAwesomeIconView fx:id="gameIcon" fill="WHITE" glyphName="GAMEPAD" size="16" />
+                                <FontAwesomeIconView fx:id="gameIcon" fill="WHITE" glyphName="GAMEPAD" mouseTransparent="true" size="17" />
                             </graphic>
                         </Label>
                   <Label fx:id="shortUpdate" alignment="CENTER" prefHeight="18.0" prefWidth="29.0" styleClass="nav-label" stylesheets="@../css/index.css">
                      <graphic>
-                        <FontAwesomeIconView fx:id="updateIcon" fill="WHITE" glyphName="PLUS" size="16" />
+                        <FontAwesomeIconView fx:id="updateIcon" fill="WHITE" glyphName="PLUS" mouseTransparent="true" size="17" />
                      </graphic>
                   </Label>
                     </children>
