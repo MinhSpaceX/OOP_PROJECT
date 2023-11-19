@@ -201,6 +201,10 @@ public class SceneContainer implements Initializable {
     public void setHistory(ActionEvent event) {
         changeView("/com/zeus/fxml/history.fxml");
     }
+    @FXML
+    public void setTranslate(ActionEvent event) {
+        changeView("/com/zeus/fxml/Translate.fxml");
+    }
 
     @FXML
     public void setFavorite(ActionEvent event){ changeView("/com/zeus/fxml/FavoriteScene.fxml");}

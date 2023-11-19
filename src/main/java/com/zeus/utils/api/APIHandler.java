@@ -45,10 +45,10 @@ public class APIHandler {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        System.out.println(translate("The - Hell"));
+        System.out.println(translate("hello, my name is Hung, i'm 10 years old"));
     }
 
-    public static List<String> translate(String english) throws IOException, InterruptedException {
+    public static List<String> translate(String english) {
         List<String> translates = new ArrayList<>();
         String url = new StringBuilder()
                 .append(translateAPI)
