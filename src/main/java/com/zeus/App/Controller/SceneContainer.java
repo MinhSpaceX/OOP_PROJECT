@@ -138,6 +138,9 @@ public class SceneContainer implements Initializable {
         shortUpdate.setOnMouseClicked(e->{
             changeView("/com/zeus/fxml/UpdateLobby.fxml");
         });
+        shortTranslate.setOnMouseClicked(e->{
+            changeView("/com/zeus/fxml/Translate.fxml");
+        });
     }
 
     private void setChoosenIcon(String FXMLurl){
@@ -183,6 +186,15 @@ public class SceneContainer implements Initializable {
                         "-fx-border-width: 0 0 0 2;");
                 shortHistory.setStyle("-fx-border-width: 0");
                 shortTranslate.setStyle("-fx-border-width: 0");
+                shortGame.setStyle("-fx-border-width: 0");
+                shortUpdate.setStyle("-fx-border-width: 0");
+                shortSearch.setStyle("-fx-border-width: 0");
+                break;
+            case "/com/zeus/fxml/Translate.fxml":
+                shortTranslate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                        "-fx-border-width: 0 0 0 2;");
+                shortHistory.setStyle("-fx-border-width: 0");
+                shortFav.setStyle("-fx-border-width: 0");
                 shortGame.setStyle("-fx-border-width: 0");
                 shortUpdate.setStyle("-fx-border-width: 0");
                 shortSearch.setStyle("-fx-border-width: 0");
