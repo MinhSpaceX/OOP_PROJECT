@@ -2,6 +2,7 @@ package com.zeus.App.Controller;
 import com.zeus.App.SearchManager;
 import com.zeus.DatabaseManager.SQLite;
 import com.zeus.DictionaryManager.SingleWord;
+import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.SystemManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -125,7 +126,9 @@ public class AddController implements Initializable {
             String NewPronoun = getPronoun.getText();
             String NewType = getType.getText();
             String NewMeaning = getMeaning.getText();
-            Pair<String, String> NewExamplePair = new Pair<>(getEngExample.getText(), getVieExample.getText());
+            String engEx = getEngExample.getText().trim();
+            String viEx = getVieExample.getText().trim();
+            Pair<String, String> NewExamplePair = new Pair<>(engEx, viEx);
             List<Pair<String, String>> NewExample = new ArrayList<>();
             NewExample.add(NewExamplePair);
             SingleWord newSingleWord = new SingleWord(NewWordTarget, NewPronoun, NewType, NewMeaning, NewExample);

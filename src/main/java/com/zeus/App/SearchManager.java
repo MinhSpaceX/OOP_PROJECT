@@ -33,8 +33,16 @@ public class SearchManager extends Manager {
 
 
     public static Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
-        Map<String, List<SingleWord>> result =sqLite.getWordFromDb(wordTarget);
-        result.putAll(sqLite.getWord(wordTarget));
+        Map<String, List<SingleWord>> result = sqLite.getWordFromDb(wordTarget);
+        try{
+            sqLite.getWord(wordTarget).forEach((k, v) -> {
+                List<SingleWord> value = result.get(k);
+                if (value != null) value.addAll(v);
+                else result.put(k, v);
+            });
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
+        }
         return result;
     }
 

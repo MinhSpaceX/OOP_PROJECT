@@ -75,6 +75,7 @@ public class UpdateController extends SearchController {
 
     @Override
     public void initialize() {
+        trie = SearchManager.userTrie;
         sql = SystemManager.getManager(SQLite.class);
         setFunction();
         getSingleWord(updateLabel);
