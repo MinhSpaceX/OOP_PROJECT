@@ -2,9 +2,8 @@ package com.zeus.App.Window;
 
 import com.zeus.App.Controller.SplashController;
 import com.zeus.Managers.Fxml.FxmlManager;
-import com.zeus.utils.file.FileManager;
 import com.zeus.Managers.SystemApp.SystemManager;
-import com.zeus.utils.log.Logger;
+import com.zeus.utils.file.FileManager;
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.scene.Parent;
@@ -17,7 +16,6 @@ public class SplashScreen extends Preloader {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Logger.info("init");
         this.loaderStage = stage;
         Parent root = FileManager.loadFXML(SystemManager.getManager(FxmlManager.class).getPath(SplashController.class));
 

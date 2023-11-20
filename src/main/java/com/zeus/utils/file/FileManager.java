@@ -9,10 +9,10 @@ import com.zeus.utils.log.Logger;
 import com.zeus.utils.stackset.StackSet;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.image.*;
+import javafx.scene.image.Image;
 
 import java.io.*;
-import java.net.*;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +38,11 @@ public class FileManager {
     }
 
     /**
-     *Load a Parent based on fxml path provided
-     * @param fxml
+     * Load a Parent based on fxml path provided
+     *
+     * @param fxml fxml path
      * @return an object name's parent
-     * @throws IOException
+     * @throws IOException exception
      */
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(new File(getPathFromFile(fxml)).toURI().toURL());
@@ -50,6 +51,7 @@ public class FileManager {
 
     /**
      * return an image loaded from icon.png path
+     *
      * @param filePath File path.
      * @return an object of class Image.
      */
@@ -58,7 +60,7 @@ public class FileManager {
         if (file.exists()) {
             return new Image(file.toURI().toString());
         }
-        Logger.warn("Cannot find file: " + file.toURI().toString());
+        Logger.warn("Cannot find file: " + file.toURI());
         return null;
     }
 
@@ -93,16 +95,16 @@ public class FileManager {
             }
             Logger.info("inserted");
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
     }
 
-    public static  void dictionaryExportToFile(StackSet<String> wordTarget, String url) {
+    public static void dictionaryExportToFile(StackSet<String> wordTarget, String url) {
         try (FileWriter fw = new FileWriter(FileManager.getPathFromFile(url));
              BufferedWriter bw = new BufferedWriter(fw)) {
 
             for (String a : wordTarget) {
-                bw.write(a.toString()+ "\n");
+                bw.write(a + "\n");
             }
         } catch (IOException e) {
             System.out.printf("%s", e.getMessage());

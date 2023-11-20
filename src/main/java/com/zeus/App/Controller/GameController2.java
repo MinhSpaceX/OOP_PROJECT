@@ -1,10 +1,9 @@
 package com.zeus.App.Controller;
 
 import com.zeus.Managers.Database.SQLite;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.clock.Clock;
-import com.zeus.utils.log.Logger;
-import com.zeus.Managers.SystemApp.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,17 +22,15 @@ import java.util.ResourceBundle;
 
 public class GameController2 implements Initializable {
 
+    SQLite sql = null;
+    GameController gc = GameController.gameController;
+    SceneContainer sc = SceneContainer.sceneContainer;
     @FXML
     private VBox AnswerContainer;
-
     @FXML
     private AnchorPane GameMenuCard;
-
     @FXML
     private Label questionDisplay;
-
-    SQLite sql = null;
-
     @FXML
     private FontAwesomeIconView backToGameMenu;
     @FXML
@@ -67,23 +64,17 @@ public class GameController2 implements Initializable {
     private double timeRemaining = 30;
     private List<Pair<String, String>> list = new ArrayList<>();
 
-
-    GameController gc = GameController.gameController;
-    SceneContainer sc = SceneContainer.sceneContainer;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sql = SystemManager.getManager(SQLite.class);
-        list = sql.getRandomWords(1, 4*8);
-        BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 100*4)));
+        list = sql.getRandomWords(1, 4 * 8);
+        BackgroundTask.perform(() -> list.addAll(sql.getRandomWords(1, 100 * 4)));
         System.out.println(sql);
-        backToGameMenu.setOnMouseClicked(e->{
-            sc.changeView(GameController.class);
-        });
+        backToGameMenu.setOnMouseClicked(e -> sc.changeView(GameController.class));
         setGameMode();
     }
 
-    public void setGameMode(){
+    public void setGameMode() {
         gameMode = gc.getGameMode();
         //Logger.info(gameMode);
         switch (gameMode) {
@@ -99,45 +90,45 @@ public class GameController2 implements Initializable {
         }
     }
 
-    public void toClassicMode(){
-        scoreDisplay.setText( "Score: " + Score);
+    public void toClassicMode() {
+        scoreDisplay.setText("Score: " + Score);
         clock.setVisible(false);
         questIndex.setText(index + "/10");
         setUpAnsAndQues();
     }
 
-    public void toInfinityMode(){
-        scoreDisplay.setText( "Score: " + Score);
+    public void toInfinityMode() {
+        scoreDisplay.setText("Score: " + Score);
         clock.setVisible(false);
         questIndex.setVisible(false);
         setUpAnsAndQues();
     }
 
-    public void toBlitzMode(){
-        scoreDisplay.setText( "Score: " + Score);
+    public void toBlitzMode() {
+        scoreDisplay.setText("Score: " + Score);
         questIndex.setVisible(false);
-        if(timeRemaining == 30){
+        if (timeRemaining == 30) {
             timeThread();
         }
-        if(timeRemaining > 0) {
+        if (timeRemaining > 0) {
             setUpAnsAndQues();
         }
     }
 
-    public void timeThread(){
+    public void timeThread() {
         BackgroundTask.perform(() -> {
             timeRemaining = 29.99999999f;
             Clock.Tick();
             Clock.Tock();
-            double elapse = Clock.elapse()/1000000000.0f;
-            while(elapse <= 30) {
+            double elapse = Clock.elapse() / 1000000000.0f;
+            while (elapse <= 30) {
                 Clock.Tock();
-                elapse = Clock.elapse()/1000000000.0f;
+                elapse = Clock.elapse() / 1000000000.0f;
                 if (elapse >= 0.1) {
                     Clock.Tick();
                     if (timeRemaining < 0) break;
                     timeRemaining -= elapse;
-                    clockCounter.setText(String.format("Time: %d",(int)timeRemaining));
+                    clockCounter.setText(String.format("Time: %d", (int) timeRemaining));
                 }
 
             }
@@ -147,32 +138,25 @@ public class GameController2 implements Initializable {
         });
     }
 
-    public void setUpAnsAndQues(){
-        if (list.size() <= 4*10) {
-            Clock.timer(() -> BackgroundTask.perform(()->list.addAll(sql.getRandomWords(1, 100*4))));
+    public void setUpAnsAndQues() {
+        if (list.size() <= 4 * 10 && !gameMode.equals("Classic")) {
+            BackgroundTask.perform(() -> list.addAll(sql.getRandomWords(1, 100 * 4)));
         }
-        for(int i = 0; i < 4; i++){
-            switch (i){
+
+        for (int i = 0; i < 4; i++) {
+            switch (i) {
                 case 0:
                     Answer1.setText(list.get(i).getValue());
-                    Answer1.setOnMouseClicked(e->{
-                        checkCorrectness(0);
-                    });
+                    Answer1.setOnMouseClicked(e -> checkCorrectness(0));
                 case 1:
                     Answer2.setText(list.get(i).getValue());
-                    Answer2.setOnMouseClicked(e->{
-                        checkCorrectness(1);
-                    });
+                    Answer2.setOnMouseClicked(e -> checkCorrectness(1));
                 case 2:
                     Answer3.setText(list.get(i).getValue());
-                    Answer3.setOnMouseClicked(e->{
-                        checkCorrectness(2);
-                    });
+                    Answer3.setOnMouseClicked(e -> checkCorrectness(2));
                 case 3:
                     Answer4.setText(list.get(i).getValue());
-                    Answer4.setOnMouseClicked(e->{
-                        checkCorrectness(3);
-                    });
+                    Answer4.setOnMouseClicked(e -> checkCorrectness(3));
             }
         }
         list.subList(0, 3).clear();
@@ -181,47 +165,32 @@ public class GameController2 implements Initializable {
         questionDisplay.setText("What is the meaning of \"" + list.get(answer).getKey() + "\"");
     }
 
-    public void checkCorrectness(int playerOption){
-        if(playerOption == answer){
+    public void checkCorrectness(int playerOption) {
+        if (playerOption == answer) {
             Score++;
-            if(gameMode.equals("Classic")){
+        }
+        switch (gameMode) {
+            case "Classic":
                 index++;
                 toClassicMode();
-            };
-            if(gameMode.equals("Infinity")){
+                if (index == 11) {
+                    openEndScene();
+                }
+                break;
+            case "Infinity":
                 toInfinityMode();
-            }
-            if(gameMode.equals("Blitz")){
+                break;
+            case "Blitz":
                 toBlitzMode();
-            }
-        }
-        else {
-            if(gameMode.equals("Classic")){
-                index++;
-                toClassicMode();
-            };
-            if(gameMode.equals("Infinity")){
-                toInfinityMode();
-            }
-            if(gameMode.equals("Blitz")){
-                toBlitzMode();
-            }
-        }
-        if((index == 11 && gameMode.equals("Classic"))){
-           openEndScene();
+                break;
         }
     }
 
-    public void openEndScene(){
+    public void openEndScene() {
         ResultCard.setVisible(true);
         finalScore.setText(String.format("%d", Score));
-        backToMenu.setOnMouseClicked(e->{
-            sc.changeView(GameController.class);
-            Logger.info("call");
-        });
-        continuePlay.setOnMouseClicked(e->{
-            sc.changeView(GameController2.class);
-        });
+        backToMenu.setOnMouseClicked(e -> sc.changeView(GameController.class));
+        continuePlay.setOnMouseClicked(e -> sc.changeView(GameController2.class));
     }
 
 }

@@ -18,38 +18,35 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public class WordView extends SearchController {
-    @FXML
-    private AnchorPane wordCard;
-
-    @FXML
-    private Text wordTargetDisplay;
-
-    @FXML
-    private Button audio;
-
-    @FXML
-    private HBox typeContainer;
-
-    @FXML
-    private Text meaningDisplay;
-
+    private static Label menuLabel;
     @FXML
     Label pronounDisplay;
-
     @FXML
     Label userBelongLabel;
-
     @FXML
     FontAwesomeIconView addToFavorite;
+    Map<String, List<SingleWord>> result;
+    MediaPlayer mediaPlayer;
+    @FXML
+    private AnchorPane wordCard;
+    @FXML
+    private Text wordTargetDisplay;
+    @FXML
+    private Button audio;
+    @FXML
+    private HBox typeContainer;
+    @FXML
+    private Text meaningDisplay;
     private boolean isFavoriteWord = false;
 
-    Map<String, List<SingleWord>> result;
+    public static void setMenuLabel(Label label) {
+        menuLabel = label;
+    }
 
-    private static Label menuLabel;
-    private boolean belongToUser;
     @Override
     protected void initialize() {
         trie = SearchManager.searchPath;
@@ -58,20 +55,13 @@ public class WordView extends SearchController {
         checkIfLiked(menuLabel.getText());
         getLikingFunction();
     }
-    
-
-    public static void setMenuLabel(Label label) {
-        menuLabel = label;
-    }
-
-    MediaPlayer mediaPlayer;
 
     @Override
     protected void displayWordFromLabel(Label label) {
         displayLabelContent(label);
     }
 
-    public void MediaHandler(){
+    public void MediaHandler() {
         audio.setOnMouseClicked(event -> {
             try {
                 if (mediaPlayer == null) throw new NullPointerException("Media is null, change word or add data.");
@@ -84,9 +74,9 @@ public class WordView extends SearchController {
         });
     }
 
-    public void checkIfLiked(String target){
+    public void checkIfLiked(String target) {
         System.out.println(FavoriteController.FavoriteList);
-        if(FavoriteController.FavoriteList.contains(target)){
+        if (FavoriteController.FavoriteList.contains(target)) {
             //System.out.println("call");
             addToFavorite.setFill(Color.rgb(142, 143, 250));
             isFavoriteWord = true;
@@ -96,15 +86,14 @@ public class WordView extends SearchController {
         addToFavorite.setFill(Color.rgb(225, 221, 221));
     }
 
-    public void getLikingFunction(){
-        addToFavorite.setOnMouseClicked(e->{
-            if(!isFavoriteWord) {
+    public void getLikingFunction() {
+        addToFavorite.setOnMouseClicked(e -> {
+            if (!isFavoriteWord) {
                 FavoriteController.FavoriteList.add(menuLabel.getText());
                 addToFavorite.setFill(Color.rgb(142, 143, 250));
                 isFavoriteWord = true;
                 System.out.println(FavoriteController.FavoriteList);
-            }
-            else {
+            } else {
                 FavoriteController.FavoriteList.remove(menuLabel.getText());
                 addToFavorite.setFill(Color.rgb(225, 221, 221));
                 isFavoriteWord = false;
@@ -113,7 +102,7 @@ public class WordView extends SearchController {
         });
     }
 
-    public void displayLabelContent(Label label){
+    public void displayLabelContent(Label label) {
         menuLabel = label;
         typeContainer.setPrefWidth(1000);
         History.historyList.add(label.getText());
@@ -123,17 +112,10 @@ public class WordView extends SearchController {
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
-        if(SearchManager.getUserTrie().search(label.getText())){
-            belongToUser = true;
-            userBelongLabel.setVisible(true);
-        }
-        else {
-            belongToUser = false;
-            userBelongLabel.setVisible(false);
-        }
+        userBelongLabel.setVisible(SearchManager.getUserTrie().search(label.getText()));
         //System.out.println(result);
         boolean getFirst = true;
-        for(var i : result.keySet()) {
+        for (var i : result.keySet()) {
             Label autoFillList = new Label(i);
             if (getFirst) {
                 autoFillList.getStyleClass().add("tab-label");
@@ -158,9 +140,7 @@ public class WordView extends SearchController {
         });
     }
 
-    public void DisplayMeaning(String type){
-        int count = 0;
-        //getClickCss.put(type, true);
+    public void DisplayMeaning(String type) {
         for (javafx.scene.Node node : typeContainer.getChildren()) {
             if (node instanceof Label) {
                 Label autoFillList = (Label) node;
@@ -168,7 +148,7 @@ public class WordView extends SearchController {
                     autoFillList.getStyleClass().clear();
                     autoFillList.getStyleClass().add("tab-label");
                 } else {
-                    if(autoFillList.getStyleClass().contains("tab-label")) {
+                    if (autoFillList.getStyleClass().contains("tab-label")) {
                         autoFillList.getStyleClass().clear();
                         autoFillList.getStyleClass().add("unchoose-tab-label");
                     }
@@ -179,7 +159,7 @@ public class WordView extends SearchController {
         meaningDisplay.setText("");
         pronounDisplay.setText("");
         pronounDisplay.setText("/" + result.get(type).get(0).getPronoun() + "/");
-        for(var i : result.get(type)) {
+        for (var i : result.get(type)) {
             str.append(i.toString());
         }
         meaningDisplay.setText(str.toString());

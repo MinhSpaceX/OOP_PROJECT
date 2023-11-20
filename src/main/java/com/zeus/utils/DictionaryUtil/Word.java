@@ -8,8 +8,10 @@ import java.util.List;
 public class Word {
     private String wordTarget;
     private Description description;
+
     public Word() {
     }
+
     public Word(String wordTarget, Description description) {
         this.wordTarget = wordTarget;
         this.description = description;
@@ -25,12 +27,13 @@ public class Word {
     public String getWordTarget() {
         return wordTarget;
     }
-    public String getPronoun() {
-        return description.getPronoun();
-    }
 
     public void setWordTarget(String wordTarget) {
         this.wordTarget = wordTarget;
+    }
+
+    public String getPronoun() {
+        return description.getPronoun();
     }
 
     public Description getDescription() {
@@ -43,37 +46,27 @@ public class Word {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
-        result.append(String.format("\n\"%s\":{", wordTarget));
-        result.append(description.toString());
-        result.append("}");
-        return result.toString();
+        return String.format("\n\"%s\":{", wordTarget) +
+                description.toString() +
+                "}";
     }
 
     public String print() {
-        StringBuilder result = new StringBuilder();
-        result.append(String.format("\"%s\": {", wordTarget));
-        result.append(description.print().replaceAll("(?m)^", "\t"));
-        result.append("},\n");
-        return result.toString();
+        return String.format("\"%s\": {", wordTarget) +
+                description.print().replaceAll("(?m)^", "\t") +
+                "},\n";
     }
 
     public static class Description {
         private String pronoun;
         private List<Type> types;
-        @JsonProperty("pronoun")
-        public void setPronoun(String pronoun) {
-            this.pronoun = pronoun;
-        }
-        @JsonProperty("type")
-        public void setTypes(List<Type> types) {
-            this.types = types;
-        }
+
         @JsonAnySetter
         public void setDescription(String pronoun, List<Type> types) {
             this.pronoun = pronoun;
             this.types = types;
         }
+
         @Override
         public String toString() {
             StringBuilder result = new StringBuilder();
@@ -83,7 +76,7 @@ public class Word {
                 for (Type t : types) {
                     result.append(t.toString()).append(",");
                 }
-                result.deleteCharAt(result.length()-1);
+                result.deleteCharAt(result.length() - 1);
             } else if (types.size() == 1) {
                 result.append(types.get(0).toString());
             }
@@ -106,20 +99,27 @@ public class Word {
             return pronoun;
         }
 
+        @JsonProperty("pronoun")
+        public void setPronoun(String pronoun) {
+            this.pronoun = pronoun;
+        }
+
         public List<Type> getTypes() {
             return types;
+        }
+
+        @JsonProperty("type")
+        public void setTypes(List<Type> types) {
+            this.types = types;
         }
 
         public static class Type {
             private String name;
             private List<Meaning> meanings;
+
             @JsonAnySetter
             public void setType(String name, List<Meaning> meanings) {
                 this.name = name;
-                this.meanings = meanings;
-            }
-
-            public void setMeanings(List<Meaning> meanings) {
                 this.meanings = meanings;
             }
 
@@ -135,6 +135,10 @@ public class Word {
                 return meanings;
             }
 
+            public void setMeanings(List<Meaning> meanings) {
+                this.meanings = meanings;
+            }
+
             @Override
             public String toString() {
                 StringBuilder result = new StringBuilder();
@@ -143,7 +147,7 @@ public class Word {
                     for (Meaning m : meanings) {
                         result.append(m.toString()).append(",");
                     }
-                    result.deleteCharAt(result.length()-1);
+                    result.deleteCharAt(result.length() - 1);
                 } else if (meanings.size() == 1) {
                     result.append(meanings.get(0).toString());
                 }
@@ -165,6 +169,7 @@ public class Word {
             public static class Meaning {
                 private String explain;
                 private List<Example> examples;
+
                 @JsonAnySetter
                 public void setMeaning(String explain, List<Example> examples) {
                     this.explain = explain;
@@ -187,7 +192,7 @@ public class Word {
                         for (Example e : examples) {
                             result.append(e.toString()).append(",");
                         }
-                        result.deleteCharAt(result.length()-1);
+                        result.deleteCharAt(result.length() - 1);
                     } else if (examples.size() == 1) {
                         result.append(examples.get(0).toString());
                     }
@@ -209,6 +214,7 @@ public class Word {
                 public static class Example {
                     private String english;
                     private String vietnamese;
+
                     @JsonAnySetter
                     public void setExample(String english, String vietnamese) {
                         this.english = english;

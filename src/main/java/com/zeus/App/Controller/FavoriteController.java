@@ -4,7 +4,6 @@ import com.zeus.Managers.ImageIcon.ImageIcon;
 import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
-import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.stackset.StackSet;
 import javafx.collections.FXCollections;
@@ -14,39 +13,28 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FavoriteController implements Initializable {
 
+    public static StackSet<String> FavoriteList = new StackSet<>();
+    SceneContainer sc = SceneContainer.sceneContainer;
     @FXML
     private VBox FavoriteDisplay;
-
     @FXML
     private Button remove;
-    public static StackSet<String> FavoriteList = new StackSet<>();
-
-    SceneContainer sc = SceneContainer.sceneContainer;
-
-    //ListView<HBox> listView = new ListView<>();
-    //ObservableList<HBox> items = FXCollections.observableArrayList();
-
 
     public void displayFavorite() {
         ArrayList<String> stringToRemove = new ArrayList<>();
-        //listView.setItems(items);
-        //listView.getStyleClass().add("listview-style");
         remove.setVisible(false);
-        for(String i : FavoriteList) {
+        for (String i : FavoriteList) {
             HBox hBox = new HBox(15);
             hBox.getStyleClass().add("hbox-style");
             CheckBox checkBox = new CheckBox();
@@ -68,8 +56,6 @@ public class FavoriteController implements Initializable {
             button.getStyleClass().add("audioHistory");
             hBox.getChildren().add(button);//HERE
             FavoriteDisplay.getChildren().add(hBox);
-            //items.add(hBox);
-            //listView.refresh();
             MediaHandler(button, label);
             hBox.setOnMouseClicked(e -> {
                 WordView.setMenuLabel(label);
@@ -108,8 +94,6 @@ public class FavoriteController implements Initializable {
                 FavoriteList.removeAll(stringToRemove);
                 FavoriteDisplay.getChildren().removeAll(itemsToRemove);
                 stringToRemove.clear();
-                //items.removeAll(itemsToRemove);
-                //listView.refresh();
                 remove.setVisible(false);
             });
 
@@ -118,11 +102,9 @@ public class FavoriteController implements Initializable {
         //FavoriteDisplay.getChildren().addAll(listView);
     }
 
-    public void MediaHandler(Button button, Label label){
+    public void MediaHandler(Button button, Label label) {
         final MediaPlayer[] tempMedia = {null};
-        BackgroundTask.perform(()-> {
-            tempMedia[0] = APIHandler.getAudio(label.getText());
-        });
+        BackgroundTask.perform(() -> tempMedia[0] = APIHandler.getAudio(label.getText()));
         button.setOnMouseClicked(event -> {
             try {
                 if (tempMedia[0] == null) throw new NullPointerException("Media is null, change word or add data.");
@@ -136,7 +118,7 @@ public class FavoriteController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)  {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         displayFavorite();
     }
 }

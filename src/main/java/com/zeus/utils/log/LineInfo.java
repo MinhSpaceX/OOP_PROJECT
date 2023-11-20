@@ -7,9 +7,10 @@ class LineInfo {
 
     /**
      * constructor.
-     * @param fileName
-     * @param lineNumber
-     * @param method
+     *
+     * @param fileName   name of file
+     * @param lineNumber line error occurred
+     * @param method     method name
      */
     public LineInfo(String fileName, int lineNumber, String method) {
         this.fileName = fileName;

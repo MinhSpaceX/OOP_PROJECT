@@ -48,7 +48,6 @@ public class AddController implements Initializable {
 
     private SQLite sql = null;
     private List<String> searchPane = new ArrayList<>();
-    private Label UpdateLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -106,9 +105,7 @@ public class AddController implements Initializable {
         for(var i : searchPane){
             Label label = new Label(i);
             label.getStyleClass().add("result-display-label-style");
-            label.setOnMouseClicked(e -> {
-                changeToUpdateView(label);
-            });
+            label.setOnMouseClicked(e -> changeToUpdateView(label));
             label.setOnKeyPressed(event -> {
                 if (event.getCode() == KeyCode.ENTER) {
                     changeToUpdateView(label);
@@ -120,28 +117,30 @@ public class AddController implements Initializable {
 
     @FXML
     public void addWordToDB(ActionEvent event){
-        if(!getWordTarget.getText().isEmpty()){
-            String NewWordTarget = getWordTarget.getText();
-            String NewPronoun = getPronoun.getText();
-            String NewType = getType.getText();
-            String NewMeaning = getMeaning.getText();
-            String engEx = getEngExample.getText().trim();
-            String viEx = getVieExample.getText().trim();
-            Pair<String, String> NewExamplePair = new Pair<>(engEx, viEx);
-            List<Pair<String, String>> NewExample = new ArrayList<>();
-            NewExample.add(NewExamplePair);
-            SingleWord newSingleWord = new SingleWord(NewWordTarget, NewPronoun, NewType, NewMeaning, NewExample);
-            sql.insert(newSingleWord);
-        }
-        else {
+        if(getWordTarget.getText().isEmpty()){
             return;
         }
+        String NewWordTarget = getWordTarget.getText();
+        SingleWord newSingleWord = getSingleWord(NewWordTarget);
+        sql.insert(newSingleWord);
         getWordTarget.clear();
         getPronoun.clear();
         getType.clear();
         getMeaning.clear();
         getEngExample.clear();
         getVieExample.clear();
+    }
+
+    private SingleWord getSingleWord(String NewWordTarget) {
+        String NewPronoun = getPronoun.getText();
+        String NewType = getType.getText();
+        String NewMeaning = getMeaning.getText();
+        String engEx = getEngExample.getText().trim();
+        String viEx = getVieExample.getText().trim();
+        Pair<String, String> NewExamplePair = new Pair<>(engEx, viEx);
+        List<Pair<String, String>> NewExample = new ArrayList<>();
+        NewExample.add(NewExamplePair);
+        return new SingleWord(NewWordTarget, NewPronoun, NewType, NewMeaning, NewExample);
     }
 
     public void changeToUpdateView(Label label){

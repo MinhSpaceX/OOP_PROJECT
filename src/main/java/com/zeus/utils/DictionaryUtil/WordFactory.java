@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class WordFactory {
     private Word word = null;
+
     public WordFactory(Word word) {
         if (word != null) {
             this.word = word;
-        }
-        else {
+        } else {
             Logger.warn("Word is null.");
         }
     }
@@ -33,12 +33,12 @@ public class WordFactory {
                 });
                 words.add(new SingleWord(wordTarget, pronoun, type.getName(), meaning.getExplain(), examples));
             });
-            if(type.getName().equalsIgnoreCase("danh từ")) type.setName("noun");
-            if(type.getName().equalsIgnoreCase("động từ")) type.setName("verb");
-            if(type.getName().equalsIgnoreCase("tính từ")) type.setName("adj");
-            if(type.getName().equalsIgnoreCase("trạng từ")) type.setName("adv");
-            if(type.getName().equalsIgnoreCase("ngoại động từ")) type.setName("transitive verb");
-            if(type.getName().equalsIgnoreCase("nội động từ")) type.setName("intransitive verb");
+            if (type.getName().equalsIgnoreCase("danh từ")) type.setName("noun");
+            if (type.getName().equalsIgnoreCase("động từ")) type.setName("verb");
+            if (type.getName().equalsIgnoreCase("tính từ")) type.setName("adj");
+            if (type.getName().equalsIgnoreCase("trạng từ")) type.setName("adv");
+            if (type.getName().equalsIgnoreCase("ngoại động từ")) type.setName("transitive verb");
+            if (type.getName().equalsIgnoreCase("nội động từ")) type.setName("intransitive verb");
             wordMap.put(type.getName(), words);
         });
         return wordMap;

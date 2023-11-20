@@ -63,9 +63,7 @@ public class GameController implements Initializable {
             ClassicMode.getStyleClass().add("game-mode-button");
             gameMode = "Infinity";
         });
-        PlayButton.setOnMouseClicked(e -> {
-            sc.changeView(GameController2.class);
-        });
+        PlayButton.setOnMouseClicked(e -> sc.changeView(GameController2.class));
     }
 
     public String getGameMode(){

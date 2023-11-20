@@ -6,7 +6,7 @@ import com.zeus.utils.log.Logger;
 
 public class Config {
     /**
-     * @JsonProperty("target") maps the target field in the Config class to the "target" property in JSON.
+     * {@code @JsonProperty("target")} maps the target field in the Config class to the "target" property in JSON.
      */
     @JsonProperty("target")
      String target = null;

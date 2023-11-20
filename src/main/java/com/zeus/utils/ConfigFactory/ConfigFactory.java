@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class ConfigFactory {
-    private Map<String, Config> configs = new HashMap<>();
+    private final Map<String, Config> configs = new HashMap<>();
+
     public ConfigFactory(String path) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {

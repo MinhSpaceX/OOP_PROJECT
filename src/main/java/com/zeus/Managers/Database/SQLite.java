@@ -1,6 +1,7 @@
 package com.zeus.Managers.Database;
 
 import com.zeus.Managers.Search.SearchManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.DictionaryUtil.SingleWord;
 import com.zeus.utils.DictionaryUtil.Word;
 import com.zeus.utils.DictionaryUtil.WordFactory;
@@ -8,11 +9,13 @@ import com.zeus.utils.encode.Encoder;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.Manager;
-import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.trie.Trie;
 import javafx.util.Pair;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.util.*;
 
@@ -26,8 +29,8 @@ public class SQLite extends Manager {
     }
 
     private void setDatabase(String path) throws FileNotFoundException, UnsupportedEncodingException {
-        this.pathToDatabase = FileManager.getPathFromFile(path);
-        this.url = "jdbc:sqlite:" + this.pathToDatabase;
+        pathToDatabase = FileManager.getPathFromFile(path);
+        this.url = "jdbc:sqlite:" + pathToDatabase;
     }
 
     private int countRow() {
@@ -36,8 +39,7 @@ public class SQLite extends Manager {
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             ResultSet result = pstmt.executeQuery();
             if (result.next()) {
-                int rowCount = result.getInt(1);
-                return rowCount;
+                return result.getInt(1);
             }
         } catch (SQLException e) {
             System.out.printf("ERROR: %s.\n", e.getMessage());
@@ -81,19 +83,6 @@ public class SQLite extends Manager {
         return conn;
     }
 
-    public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
-        SQLite sqLite = new SQLite();
-        sqLite.setDatabase("/com/zeus/data/Dictionary.db");
-        sqLite.checkExist();
-        sqLite.userDatabase = FileManager.getPathFromFile("/com/zeus/data/userDatabase.db");
-        sqLite.createDatabaseFromQuery("/com/zeus/data/query.txt", SQLite.userDatabase);
-        //SingleWord singleWord = new SingleWord("damn", "what the fuck", "damn", "damn", null);
-        //SingleWord newsingleWord = new SingleWord("damn", "new What?", null, "damn just kidding", null);
-        //sqLite.insert(singleWord);
-        //sqLite.updateWord(singleWord, newsingleWord);
-        sqLite.getWord("in").forEach((s, singleWords) -> System.out.println(singleWords));
-    }
-
     private void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
         Map<String, List<SingleWord>> wordMap = new WordFactory(word).getSingleWordMap();
 
@@ -130,8 +119,8 @@ public class SQLite extends Manager {
                     meaningID++;
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+            Logger.printStackTrace(e);
         }
     }
 
@@ -154,7 +143,8 @@ public class SQLite extends Manager {
             checkMeaningExist.setString(1, wordID);
             checkMeaningExist.setString(2, word.getMeaning());
             ResultSet meaningExist = checkMeaningExist.executeQuery();
-            if (meaningExist.next() && meaningExist.getInt(1) != 0) throw new Exception("Insert aborted. Meaning existed.");
+            if (meaningExist.next() && meaningExist.getInt(1) != 0)
+                throw new Exception("Insert aborted. Meaning existed.");
 
             // Insert word into WORD table
             sW.setString(1, wordID);
@@ -247,7 +237,7 @@ public class SQLite extends Manager {
             for (Word word : wordList) {
                 insert(word, Encoder.encode(word.getWordTarget()), sW, sM, sE);
                 count++;
-                if (count % 1000 == 0) {
+                if (count % batchSize == 0) {
                     sW.executeBatch();
                     sM.executeBatch();
                     sE.executeBatch();
@@ -258,7 +248,7 @@ public class SQLite extends Manager {
             sE.executeBatch();
             connection.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.printStackTrace(e);
         }
     }
 
@@ -289,12 +279,14 @@ public class SQLite extends Manager {
              PreparedStatement updateEXAMPLE = connection.prepareStatement("UPDATE EXAMPLE SET targetEN = ?, targetVN = ? WHERE wordID = ? AND meaningID = ? AND targetEN = ? AND targetVN = ?");
              PreparedStatement getMeaningID = connection.prepareStatement("SELECT meaningID FROM MEANING WHERE wordID = ? AND target = ? AND type = ?")) {
             String wordID = Encoder.encode(newWord.getWordTarget());
-            if (!Objects.equals(oldWord.getWordTarget(), newWord.getWordTarget())) throw new Exception(String.format("Old word target(%s) must be the same as new word target(%s)", oldWord.getWordTarget(), newWord.getWordTarget()));
+            if (!Objects.equals(oldWord.getWordTarget(), newWord.getWordTarget()))
+                throw new Exception(String.format("Old word target(%s) must be the same as new word target(%s)", oldWord.getWordTarget(), newWord.getWordTarget()));
             getMeaningID.setString(1, wordID);
             getMeaningID.setString(2, oldWord.getMeaning());
             getMeaningID.setString(3, oldWord.getType());
             ResultSet resultSet = getMeaningID.executeQuery();
-            if (!resultSet.next()) throw new Exception(String.format("There is no word(wordID: %s) with meaning: %s and type: %s.", wordID, oldWord.getMeaning(), oldWord.getType()));
+            if (!resultSet.next())
+                throw new Exception(String.format("There is no word(wordID: %s) with meaning: %s and type: %s.", wordID, oldWord.getMeaning(), oldWord.getType()));
 
             updateWORD.setString(1, newWord.getPronoun());
             updateWORD.setString(2, wordID);
@@ -312,7 +304,8 @@ public class SQLite extends Manager {
             List<Pair<String, String>> oldExamples = oldWord.getExamples();
             List<Pair<String, String>> newExamples = newWord.getExamples();
             if (oldExamples != null && newExamples != null) {
-                if (oldExamples.size() != newExamples.size()) throw new Exception(String.format("Old word examples array(%d) must be of same size as new word examples array(%d).", oldExamples.size(), newExamples.size()));
+                if (oldExamples.size() != newExamples.size())
+                    throw new Exception(String.format("Old word examples array(%d) must be of same size as new word examples array(%d).", oldExamples.size(), newExamples.size()));
                 for (int i = 0; i < oldExamples.size(); i++) {
                     Pair<String, String> oldPair = oldExamples.get(i);
                     Pair<String, String> newPair = newExamples.get(i);

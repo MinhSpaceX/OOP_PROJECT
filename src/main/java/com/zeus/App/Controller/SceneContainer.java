@@ -1,9 +1,9 @@
 package com.zeus.App.Controller;
 
 import com.zeus.Managers.Fxml.FxmlManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
-import com.zeus.Managers.SystemApp.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -14,12 +14,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SceneContainer implements Initializable {
     public static SceneContainer sceneContainer;
+    boolean MenuVisible = false;
     @FXML
     private FontAwesomeIconView menuIcon;
     @FXML
@@ -30,43 +30,28 @@ public class SceneContainer implements Initializable {
     private FontAwesomeIconView gameIcon;
     @FXML
     private FontAwesomeIconView updateIcon;
-
     @FXML
     private FontAwesomeIconView heartIcon;
-
     @FXML
     private FontAwesomeIconView historyIcon;
-
     @FXML
     private Button menuButton;
-
     @FXML
     private AnchorPane slider;
-
     @FXML
     private AnchorPane viewWindow = new AnchorPane();
-
     @FXML
     private Label shortFav;
-
     @FXML
     private Label shortGame;
-
     @FXML
     private Label shortHistory;
-
     @FXML
     private Label shortSearch;
-
     @FXML
     private Label shortTranslate;
-
     @FXML
     private Label shortUpdate;
-
-
-    boolean MenuVisible = false;
-    boolean openWordCard = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,11 +62,11 @@ public class SceneContainer implements Initializable {
         Logger.info("Container init -----------------");
     }
 
-    public void loadMenuScreen(ActionEvent event) throws IOException {
+    public void loadMenuScreen(ActionEvent event) {
         changeView(Menu.class);
     }
 
-    public void sideNavSlide(){
+    public void sideNavSlide() {
         slider.setTranslateX(-170);
         menuButton.setOnMouseClicked(event -> {
             TranslateTransition slide = new TranslateTransition();
@@ -89,12 +74,11 @@ public class SceneContainer implements Initializable {
 
             slide.setNode(slider);
 
-            if(MenuVisible) {
+            if (MenuVisible) {
                 menuButton.setStyle("-fx-background-color: rgb(119, 82, 254)");
                 slide.setToX(-170);
                 MenuVisible = false;
-            }
-            else{
+            } else {
                 menuButton.setStyle("-fx-background-color: rgb(142, 143, 250)");
                 slide.setToX(0);
                 MenuVisible = true;
@@ -104,11 +88,11 @@ public class SceneContainer implements Initializable {
     }
 
     @FXML
-    public void setGameView(ActionEvent event){
+    public void setGameView(ActionEvent event) {
         changeView(GameController.class);
     }
 
-    public <T> void changeView(Class<T> tClass){
+    public <T> void changeView(Class<T> tClass) {
         String FXMLurl = null;
         try {
             FXMLurl = SystemManager.getManager(FxmlManager.class).getPath(tClass);
@@ -120,38 +104,26 @@ public class SceneContainer implements Initializable {
         AnchorPane view = null;
         try {
             view = (AnchorPane) FileManager.loadFXML(FXMLurl);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Logger.printStackTrace(e);
         }
         viewWindow.getChildren().setAll(view);
         Logger.info("View changed!");
     }
 
-    public void setMenuButtonFunction(){
-        shortSearch.setOnMouseClicked(e->{
-            changeView(Menu.class);
-        });
-        shortTranslate.setOnMouseClicked(e->{
+    public void setMenuButtonFunction() {
+        shortSearch.setOnMouseClicked(e -> changeView(Menu.class));
+        shortTranslate.setOnMouseClicked(e -> {
             //changeView("");
         });
-        shortFav.setOnMouseClicked(e->{
-            changeView(FavoriteController.class);
-        });
-        shortHistory.setOnMouseClicked(e->{
-            changeView(History.class);
-        });
-        shortGame.setOnMouseClicked(e->{
-            changeView(GameController.class);
-        });
-        shortUpdate.setOnMouseClicked(e->{
-            changeView(AddController.class);
-        });
-        shortTranslate.setOnMouseClicked(e->{
-            changeView(Translate.class);
-        });
+        shortFav.setOnMouseClicked(e -> changeView(FavoriteController.class));
+        shortHistory.setOnMouseClicked(e -> changeView(History.class));
+        shortGame.setOnMouseClicked(e -> changeView(GameController.class));
+        shortUpdate.setOnMouseClicked(e -> changeView(AddController.class));
+        shortTranslate.setOnMouseClicked(e -> changeView(Translate.class));
     }
 
-    private <T> void setChoosenIcon(Class<T> tClass){
+    private <T> void setChoosenIcon(Class<T> tClass) {
         clearHighlight();
         if (tClass.equals(Menu.class)) {
             shortSearch.setStyle("-fx-border-color: rgb(194, 217, 255); " +
@@ -199,5 +171,7 @@ public class SceneContainer implements Initializable {
     }
 
     @FXML
-    public void setFavorite(ActionEvent event){ changeView(FavoriteController.class);}
+    public void setFavorite(ActionEvent event) {
+        changeView(FavoriteController.class);
+    }
 }

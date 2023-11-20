@@ -15,7 +15,8 @@ public class Properties {
 
     /**
      * Add the pair of key and value from JsonNode format to the Map.
-     * @param key The key.
+     *
+     * @param key   The key.
      * @param value The value.
      */
     @JsonAnySetter

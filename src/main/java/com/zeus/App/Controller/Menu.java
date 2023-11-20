@@ -3,11 +3,8 @@ package com.zeus.App.Controller;
 import com.zeus.Managers.Search.SearchManager;
 import com.zeus.utils.controller.SearchController;
 import com.zeus.utils.log.Logger;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
 
-import javax.swing.text.html.ImageView;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Menu extends SearchController {
@@ -16,7 +13,7 @@ public class Menu extends SearchController {
     protected void displayWordFromLabel(Label label) {
         try {
             ChangeToWordView(label);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Logger.printStackTrace(e);
         }
     }

@@ -2,6 +2,7 @@ package com.zeus.App.Controller;
 
 import com.zeus.Managers.Search.SearchManager;
 import com.zeus.utils.api.APIHandler;
+import com.zeus.utils.log.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class Translate implements Initializable {
@@ -20,9 +22,11 @@ public class Translate implements Initializable {
     Button translate;
     @FXML
     Button erase;
-    public void Translate() {
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         translate.setOnMouseClicked(e -> {
-            if (word.getText().length() == 0) {
+            if (word.getText().isEmpty()) {
                 result.setVisible(true);
                 result.setText("Sa rang hê ô");
             } else {
@@ -33,7 +37,15 @@ public class Translate implements Initializable {
                     sc.changeView(WordView.class);
                 } else {
                     result.setVisible(true);
-                    result.setText(APIHandler.translate(word.getText()).get(0).toString());
+                    List<String> translateResults = APIHandler.translate(word.getText());
+                    if (translateResults == null) try {
+                        throw new Exception("Translate result list return null");
+                    } catch (Exception ex) {
+                        result.setText("");
+                        Logger.printStackTrace(ex);
+                        return;
+                    }
+                    result.setText(translateResults.get(0));
                 }
             }
         });
@@ -42,10 +54,5 @@ public class Translate implements Initializable {
             result.clear();
             result.setVisible(false);
         });
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Translate();
     }
 }

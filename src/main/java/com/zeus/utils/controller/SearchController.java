@@ -1,8 +1,8 @@
 package com.zeus.utils.controller;
 
 import com.zeus.Managers.Search.SearchManager;
-import com.zeus.utils.log.Logger;
 import com.zeus.Managers.SystemApp.SystemManager;
+import com.zeus.utils.log.Logger;
 import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
-import javax.swing.text.html.ImageView;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,14 +19,9 @@ import java.util.stream.Collectors;
 public abstract class SearchController implements Initializable {
     @FXML
     protected TextField searchBar;
-
     @FXML
     protected VBox resultDisplay;
-    
     protected List<String> autoFillList;
-
-    protected static String input;
-
     protected Trie trie;
 
     @Override
@@ -45,7 +39,7 @@ public abstract class SearchController implements Initializable {
                 resultDisplay.getChildren().get(0).requestFocus();
             }
 
-            if(event.getCode() == KeyCode.ENTER && !autoFillList.isEmpty()){
+            if (event.getCode() == KeyCode.ENTER && !autoFillList.isEmpty()) {
                 try {
                     resultDisplay.setVisible(false);
                     searchBar.clear();
@@ -64,7 +58,7 @@ public abstract class SearchController implements Initializable {
             } else {
                 resultDisplay.setVisible(false);
             }
-            if((keyEvent.getTarget() instanceof TextField)){
+            if ((keyEvent.getTarget() instanceof TextField)) {
                 searchBar.requestFocus();
             }
         });
@@ -73,16 +67,16 @@ public abstract class SearchController implements Initializable {
 
     protected void displayAutoFill(String input) {
         autoFillList = SystemManager.getManager(SearchManager.class).autoFill(input, trie).stream().distinct().collect(Collectors.toList());
-        if(autoFillList.isEmpty()){
+        if (autoFillList.isEmpty()) {
             Label label = new Label("Hmm...what word is this?");
             label.getStyleClass().add("not-found-style");
             resultDisplay.getChildren().add(label);
             return;
         }
-        if(autoFillList.size() == 2){
+        if (autoFillList.size() == 2) {
             autoFillList.remove(0);
         }
-        for(var i : autoFillList){
+        for (var i : autoFillList) {
             Label label = new Label(i);
             label.getStyleClass().add("label-style");
             label.setOnMouseClicked(e -> {
@@ -102,6 +96,6 @@ public abstract class SearchController implements Initializable {
     }
 
     protected abstract void displayWordFromLabel(Label label);
-    
+
     protected abstract void initialize();
 }
