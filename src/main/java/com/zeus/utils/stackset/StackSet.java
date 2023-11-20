@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class StackSet <T> extends ArrayList<T> {
+public class StackSet<T> extends ArrayList<T> {
     private final Set<T> set = new HashSet<>();
 
     @Override

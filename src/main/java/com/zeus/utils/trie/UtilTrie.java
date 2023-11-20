@@ -6,8 +6,8 @@ import com.zeus.utils.log.Logger;
 import java.util.*;
 
 class UtilTrie {
-    protected static final int ALPHABET_SIZE = 26;
     protected Node root;
+
     UtilTrie() {
         root = new Node();
     }
@@ -16,6 +16,7 @@ class UtilTrie {
         root = new Node();
         words.forEach(w -> this.insert(w.getWordTarget()));
     }
+
     public boolean insert(String word) {
         if (root == null) {
             Logger.warn("Root is null.");
@@ -45,7 +46,7 @@ class UtilTrie {
             return false;
         }
         word = word.toLowerCase();
-        int index = 0;
+        int index;
         Node iterator = root;
         for (int character = 0; character < word.length(); character++) {
             index = word.charAt(character);
@@ -55,7 +56,7 @@ class UtilTrie {
             iterator = iterator.next(index);
         }
         if (iterator.isEndOfWord()) {
-            Logger.info("Found word: "+ word);
+            Logger.info("Found word: " + word);
         } else {
             Logger.info("Did not found the word: " + word);
         }
@@ -65,6 +66,7 @@ class UtilTrie {
     public void reset() {
         root.children.clear();
     }
+
     public boolean isEmpty() {
         return root.getChildren().isEmpty();
     }
@@ -77,20 +79,21 @@ class UtilTrie {
         getWords(babyGroot, word.toLowerCase(), result, numberOfWords, wordLength);
         return result;
     }
+
     protected boolean delete(Node node, String word, int depth) {
         if (node == null) {
             Logger.warn("Delete word cancelled. Word does not exist!");
             return false;
         }
-        if (word.length()-1 == depth) {
+        if (word.length() - 1 == depth) {
             if (!node.isEndOfWord()) {
                 Logger.warn("Delete word cancelled. Word does not exist!");
                 return false;
             }
             return node.getChildren().isEmpty();
         }
-        if (delete(node.getChildren().get((int)word.charAt(depth)), word, depth+1)) {
-            node.getChildren().remove((int)word.charAt(depth));
+        if (delete(node.getChildren().get((int) word.charAt(depth)), word, depth + 1)) {
+            node.getChildren().remove((int) word.charAt(depth));
         }
         return false;
     }
@@ -113,10 +116,10 @@ class UtilTrie {
             return null;
         }
         word = word.toLowerCase();
-        int index = 0;
+        int index;
         for (int character = 0; character < word.length(); character++) {
             index = word.charAt(character);
-            if(node != null) {
+            if (node != null) {
                 node = node.next(index);
             }
         }
@@ -137,20 +140,24 @@ class UtilTrie {
             getWords(node.getChildren().get(character), temp, list, numberOfWords, wordLength);
         }
     }
+
     protected static class Node {
         private Map<Integer, Node> children = new HashMap<>();
         private boolean endOfWord = false;
 
-        public Node() {}
+        public Node() {
+        }
+
+        public Node(boolean endOfWord) {
+            this.endOfWord = endOfWord;
+        }
+
         public Node next(int character) {
             return children.get(character);
         }
 
         public void add(int character) {
             children.put(character, new Node());
-        }
-        public Node(boolean endOfWord) {
-            this.endOfWord = endOfWord;
         }
 
         public Map<Integer, Node> getChildren() {

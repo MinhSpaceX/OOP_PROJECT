@@ -3,10 +3,10 @@ package com.zeus.utils.trie;
 import com.zeus.utils.DictionaryUtil.Word;
 import com.zeus.utils.log.Logger;
 
-import java.util.*;
+import java.util.List;
 
 
-public class Trie extends UtilTrie{
+public class Trie extends UtilTrie {
     public Trie() {
         super();
     }
