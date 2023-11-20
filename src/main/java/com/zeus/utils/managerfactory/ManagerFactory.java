@@ -11,24 +11,28 @@ import com.zeus.utils.log.Logger;
 import java.util.function.Consumer;
 
 public class ManagerFactory {
-    public static <T extends Manager> T createManager(Class<T> tClass) {
+    public static <T extends Manager> T createManager(Class<T> tClass) throws NullPointerException {
         try {
             return tClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             Logger.printStackTrace(e);
         }
-        return null;
+        throw new NullPointerException();
     }
 
-    public static void neccessary() {
-        SystemManager.loadAllConfig();
-        ManagerFactory.createManager(SystemManager.class).init();
-        ManagerFactory.createManager(System.class).init();
-        ManagerFactory.createManager(FxmlManager.class).init();
-        ManagerFactory.createManager(SQLite.class);
-        //ManagerFactory.createManager(MongoManager.class);
-        ManagerFactory.createManager(SearchManager.class);
-        ManagerFactory.createManager(ImageIcon.class);
+    public static void necessary() {
+        try {
+            SystemManager.loadAllConfig();
+            ManagerFactory.createManager(SystemManager.class).init();
+            ManagerFactory.createManager(System.class).init();
+            ManagerFactory.createManager(FxmlManager.class).init();
+            ManagerFactory.createManager(SQLite.class);
+            //ManagerFactory.createManager(MongoManager.class);
+            ManagerFactory.createManager(SearchManager.class);
+            ManagerFactory.createManager(ImageIcon.class);
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
+        }
     }
 
     public static void initAllManager(Consumer<Manager> consumer) {

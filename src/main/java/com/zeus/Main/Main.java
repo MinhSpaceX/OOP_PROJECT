@@ -12,7 +12,7 @@ public class Main {
             SystemManager.getManager(SystemManager.class).terminate();
             Logger.info("GOODBYE");
         }));
-        ManagerFactory.neccessary();
+        ManagerFactory.necessary();
         App.run(args);
     }
 }
