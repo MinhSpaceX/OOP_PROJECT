@@ -1,4 +1,4 @@
-package com.zeus.ConfigFactory;
+package com.zeus.utils.ConfigFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeus.utils.config.Config;

@@ -1,5 +1,7 @@
 package com.zeus.App.Controller;
 
+import com.zeus.Managers.ImageIcon.ImageIcon;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.file.FileManager;
@@ -55,15 +57,13 @@ public class FavoriteController implements Initializable {
             hBox.getChildren().add(label);//HERE
             Button button = new Button();
             try {
-                ImageView imageView = new ImageView(FileManager.loadImage("/com/zeus/icon/volume-high-solid.png"));
+                ImageView imageView = new ImageView(SystemManager.getManager(ImageIcon.class).getImage("volume"));
                 imageView.setFitWidth(80); // Đặt chiều rộng
                 imageView.setFitHeight(20); // Đặt chiều cao
                 imageView.setPreserveRatio(true);
                 button.setGraphic(imageView);
-            } catch (FileNotFoundException e) {
-                Logger.error(e.getMessage());
-            } catch (UnsupportedEncodingException e) {
-                Logger.error(e.getMessage());
+            } catch (Exception e) {
+                Logger.printStackTrace(e);
             }
             button.getStyleClass().add("audioHistory");
             hBox.getChildren().add(button);//HERE
@@ -73,7 +73,7 @@ public class FavoriteController implements Initializable {
             MediaHandler(button, label);
             hBox.setOnMouseClicked(e -> {
                 WordView.setMenuLabel(label);
-                sc.changeView("/com/zeus/fxml/WordView.fxml");
+                sc.changeView(WordView.class);
             });
             ObservableList<HBox> itemsToRemove = FXCollections.observableArrayList();
 

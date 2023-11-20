@@ -1,9 +1,7 @@
-package com.zeus.DictionaryManager;
+package com.zeus.utils.DictionaryUtil;
 
-import com.zeus.utils.log.Logger;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SingleWord {

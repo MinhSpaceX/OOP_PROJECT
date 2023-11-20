@@ -1,8 +1,7 @@
 package com.zeus.App.Controller;
 
-import com.zeus.App.SearchManager;
-import com.zeus.DatabaseManager.MongoManager;
-import com.zeus.DictionaryManager.SingleWord;
+import com.zeus.Managers.Search.SearchManager;
+import com.zeus.utils.DictionaryUtil.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.controller.SearchController;
@@ -10,30 +9,16 @@ import com.zeus.utils.log.Logger;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.LightBase;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.util.Pair;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class WordView extends SearchController {
     @FXML

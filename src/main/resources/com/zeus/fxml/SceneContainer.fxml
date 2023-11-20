@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.fontawesome.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.ColorInput?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="787.0" style="-fx-background-color: linear-gradient(to right bottom, #7752FE, #C2D9FF);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.SceneContainer">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="787.0" style="-fx-background-color: linear-gradient(to right bottom, #7752FE, #C2D9FF);" stylesheets="@../css/index.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.SceneContainer">
     <children>
         <AnchorPane fx:id="viewWindow" layoutX="170.0" layoutY="6.0" prefHeight="492.0" prefWidth="617.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0" />
         <AnchorPane fx:id="slider" layoutX="35.0" layoutY="48.0" prefHeight="330.0" prefWidth="122.0" style="-fx-background-color: rgb(119, 82, 254);" styleClass="navigation-bar" stylesheets="@../css/index.css">

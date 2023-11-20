@@ -1,11 +1,13 @@
 package com.zeus.App.Controller;
 
-import com.zeus.App.SearchManager;
-import com.zeus.ConfigFactory.ConfigFactory;
-import com.zeus.DatabaseManager.MongoManager;
-import com.zeus.DatabaseManager.SQLite;
+import com.zeus.Managers.Fxml.FxmlManager;
+import com.zeus.Managers.Search.SearchManager;
+import com.zeus.utils.ConfigFactory.ConfigFactory;
+import com.zeus.Managers.Database.MongoManager;
+import com.zeus.Managers.Database.SQLite;
+import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.ManagerFactory;
-import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,46 +38,8 @@ public class SplashController implements Initializable {
     }
 
     public void init() {
-        ConfigFactory configFactory = SystemManager.getConfigFactory();
-        Thread thread2 = new Thread(() -> {
-            try {
-                Platform.runLater(() -> progressTextt.setText("Fetching data..."));
-                ManagerFactory.createManager(MongoManager.class).init(configFactory.getConfig("Database"));
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                     InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        Thread thread3 = new Thread(() -> {
-            try {
-                Platform.runLater(() -> progressTextt.setText("Creating search manager..."));
-                ManagerFactory.createManager(SearchManager.class).init(configFactory.getConfig(""));
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                     InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        Thread thread4 = new Thread(() -> {
-            try {
-                Platform.runLater(() -> progressTextt.setText("Creating SQLite manager..."));
-                ManagerFactory.createManager(SQLite.class).init(configFactory.getConfig("Database"));
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                     InvocationTargetException e) {
-                throw new RuntimeException(e);
-            }
-        });
-        try {
-            /*thread2.start();
-            thread2.join();*/
-            thread4.start();
-            thread4.join();
-            thread3.start();
-            thread3.join();
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Logger.info("init");
+        ManagerFactory.initAllManager(manager -> Platform.runLater(() -> progressTextt.setText(manager.getInitMessage())));
     }
 
     private void handleMouseDragged(MouseEvent event) {

@@ -1,5 +1,7 @@
 package com.zeus.App.Controller;
 
+import com.zeus.Managers.ImageIcon.ImageIcon;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
 import com.zeus.utils.file.FileManager;
@@ -13,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -53,7 +56,7 @@ public class History implements Initializable {
             hBox.getChildren().add(label);//HERE
             Button button = new Button();
             try {
-                ImageView imageView = new ImageView(FileManager.loadImage("/com/zeus/icon/volume-high-solid.png"));
+                ImageView imageView = new ImageView(SystemManager.getManager(ImageIcon.class).getImage("volume"));
                 imageView.setFitWidth(80); // Đặt chiều rộng
                 imageView.setFitHeight(20); // Đặt chiều cao
                 imageView.setPreserveRatio(true);
@@ -71,7 +74,7 @@ public class History implements Initializable {
             MediaHandler(button, label);
             hBox.setOnMouseClicked(e -> {
                 WordView.setMenuLabel(label);
-                sc.changeView("/com/zeus/fxml/WordView.fxml");
+                sc.changeView(WordView.class);
             });
             ObservableList<HBox> itemsToRemove = FXCollections.observableArrayList();
 

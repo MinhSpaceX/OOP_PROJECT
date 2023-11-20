@@ -1,13 +1,15 @@
 package com.zeus.App.Window;
 
 import com.sun.javafx.application.LauncherImpl;
+import com.zeus.Managers.Fxml.FxmlManager;
 import com.zeus.App.Controller.SceneContainer;
 import com.zeus.App.Controller.SplashController;
 import com.zeus.utils.config.Config;
 import com.zeus.utils.file.FileManager;
 
+import com.zeus.Managers.SystemApp.SystemManager;
+import com.zeus.utils.log.Logger;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,6 +26,7 @@ public class App extends Application {
 
     @Override
     public void init() throws Exception {
+        Logger.info("init app");
         SplashController splashController = new SplashController();
         splashController.init();
     }
@@ -43,9 +46,8 @@ public class App extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FileManager.loadFXML("/com/zeus/fxml/ContainerScene.fxml");
-        Scene scene = new Scene(root, 787, 492);
-        scene.getStylesheets().add(new File(FileManager.getPathFromFile("/com/zeus/css/index.css")).toURI().toURL().toExternalForm());
+        Parent root = FileManager.loadFXML(SystemManager.getManager(FxmlManager.class).getPath(SceneContainer.class));
+        Scene scene = new Scene(root);
         initialize(stage);
         stage.setScene(scene);
         stage.show();

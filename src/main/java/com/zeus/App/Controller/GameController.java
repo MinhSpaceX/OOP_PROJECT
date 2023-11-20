@@ -1,12 +1,9 @@
 package com.zeus.App.Controller;
 
-import com.zeus.utils.log.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -67,7 +64,7 @@ public class GameController implements Initializable {
             gameMode = "Infinity";
         });
         PlayButton.setOnMouseClicked(e -> {
-            sc.changeView("/com/zeus/fxml/GameScene2.fxml");
+            sc.changeView(GameController2.class);
         });
     }
 

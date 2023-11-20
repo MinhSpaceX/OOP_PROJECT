@@ -1,6 +1,6 @@
 package com.zeus.utils.trie;
 
-import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.DictionaryUtil.Word;
 import com.zeus.utils.log.Logger;
 
 import java.util.*;

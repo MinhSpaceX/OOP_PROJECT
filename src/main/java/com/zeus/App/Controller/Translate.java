@@ -1,6 +1,6 @@
 package com.zeus.App.Controller;
 
-import com.zeus.App.SearchManager;
+import com.zeus.Managers.Search.SearchManager;
 import com.zeus.utils.api.APIHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +30,7 @@ public class Translate implements Initializable {
                     SceneContainer sc = SceneContainer.sceneContainer;
                     Label label = new Label(word.getText().toLowerCase());
                     WordView.setMenuLabel(label);
-                    sc.changeView("/com/zeus/fxml/WordView.fxml");
+                    sc.changeView(WordView.class);
                 } else {
                     result.setVisible(true);
                     result.setText(APIHandler.translate(word.getText()).get(0).toString());

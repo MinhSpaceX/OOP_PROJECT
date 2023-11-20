@@ -1,12 +1,14 @@
-package com.zeus.App;
+package com.zeus.Managers.Search;
 
-import com.zeus.DatabaseManager.MongoManager;
-import com.zeus.DatabaseManager.SQLite;
-import com.zeus.DictionaryManager.SingleWord;
-import com.zeus.utils.config.Config;
+import com.zeus.App.Controller.FavoriteController;
+import com.zeus.App.Controller.History;
+import com.zeus.Managers.Database.MongoManager;
+import com.zeus.Managers.Database.SQLite;
+import com.zeus.utils.DictionaryUtil.SingleWord;
+import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.Manager;
-import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.trie.Trie;
 
 import java.util.List;
@@ -47,7 +49,7 @@ public class SearchManager extends Manager {
     }
 
     @Override
-    public void init(Config config) {
+    public void init() {
         mgp = SystemManager.getManager(MongoManager.class);
         sqLite = SystemManager.getManager(SQLite.class);
         sqLite.loadTrieFromUserDb(searchPath, userTrie);
@@ -60,6 +62,11 @@ public class SearchManager extends Manager {
         if (searchPath == null) {
             Logger.error("Trie is null.");
         }
+    }
+
+    @Override
+    protected void setConfig() {
+        config = SystemManager.getConfigFactory().getConfig("Database");
     }
 
     public static Trie getUserTrie(){

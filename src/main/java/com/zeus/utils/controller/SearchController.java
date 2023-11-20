@@ -1,8 +1,8 @@
 package com.zeus.utils.controller;
 
-import com.zeus.App.SearchManager;
+import com.zeus.Managers.Search.SearchManager;
 import com.zeus.utils.log.Logger;
-import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

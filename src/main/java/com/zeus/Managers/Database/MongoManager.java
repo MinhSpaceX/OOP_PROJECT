@@ -1,14 +1,13 @@
-package com.zeus.DatabaseManager;
+package com.zeus.Managers.Database;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.*;
-import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.DictionaryUtil.Word;
 import com.zeus.utils.clock.Clock;
-import com.zeus.utils.config.Config;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.Manager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.trie.Trie;
-import org.apache.commons.logging.Log;
 import org.bson.BsonNull;
 import org.bson.Document;
 
@@ -74,7 +73,7 @@ public class MongoManager extends Manager {
     }
 
     @Override
-    public void init(Config config) {
+    public void init() {
         try {
             client = MongoClients.create(config.getProperty("mongodbPath", String.class));
             database = client.getDatabase("dictionary_metadata");
@@ -90,5 +89,10 @@ public class MongoManager extends Manager {
         } catch (Exception e) {
             Logger.error(e.getMessage());
         }
+    }
+
+    @Override
+    protected void setConfig() {
+        config = SystemManager.getConfigFactory().getConfig("Database");
     }
 }

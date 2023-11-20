@@ -4,11 +4,9 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeus.App.Controller.History;
-import com.zeus.DictionaryManager.Word;
+import com.zeus.utils.DictionaryUtil.Word;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.stackset.StackSet;
-import com.zeus.utils.trie.Trie;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.image.*;
@@ -17,7 +15,6 @@ import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class FileManager {

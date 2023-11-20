@@ -1,9 +1,8 @@
 package com.zeus.App.Controller;
-import com.zeus.App.SearchManager;
-import com.zeus.DatabaseManager.SQLite;
-import com.zeus.DictionaryManager.SingleWord;
-import com.zeus.utils.log.Logger;
-import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.Managers.Search.SearchManager;
+import com.zeus.Managers.Database.SQLite;
+import com.zeus.utils.DictionaryUtil.SingleWord;
+import com.zeus.Managers.SystemApp.SystemManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -148,7 +147,7 @@ public class AddController implements Initializable {
     public void changeToUpdateView(Label label){
         SceneContainer sc = SceneContainer.sceneContainer;
         UpdateController.SetUpdateLabel(label);
-        sc.changeView("/com/zeus/fxml/UpdateScene.fxml");
+        sc.changeView(UpdateController.class);
     }
 
 }

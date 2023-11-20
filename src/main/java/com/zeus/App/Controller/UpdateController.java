@@ -1,27 +1,20 @@
 package com.zeus.App.Controller;
 
-import com.zeus.App.SearchManager;
-import com.zeus.DatabaseManager.SQLite;
-import com.zeus.DictionaryManager.SingleWord;
+import com.zeus.Managers.Search.SearchManager;
+import com.zeus.Managers.Database.SQLite;
+import com.zeus.utils.DictionaryUtil.SingleWord;
 import com.zeus.utils.controller.SearchController;
 import com.zeus.utils.log.Logger;
-import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.LightBase;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class UpdateController extends SearchController {
     @FXML
@@ -245,7 +238,7 @@ public class UpdateController extends SearchController {
     @FXML
     public void backToAddScene(ActionEvent event){
         SceneContainer sc = SceneContainer.sceneContainer;
-        sc.changeView("/com/zeus/fxml/UpdateLobby.fxml");
+        sc.changeView(AddController.class);
     }
 
 }

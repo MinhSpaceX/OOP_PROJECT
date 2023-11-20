@@ -1,15 +1,9 @@
-package com.zeus.DictionaryManager;
+package com.zeus.utils.DictionaryUtil;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 
-import java.awt.desktop.AppReopenedEvent;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class Word {
     private String wordTarget;

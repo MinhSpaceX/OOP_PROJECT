@@ -1,24 +1,17 @@
-package com.zeus.DatabaseManager;
+package com.zeus.Managers.Database;
 
-import com.sun.javafx.iio.gif.GIFImageLoader2;
-import com.zeus.App.SearchManager;
-import com.zeus.DictionaryManager.SingleWord;
-import com.zeus.DictionaryManager.Word;
-import com.zeus.DictionaryManager.WordFactory;
-import com.zeus.utils.clock.Clock;
-import com.zeus.utils.config.Config;
+import com.zeus.Managers.Search.SearchManager;
+import com.zeus.utils.DictionaryUtil.SingleWord;
+import com.zeus.utils.DictionaryUtil.Word;
+import com.zeus.utils.DictionaryUtil.WordFactory;
 import com.zeus.utils.encode.Encoder;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
 import com.zeus.utils.managerfactory.Manager;
-import com.zeus.utils.managerfactory.SystemManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.trie.Trie;
-import javafx.stage.Stage;
 import javafx.util.Pair;
-import org.apache.commons.logging.Log;
 
-import javax.swing.plaf.nimbus.State;
-import java.awt.desktop.UserSessionEvent;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
@@ -426,7 +419,7 @@ public class SQLite extends Manager {
     }
 
     @Override
-    public void init(Config config) {
+    public void init() {
         pathToDatabase = config.getProperty("localSQLitePath", String.class);
         try {
             userDatabase = FileManager.getPathFromFile(config.getProperty("localUserDatabase", String.class));
@@ -444,5 +437,10 @@ public class SQLite extends Manager {
         } catch (Exception e) {
             Logger.error(e.getMessage());
         }
+    }
+
+    @Override
+    protected void setConfig() {
+        config = SystemManager.getConfigFactory().getConfig("Database");
     }
 }

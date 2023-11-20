@@ -58,7 +58,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="33.0" prefWidth="330.0" spacing="10.0">
                                  <children>
-                                    <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Alphamorphosisdasd" wrappingWidth="259.7366669178009">
+                                    <Text fx:id="wordTargetDisplay" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="259.7366669178009">
                                        <font>
                                           <Font name="Corbel" size="18.0" />
                                        </font>
@@ -90,7 +90,7 @@
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label fx:id="pronounDisplay" prefHeight="37.0" prefWidth="335.0" text="/Pronounciation/" textFill="#b1a9a9">
+                              <Label fx:id="pronounDisplay" prefHeight="37.0" prefWidth="335.0" textFill="#b1a9a9">
                                  <padding>
                                     <Insets left="15.0" />
                                  </padding>
@@ -111,7 +111,7 @@
                                     <Insets left="5.0" right="5.0" top="5.0" />
                                  </padding>
                                  <content>
-                                    <Text fx:id="meaningDisplay" strokeType="OUTSIDE" strokeWidth="0.0" text="Display 1..." wrappingWidth="419.73677825927734">
+                                    <Text fx:id="meaningDisplay" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="419.73677825927734">
                                        <font>
                                           <Font size="16.0" />
                                        </font>

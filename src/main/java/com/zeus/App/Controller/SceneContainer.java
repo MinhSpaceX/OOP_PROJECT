@@ -1,7 +1,9 @@
 package com.zeus.App.Controller;
 
+import com.zeus.Managers.Fxml.FxmlManager;
 import com.zeus.utils.file.FileManager;
 import com.zeus.utils.log.Logger;
+import com.zeus.Managers.SystemApp.SystemManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -69,14 +71,14 @@ public class SceneContainer implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sceneContainer = this;
-        changeView("/com/zeus/fxml/menu.fxml");
+        changeView(Menu.class);
         setMenuButtonFunction();
         sideNavSlide();
         Logger.info("Container init -----------------");
     }
 
     public void loadMenuScreen(ActionEvent event) throws IOException {
-        changeView("/com/zeus/fxml/menu.fxml");
+        changeView(Menu.class);
     }
 
     public void sideNavSlide(){
@@ -103,11 +105,17 @@ public class SceneContainer implements Initializable {
 
     @FXML
     public void setGameView(ActionEvent event){
-        changeView("/com/zeus/fxml/GameScene.fxml");
+        changeView(GameController.class);
     }
 
-    public void changeView(String FXMLurl){
-        setChoosenIcon(FXMLurl);
+    public <T> void changeView(Class<T> tClass){
+        String FXMLurl = null;
+        try {
+            FXMLurl = SystemManager.getManager(FxmlManager.class).getPath(tClass);
+            setChoosenIcon(tClass);
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
+        }
         viewWindow.getChildren().clear();
         AnchorPane view = null;
         try {
@@ -121,103 +129,75 @@ public class SceneContainer implements Initializable {
 
     public void setMenuButtonFunction(){
         shortSearch.setOnMouseClicked(e->{
-            changeView("/com/zeus/fxml/menu.fxml");
+            changeView(Menu.class);
         });
         shortTranslate.setOnMouseClicked(e->{
             //changeView("");
         });
         shortFav.setOnMouseClicked(e->{
-            changeView("/com/zeus/fxml/FavoriteScene.fxml");
+            changeView(FavoriteController.class);
         });
         shortHistory.setOnMouseClicked(e->{
-            changeView("/com/zeus/fxml/history.fxml");
+            changeView(History.class);
         });
         shortGame.setOnMouseClicked(e->{
-            changeView("/com/zeus/fxml/GameScene.fxml");
+            changeView(GameController.class);
         });
         shortUpdate.setOnMouseClicked(e->{
-            changeView("/com/zeus/fxml/UpdateLobby.fxml");
+            changeView(AddController.class);
         });
         shortTranslate.setOnMouseClicked(e->{
-            changeView("/com/zeus/fxml/Translate.fxml");
+            changeView(Translate.class);
         });
     }
 
-    private void setChoosenIcon(String FXMLurl){
-        switch (FXMLurl){
-            case "/com/zeus/fxml/menu.fxml":
-                shortSearch.setStyle("-fx-border-color: rgb(194, 217, 255); " +
-                        "-fx-border-width: 0 0 0 2;");
-                shortGame.setStyle("-fx-border-width: 0");
-                shortFav.setStyle("-fx-border-width: 0");
-                shortTranslate.setStyle("-fx-border-width: 0");
-                shortUpdate.setStyle("-fx-border-width: 0");
-                shortHistory.setStyle("-fx-border-width: 0");
-                break;
-            case "/com/zeus/fxml/GameScene.fxml":
-                shortGame.setStyle("-fx-border-color: rgb(194, 217, 255); " +
-                        "-fx-border-width: 0 0 0 2;");
-                shortFav.setStyle("-fx-border-width: 0");
-                shortTranslate.setStyle("-fx-border-width: 0");
-                shortUpdate.setStyle("-fx-border-width: 0");
-                shortHistory.setStyle("-fx-border-width: 0");
-                shortSearch.setStyle("-fx-border-width: 0");
-                break;
-            case "/com/zeus/fxml/UpdateLobby.fxml":
-                shortUpdate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
-                        "-fx-border-width: 0 0 0 2;");
-                shortFav.setStyle("-fx-border-width: 0");
-                shortTranslate.setStyle("-fx-border-width: 0");
-                shortGame.setStyle("-fx-border-width: 0");
-                shortHistory.setStyle("-fx-border-width: 0");
-                shortSearch.setStyle("-fx-border-width: 0");
-                break;
-            case "/com/zeus/fxml/history.fxml":
-                shortHistory.setStyle("-fx-border-color: rgb(194, 217, 255); " +
-                        "-fx-border-width: 0 0 0 2;");
-                shortFav.setStyle("-fx-border-width: 0");
-                shortTranslate.setStyle("-fx-border-width: 0");
-                shortGame.setStyle("-fx-border-width: 0");
-                shortUpdate.setStyle("-fx-border-width: 0");
-                shortSearch.setStyle("-fx-border-width: 0");
-                break;
-            case "/com/zeus/fxml/FavoriteScene.fxml":
-                shortFav.setStyle("-fx-border-color: rgb(194, 217, 255); " +
-                        "-fx-border-width: 0 0 0 2;");
-                shortHistory.setStyle("-fx-border-width: 0");
-                shortTranslate.setStyle("-fx-border-width: 0");
-                shortGame.setStyle("-fx-border-width: 0");
-                shortUpdate.setStyle("-fx-border-width: 0");
-                shortSearch.setStyle("-fx-border-width: 0");
-                break;
-            case "/com/zeus/fxml/Translate.fxml":
-                shortTranslate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
-                        "-fx-border-width: 0 0 0 2;");
-                shortHistory.setStyle("-fx-border-width: 0");
-                shortFav.setStyle("-fx-border-width: 0");
-                shortGame.setStyle("-fx-border-width: 0");
-                shortUpdate.setStyle("-fx-border-width: 0");
-                shortSearch.setStyle("-fx-border-width: 0");
-                break;
-            default:
-                break;
+    private <T> void setChoosenIcon(Class<T> tClass){
+        clearHighlight();
+        if (tClass.equals(Menu.class)) {
+            shortSearch.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                    "-fx-border-width: 0 0 0 2;");
+        } else if (tClass.equals(GameController.class)) {
+            shortGame.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                    "-fx-border-width: 0 0 0 2;");
+        } else if (tClass.equals(AddController.class)) {
+            shortUpdate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                    "-fx-border-width: 0 0 0 2;");
+        } else if (tClass.equals(History.class)) {
+            shortHistory.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                    "-fx-border-width: 0 0 0 2;");
+        } else if (tClass.equals(FavoriteController.class)) {
+            shortFav.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                    "-fx-border-width: 0 0 0 2;");
+        } else if (tClass.equals(Translate.class)) {
+            shortTranslate.setStyle("-fx-border-color: rgb(194, 217, 255); " +
+                    "-fx-border-width: 0 0 0 2;");
         }
+    }
+
+    private void clearHighlight() {
+        shortTranslate.setStyle("-fx-border-width: 0");
+        shortHistory.setStyle("-fx-border-width: 0");
+        shortFav.setStyle("-fx-border-width: 0");
+        shortGame.setStyle("-fx-border-width: 0");
+        shortUpdate.setStyle("-fx-border-width: 0");
+        shortSearch.setStyle("-fx-border-width: 0");
     }
 
     @FXML
     public void setAddWord(ActionEvent event) {
-        changeView("/com/zeus/fxml/UpdateLobby.fxml");
+        changeView(AddController.class);
     }
 
     @FXML
     public void setHistory(ActionEvent event) {
-        changeView("/com/zeus/fxml/history.fxml");
-    }
-    @FXML
-    public void setTranslate(ActionEvent event) {
-        changeView("/com/zeus/fxml/Translate.fxml");
+        changeView(History.class);
     }
 
     @FXML
-    public void setFavorite(ActionEvent event){ changeView("/com/zeus/fxml/FavoriteScene.fxml");}
+    public void setTranslate(ActionEvent event) {
+        changeView(Translate.class);
+    }
+
+    @FXML
+    public void setFavorite(ActionEvent event){ changeView(FavoriteController.class);}
 }

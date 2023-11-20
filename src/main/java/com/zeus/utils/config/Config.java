@@ -21,6 +21,10 @@ public class Config {
         return target;
     }
 
+    public Properties getProperties() {
+        return properties;
+    }
+
     /**
      * Get properties.
      * @return properties.
