@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="471.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.GameController">
+    <children>
+        <AnchorPane fx:id="GameMenuCard" layoutY="11.0" prefHeight="470.0" prefWidth="447.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css">
+         <children>
+            <HBox layoutX="78.0" layoutY="40.0" prefHeight="51.0" prefWidth="290.0" style="-fx-background-color: white; -fx-border-width: 0 0 2 0; -fx-border-color: rgb(119, 82, 254);">
+               <children>
+                  <ImageView fitHeight="45.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/icon.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="52.0" prefWidth="194.0" text="CubicQuizzlit">
+                     <font>
+                        <Font name="Dubai Medium" size="29.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="45.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </HBox>
+            <Text fill="#b1a9a9" layoutX="52.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answer the mutiple-choice questions to test your vocabulary !" textAlignment="CENTER" wrappingWidth="342.936767578125">
+               <font>
+                  <Font name="Corbel" size="19.0" />
+               </font>
+            </Text>
+            <HBox layoutX="30.0" layoutY="253.0" prefHeight="90.0" prefWidth="394.0" spacing="50.0">
+               <children>
+                  <Button fx:id="ClassicMode" mnemonicParsing="false" prefHeight="86.0" prefWidth="94.0" styleClass="game-mode-choosen" stylesheets="@../css/application.css" text="Classic">
+                     <font>
+                        <Font name="Corbel" size="21.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="InfinityMode" mnemonicParsing="false" prefHeight="86.0" prefWidth="99.0" styleClass="game-mode-button" stylesheets="@../css/application.css" text="Infinity">
+                     <font>
+                        <Font name="Corbel" size="21.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="BlitzMode" mnemonicParsing="false" prefHeight="86.0" prefWidth="94.0" styleClass="game-mode-button" stylesheets="@../css/application.css" text="Blitz">
+                     <font>
+                        <Font name="Corbel" size="21.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <Text fill="#7752fe" layoutX="120.0" layoutY="226.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Mode:" textAlignment="CENTER" wrappingWidth="206.39998779296866">
+               <font>
+                  <Font name="Dubai Medium" size="31.0" />
+               </font>
+            </Text>
+            <Button fx:id="PlayButton" layoutX="132.0" layoutY="385.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="190.0" styleClass="play-button" stylesheets="@../css/application.css" text="LET&quot;S CUBIZZ!">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+         </children>
+        </AnchorPane>
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+    </children>
+</AnchorPane>

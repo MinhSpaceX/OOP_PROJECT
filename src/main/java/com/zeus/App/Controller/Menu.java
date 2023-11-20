@@ -1,90 +1,53 @@
 package com.zeus.App.Controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zeus.DatabaseManager.MongoPanel;
-import com.zeus.DictionaryManager.Word;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.zeus.App.SearchManager;
+import com.zeus.utils.controller.SearchController;
+import com.zeus.utils.file.FileManager;
+import com.zeus.utils.log.Logger;
+import com.zeus.utils.managerfactory.SystemManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.event.*;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class Menu {
+import javax.swing.text.html.ImageView;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
-    @FXML
-    public TextField getWordTarget;
-    @FXML
-    public TextField getWordExplain;
-    @FXML
-    public TextField getWordType;
-    @FXML
-    public Button addButton;
-    @FXML
-    public Button deleteButton;
-    @FXML
-    public Button refresher;
-    @FXML
-    public TableView<Word> table;
-    @FXML
-    public TableColumn<Word, String> word_targetDisplay;
-    @FXML
-    public TableColumn<Word, String> word_explainDisplay;
-    @FXML
-    public TableColumn<Word, String> word_typeDisplay;
-    @FXML
-    public TextField searchInput;
-    @FXML
-    public Button search;
+import static com.zeus.utils.file.FileManager.getPathFromFile;
 
-    private String word_target;
-    private String word_explain;
-    private String word_type;
-    public MongoPanel mp = new MongoPanel();
-    private ObservableList<Word> dictionary = FXCollections.observableArrayList();
+public class Menu extends SearchController {
 
-    public void getNewWord(ActionEvent actionEvent) throws JsonProcessingException {
-        word_target = getWordTarget.getText();
-        word_explain = getWordExplain.getText();
-        word_type = getWordType.getText();
-
-        mp.addDocument(word_target, word_explain, word_type);
-        clearBox();
-        System.out.println("Add successfully!");
+    @Override
+    protected void displayWordFromLabel(Label label) {
+        try {
+            ChangeToWordView(label);
+        } catch (IOException e) {
+            Logger.printStackTrace(e);
+        }
     }
 
-    public void deleteWord(ActionEvent actionEvent){
-        word_target = getWordTarget.getText();
-        mp.deleteDocument(word_target);
-        System.out.println("Delete successfully!");
-        clearBox();
+    @Override
+    public void initialize() {
+        trie = SearchManager.searchPath;
+        Logger.info("Menu initialized.");
     }
 
-    public void displayData(ActionEvent actionEvent){
-        refresh();
-        word_targetDisplay.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getWordTarget()));
-        word_explainDisplay.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getWordExplain()));
-        word_typeDisplay.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getWordType()));
-        table.setItems(dictionary);
-    }
-
-    public void findWord(ActionEvent actionEvent) throws JsonProcessingException {
-        String searchPattern = searchInput.getText();
-        refresh();
-        mp.findWord(searchPattern);
-    }
-
-    private void refresh(){
-        dictionary.clear();
-        dictionary = mp.FetchingData();
-    }
-
-    private void clearBox(){
-        getWordTarget.clear();
-        getWordExplain.clear();
-        getWordType.clear();
+    private void ChangeToWordView(Label label) throws IOException {
+        SceneContainer sc = SceneContainer.sceneContainer;
+        WordView.setMenuLabel(label);
+        sc.changeView("/com/zeus/fxml/WordView.fxml");
     }
 }

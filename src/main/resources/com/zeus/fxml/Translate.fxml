@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="471.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zeus.App.Controller.Translate">
+   <children>
+      <AnchorPane fx:id="wordCard" layoutY="11.0" prefHeight="470.0" prefWidth="447.0" style="-fx-background-color: white;" styleClass="display-card" stylesheets="@../css/application.css">
+         <children>
+            <VBox layoutX="49.0" layoutY="58.4" prefHeight="308.0" prefWidth="329.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox prefHeight="63.0" prefWidth="447.0">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="54.0" prefWidth="446.0" text="TRANSLATE">
+                           <graphic>
+                              <ImageView fitHeight="39.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icon/icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font name="Dubai Medium" size="24.0" />
+                           </font>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <TextArea fx:id="word" prefHeight="100.0" prefWidth="414.0" promptText="Enter your text" style="border: 0;" styleClass="text-field" stylesheets="@../css/only_for-update.css" wrapText="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextArea>
+                        <Button fx:id="erase" mnemonicParsing="false" styleClass="transparent-template" stylesheets="@../css/index.css">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../icon/close.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <Button fx:id="translate" mnemonicParsing="false" styleClass="addword-button" stylesheets="@../css/index.css" text="translate" />
+                  <TextArea fx:id="result" prefHeight="200.0" prefWidth="200.0" styleClass="text-field" stylesheets="@../css/only_for-update.css" visible="false" wrapText="true">
+                     <font>
+                        <Font size="18.0" />
+                     </font></TextArea>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
