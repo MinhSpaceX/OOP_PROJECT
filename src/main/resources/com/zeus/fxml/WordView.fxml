@@ -71,12 +71,12 @@
                                           <Font name="Corbel Bold" size="15.0" />
                                        </font>
                                     </Label>
-                                    <FontAwesomeIconView fx:id="addToFavorite" fill="#e1dddd" glyphName="HEART" size="15">
+                                    <FontAwesomeIconView fx:id="addToFavorite" fill="#e1dddd" glyphName="HEART" size="15" styleClass="clickable_icon" text="">
                                        <font>
                                           <Font size="88.0" />
                                        </font>
                                     </FontAwesomeIconView>
-                                    <Button fx:id="audio" mnemonicParsing="false" styleClass="transparent-template" stylesheets="@../css/application.css">
+                                    <Button fx:id="audio" mnemonicParsing="false" styleClass="clickable_icon" stylesheets="@../css/application.css">
                                        <graphic>
                                           <ImageView fitHeight="16.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

@@ -12,6 +12,14 @@
     -fx-background-color: transparent;
 }
 
+.clickable_icon {
+    -fx-background-color: transparent;
+}
+
+.clickable_icon:hover {
+    -fx-cursor: hand;
+}
+
 .type-css{
     -fx-background-color: rgb(119, 82, 254);
     -fx-background-radius: 5;

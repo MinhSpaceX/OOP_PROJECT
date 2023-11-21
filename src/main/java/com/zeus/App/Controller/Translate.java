@@ -28,7 +28,7 @@ public class Translate implements Initializable {
         translate.setOnMouseClicked(e -> {
             if (word.getText().isEmpty()) {
                 result.setVisible(true);
-                result.setText("Sa rang hê ô");
+                result.setText("Không có bản dịch.");
             } else {
                 if (SearchManager.search(word.getText())) {
                     SceneContainer sc = SceneContainer.sceneContainer;

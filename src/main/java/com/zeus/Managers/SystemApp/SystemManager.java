@@ -55,7 +55,7 @@ public class SystemManager extends Manager {
     @Override
     public void init() {
         FileManager.insertFromFile(config.getProperty("localHistory", String.class), History.historyList);
-        FileManager.insertFromFile(config.getProperty("localHistory", String.class), FavoriteController.FavoriteList);
+        FileManager.insertFromFile(config.getProperty("localFavorite", String.class), FavoriteController.FavoriteList);
         Logger.info("SystemManager initialized.");
     }
 

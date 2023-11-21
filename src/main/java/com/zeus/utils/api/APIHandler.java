@@ -39,7 +39,7 @@ public class APIHandler {
             mediaPlayer.setOnPaused(mediaPlayer::play);
             return mediaPlayer;
         } catch (Exception e) {
-            Logger.error(e.getMessage());
+            Logger.printStackTrace(e);
         }
         return null;
     }
@@ -67,7 +67,7 @@ public class APIHandler {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.body());
             for (JsonNode node : jsonNode.get("matches")) {
-                translates.add(new String(node.get("translation").toString().getBytes(), StandardCharsets.UTF_8));
+                translates.add(node.get("translation").toString().replace("\\n", "\n"));
             }
             return translates;
         } catch (Exception e) {
