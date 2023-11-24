@@ -65,7 +65,7 @@
                   <Font name="Dubai Medium" size="31.0" />
                </font>
             </Text>
-            <Button fx:id="PlayButton" layoutX="132.0" layoutY="385.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="190.0" styleClass="play-button" stylesheets="@../css/application.css" text="LET&quot;S CUBIZZ!">
+            <Button fx:id="PlayButton" layoutX="132.0" layoutY="385.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="190.0" styleClass="play-button" stylesheets="@../css/application.css" text="LET'S CUBIZZ!">
                <font>
                   <Font size="22.0" />
                </font>
