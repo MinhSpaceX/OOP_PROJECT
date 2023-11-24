@@ -1,0 +1,53 @@
+[
+  {
+    "target": "WindowConfig",
+    "properties": {
+      "title": "Duelingo",
+      "iconPath": "/com/zeus/icon/icon.png",
+      "HEIGHT": 530,
+      "WIDTH": 800,
+      "resizable": false,
+      "fullScreen": false
+    }
+  },
+  {
+    "target": "Database",
+    "properties": {
+      "mongodbPath": "mongodb+srv://hotmashmallow:SydFj7MBdnl57nID@cluster0.z4stprp.mongodb.net/?retryWrites=true&w=majority",
+      "localDataPath": "/com/zeus/data/dictionary.json",
+      "localSQLitePath": "/com/zeus/data/Dictionary.db",
+      "localTest": "/com/zeus/data/test.json",
+      "localUserDatabase": "/com/zeus/data/userDatabase.db",
+      "localHistory": "/com/zeus/data/history.txt",
+      "localFavorite": "/com/zeus/data/favorite.txt"
+    }
+  },
+  {
+    "target": "FXML",
+    "properties": {
+      "AddController": "/com/zeus/fxml/AddController.fxml",
+      "FavoriteController": "/com/zeus/fxml/FavoriteController.fxml",
+      "GameController": "/com/zeus/fxml/GameController.fxml",
+      "GameController2": "/com/zeus/fxml/GameController2.fxml",
+      "History": "/com/zeus/fxml/History.fxml",
+      "Menu": "/com/zeus/fxml/Menu.fxml",
+      "SceneContainer": "/com/zeus/fxml/SceneContainer.fxml",
+      "SplashController": "/com/zeus/fxml/SplashController.fxml",
+      "UpdateController": "/com/zeus/fxml/UpdateController.fxml",
+      "WordView": "/com/zeus/fxml/WordView.fxml",
+      "Translate": "/com/zeus/fxml/Translate.fxml"
+    }
+  },
+  {
+    "target": "CSS",
+    "properties": {
+
+    }
+  },
+  {
+    "target": "Icon",
+    "properties": {
+        "volume": "/com/zeus/icon/volume-high-solid.png"
+    }
+  }
+]
