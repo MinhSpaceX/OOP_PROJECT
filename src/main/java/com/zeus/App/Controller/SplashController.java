@@ -15,11 +15,20 @@ public class SplashController implements Initializable {
     @FXML
     private Label progressText;
 
+    /**
+     * set the progress text in the splash screen
+     *
+     * @param url            ...
+     * @param resourceBundle ...
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         staticText = progressText;
     }
 
+    /**
+     * start all the manager class
+     */
     public void init() {
         Logger.info("init");
         ManagerFactory.initAllManager(manager -> Platform.runLater(() -> staticText.setText(manager.getInitMessage())));

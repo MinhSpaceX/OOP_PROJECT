@@ -36,29 +36,42 @@
                         </Label>
                      </children>
                   </HBox>
+                  <Label prefHeight="18.0" prefWidth="426.0" text="English to Vietnamese" textFill="#8e8ffa">
+                     <VBox.margin>
+                        <Insets left="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <TextArea fx:id="word" prefHeight="100.0" prefWidth="414.0" promptText="Enter your text" style="border: 0;" styleClass="text-field" stylesheets="@../css/only_for-update.css" wrapText="true">
+                        <TextArea fx:id="word" prefHeight="100.0" prefWidth="427.0" promptText="Enter your text" style="border: 0;" styleClass="text-field" stylesheets="@../css/only_for-update.css" wrapText="true">
                            <font>
                               <Font size="18.0" />
                            </font>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
                         </TextArea>
-                        <Button fx:id="erase" mnemonicParsing="false" styleClass="clickable_icon" stylesheets="@../css/index.css">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../icon/close.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
                      </children>
                   </HBox>
-                  <Button fx:id="translate" mnemonicParsing="false" styleClass="addword-button" stylesheets="@../css/index.css" text="translate" />
-                  <TextArea fx:id="result" prefHeight="200.0" prefWidth="200.0" styleClass="text-field" stylesheets="@../css/only_for-update.css" visible="false" wrapText="true">
+                  <HBox prefHeight="30.0" prefWidth="447.0" spacing="20.0">
+                     <children>
+                        <Button fx:id="translate" mnemonicParsing="false" styleClass="addword-button" stylesheets="@../css/index.css" text="translate" />
+                        <Button fx:id="erase" mnemonicParsing="false" prefHeight="34.0" prefWidth="59.0" styleClass="addword-button" stylesheets="@../css/index.css" text="clear" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </HBox>
+                  <TextArea fx:id="result" prefHeight="200.0" prefWidth="200.0" promptText="Translate will show up here" styleClass="text-field" stylesheets="@../css/only_for-update.css" wrapText="true">
                      <font>
                         <Font size="18.0" />
-                     </font></TextArea>
+                     </font>
+                     <VBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </VBox.margin></TextArea>
                </children>
             </VBox>
          </children>

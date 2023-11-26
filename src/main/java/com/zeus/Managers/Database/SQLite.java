@@ -28,11 +28,25 @@ public class SQLite extends Manager {
         Logger.info("SQLiteManager created.");
     }
 
+    /**
+     * Sets the pathToDatabase variable to the path of a file specified by the path.
+     * It then sets the url variable to a string that concatenates
+     * the pathToDatabase variable with the string "jdbc:sqlite:"
+     *
+     * @param path Path to database.
+     * @throws FileNotFoundException        if file not found.
+     * @throws UnsupportedEncodingException if not support encode.
+     */
     private void setDatabase(String path) throws FileNotFoundException, UnsupportedEncodingException {
         pathToDatabase = FileManager.getPathFromFile(path);
         this.url = "jdbc:sqlite:" + pathToDatabase;
     }
 
+    /**
+     * counts the number of rows in a table named WORD.
+     *
+     * @return the result.
+     */
     private int countRow() {
         String query = "SELECT COUNT(*) FROM WORD";
         try (Connection conn = this.connect();
@@ -42,7 +56,7 @@ public class SQLite extends Manager {
                 return result.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.printf("ERROR: %s.\n", e.getMessage());
+            Logger.printStackTrace(e);
         }
         return -1;
     }
@@ -50,7 +64,6 @@ public class SQLite extends Manager {
     /**
      * Functions to execute when create a manager.
      */
-
     private void checkExist() {
         try (Connection conn = this.connect()) {
             Logger.info(String.format("Database status: EXIST. File path: '%s'.\n", pathToDatabase));
@@ -59,6 +72,11 @@ public class SQLite extends Manager {
         }
     }
 
+    /**
+     * Establishes a connection to a database.
+     *
+     * @return the connection.
+     */
     private Connection connect() {
         Connection conn = null;
         try {
@@ -71,6 +89,12 @@ public class SQLite extends Manager {
         return conn;
     }
 
+    /**
+     * Establishes a connection to a SQLite database located at the path.
+     *
+     * @param path the path of a SQLite database.
+     * @return the connection.
+     */
     private Connection connect(String path) {
         Connection conn = null;
         try {
@@ -83,6 +107,15 @@ public class SQLite extends Manager {
         return conn;
     }
 
+    /**
+     * Inserts data into the WORD, MEANING, and EXAMPLE tables based on the provided Word object.
+     *
+     * @param word   The Word object to insert into the database.
+     * @param wordID The encoded wordID associated with the Word object.
+     * @param sW     The PreparedStatement for inserting data into the WORD table.
+     * @param sM     The PreparedStatement for inserting data into the MEANING table.
+     * @param sE     The PreparedStatement for inserting data into the EXAMPLE table.
+     */
     private void insert(Word word, String wordID, PreparedStatement sW, PreparedStatement sM, PreparedStatement sE) {
         Map<String, List<SingleWord>> wordMap = new WordFactory(word).getSingleWordMap();
 
@@ -119,13 +152,19 @@ public class SQLite extends Manager {
                     meaningID++;
                 }
             }
-            } catch (Exception e) {
+        } catch (Exception e) {
             Logger.printStackTrace(e);
         }
     }
 
+    /**
+     * insert a SingleWord object into SQL.
+     *
+     * @param word the SingleWord object
+     * @return true when succeed
+     * <p>false otherwise</p>
+     */
     public boolean insert(SingleWord word) {
-        SearchManager.getUserTrie().insert(word.getWordTarget());
         boolean success = true;
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
@@ -188,6 +227,7 @@ public class SQLite extends Manager {
                 }
             }
             Logger.info("Insert successful.");
+            SystemManager.getManager(SearchManager.class).getUserTrie().insert(word.getWordTarget());
         } catch (Exception e) {
             Logger.printStackTrace(e);
             success = false;
@@ -195,6 +235,12 @@ public class SQLite extends Manager {
         return success;
     }
 
+    /**
+     * Creates a database and tables from the SQL queries specified in the provided file.
+     *
+     * @param filePath The path to the file containing SQL queries.
+     * @param database The name of the database to create.
+     */
     private void createDatabaseFromQuery(String filePath, String database) {
         try (Connection conn = this.connect(database);
              BufferedReader bufferedReader = new BufferedReader(new FileReader(FileManager.getFileFromPath(filePath)));
@@ -217,6 +263,11 @@ public class SQLite extends Manager {
         }
     }
 
+    /**
+     * import data from a JSON file into SQLite.
+     *
+     * @param jsonPath the file path of a JSON file.
+     */
     private void importFromJson(String jsonPath) {
         int batchSize = 1000;
         List<Word> wordList = FileManager.deserializeFromFile(jsonPath);
@@ -252,6 +303,13 @@ public class SQLite extends Manager {
         }
     }
 
+    /**
+     * retrieves a specified number of random word-meaning pairs from a database.
+     *
+     * @param minWordLength Minimum length of the words to consider.
+     * @param numberOfWords Number of random word-meaning pairs to retrieve.
+     * @return the list of word-meaning pairs.
+     */
     public List<Pair<String, String>> getRandomWords(int minWordLength, int numberOfWords) {
         List<Pair<String, String>> result = new ArrayList<>();
         try (Connection connection = this.connect();
@@ -272,6 +330,12 @@ public class SQLite extends Manager {
         return result;
     }
 
+    /**
+     * Update a Word object into database.
+     *
+     * @param oldWord The original word information to be updated.
+     * @param newWord The new word information to replace the old information.
+     */
     public void updateWord(SingleWord oldWord, SingleWord newWord) {
         try (Connection connection = this.connect(userDatabase);
              PreparedStatement updateWORD = connection.prepareStatement("UPDATE WORD SET pronoun = ? WHERE wordID = ?");
@@ -323,6 +387,12 @@ public class SQLite extends Manager {
         }
     }
 
+    /**
+     * Retrieve information about a word from the userDatabase based on its wordTarget.
+     *
+     * @param wordTarget The target word for which information is retrieved.
+     * @return A map where the key is the word type, and the value is a list of SingleWord objects.
+     */
     public Map<String, List<SingleWord>> getWord(String wordTarget) {
         try (Connection connection = this.connect(userDatabase);
              PreparedStatement getWORD = connection.prepareStatement("SELECT WORD.pronoun, MEANING.type ,MEANING.target, EXAMPLE.targetEN, EXAMPLE.targetVN FROM WORD LEFT JOIN MEANING ON WORD.wordID = MEANING.wordID LEFT JOIN EXAMPLE ON WORD.wordID = EXAMPLE.wordID AND EXAMPLE.meaningID = MEANING.meaningID WHERE WORD.wordID = ?")) {
@@ -357,6 +427,12 @@ public class SQLite extends Manager {
         return null;
     }
 
+    /**
+     * Retrieves information about a word from the database based on its target word.
+     *
+     * @param wordTarget The target word for which information is retrieved.
+     * @return A map where the key is the word type, and the value is a list of SingleWord objects.
+     */
     public Map<String, List<SingleWord>> getWordFromDb(String wordTarget) {
         try (Connection connection = this.connect();
              PreparedStatement getWORD = connection.prepareStatement("SELECT WORD.pronoun, MEANING.type ,MEANING.target, EXAMPLE.targetEN, EXAMPLE.targetVN FROM WORD LEFT JOIN MEANING ON WORD.wordID = MEANING.wordID LEFT JOIN EXAMPLE ON WORD.wordID = EXAMPLE.wordID AND EXAMPLE.meaningID = MEANING.meaningID WHERE WORD.wordID = ?")) {
@@ -391,6 +467,13 @@ public class SQLite extends Manager {
         return null;
     }
 
+    /**
+     * Loads words from the user-specific database into two Trie structures.
+     * Inserts words into both the searchTrie and userTrie for efficient word lookup.
+     *
+     * @param searchTrie The Trie structure used for general word search functionality.
+     * @param userTrie   The Trie structure specific to user-added words.
+     */
     public void loadTrieFromUserDb(Trie searchTrie, Trie userTrie) {
         try (Connection connection = this.connect(userDatabase);
              Connection connection1 = this.connect();
@@ -401,7 +484,6 @@ public class SQLite extends Manager {
             while (resultSet.next()) {
                 String word = resultSet.getString(1);
                 userTrie.insert(word);
-                searchTrie.insert(word);
             }
             while (resultSet1.next()) {
                 searchTrie.insert(resultSet1.getString(1));
@@ -411,6 +493,27 @@ public class SQLite extends Manager {
         }
     }
 
+    /**
+     * Deletes a word and its associated data from the user database.
+     *
+     * @param wordTarget The target word to be deleted.
+     */
+    public void delete(String wordTarget) {
+        try (Connection connection = this.connect(userDatabase);
+             PreparedStatement deleteQuery = connection.prepareStatement("DELETE FROM WORD WHERE wordID = ?")) {
+            deleteQuery.setString(1, Encoder.encode(wordTarget));
+            deleteQuery.executeUpdate();
+            SearchManager.userTrie.print();
+            SearchManager.userTrie.delete(wordTarget);
+        } catch (Exception e) {
+            Logger.printStackTrace(e);
+        }
+    }
+
+    /**
+     * Initializes the application, setting up database paths, URLs, and performing necessary checks.
+     * Also imports data from a JSON file specified in the configuration.
+     */
     @Override
     public void init() {
         pathToDatabase = config.getProperty("localSQLitePath", String.class);
@@ -432,6 +535,10 @@ public class SQLite extends Manager {
         }
     }
 
+    /**
+     * Sets up the configuration for the database using the configuration factory from {@link SystemManager}.
+     * The configuration is retrieved based on the "Database" identifier.
+     */
     @Override
     protected void setConfig() {
         config = SystemManager.getConfigFactory().getConfig("Database");

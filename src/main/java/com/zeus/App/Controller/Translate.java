@@ -23,6 +23,11 @@ public class Translate implements Initializable {
     @FXML
     Button erase;
 
+    /**
+     * set up translate function through API
+     * @param url ...
+     * @param resourceBundle ...
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         translate.setOnMouseClicked(e -> {
@@ -52,7 +57,7 @@ public class Translate implements Initializable {
         erase.setOnMouseClicked(e -> {
             word.clear();
             result.clear();
-            result.setVisible(false);
         });
+        result.setEditable(false);
     }
 }

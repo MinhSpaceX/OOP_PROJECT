@@ -3,7 +3,15 @@ package com.zeus.utils.background;
 import com.zeus.utils.log.Logger;
 import javafx.concurrent.Task;
 
+/**
+ * Class to perform background tasks.
+ */
 public class BackgroundTask {
+    /**
+     * Perform a given task in another thread.
+     *
+     * @param runnable The task to run in background.
+     */
     public static void perform(Runnable runnable) {
         Task<String> task = new Task<>() {
             @Override

@@ -6,9 +6,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Property class.
+ */
 public class Properties {
     private final Map<String, Object> properties = new HashMap<>();
 
+    /**
+     * Get the map contains properties with property's name as
+     * key and property's value as map's value.
+     *
+     * @return The map contains properties.
+     */
     public Map<String, Object> getProperties() {
         return properties;
     }

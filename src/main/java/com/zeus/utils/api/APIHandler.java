@@ -16,10 +16,19 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * API handle class.
+ */
 public class APIHandler {
     private static final String api = "https://api.dictionaryapi.dev/api/v2/entries/en/";
     private static final String translateAPI = "https://api.mymemory.translated.net/get?";
 
+    /**
+     * Get audio player from API with word as parameter.
+     *
+     * @param wordTarget The word target.
+     * @return MediaPlayer class contains loaded audio.
+     */
     public static MediaPlayer getAudio(String wordTarget) {
         HttpClient client = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
@@ -44,10 +53,12 @@ public class APIHandler {
         return null;
     }
 
-    public static void main(String[] args) {
-        System.out.println(translate("hello, my name is Hung, i'm 10 years old"));
-    }
-
+    /**
+     * Translate text with API.
+     *
+     * @param english English text.
+     * @return Translated text in Vietnamese.
+     */
     public static List<String> translate(String english) {
         List<String> translates = new ArrayList<>();
         String url = translateAPI +

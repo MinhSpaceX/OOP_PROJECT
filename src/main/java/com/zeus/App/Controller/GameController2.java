@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of the game scene
+ */
 public class GameController2 implements Initializable {
 
     SQLite sql = null;
@@ -64,16 +67,24 @@ public class GameController2 implements Initializable {
     private double timeRemaining = 30;
     private List<Pair<String, String>> list = new ArrayList<>();
 
+    /**
+     * This method is called by the FXMLLoader when initialization is complete.
+     *
+     * @param url            points to the FXML file that corresponds to the controller class.
+     * @param resourceBundle optional parameter.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sql = SystemManager.getManager(SQLite.class);
         list = sql.getRandomWords(1, 4 * 8);
         BackgroundTask.perform(() -> list.addAll(sql.getRandomWords(1, 100 * 4)));
-        System.out.println(sql);
         backToGameMenu.setOnMouseClicked(e -> sc.changeView(GameController.class));
         setGameMode();
     }
 
+    /**
+     * set the suitable scene for each game mode
+     */
     public void setGameMode() {
         gameMode = gc.getGameMode();
         //Logger.info(gameMode);
@@ -90,6 +101,10 @@ public class GameController2 implements Initializable {
         }
     }
 
+    /**
+     * provide components for classic mode
+     * {@link #setUpAnsAndQues()} get new question
+     */
     public void toClassicMode() {
         scoreDisplay.setText("Score: " + Score);
         clock.setVisible(false);
@@ -97,6 +112,9 @@ public class GameController2 implements Initializable {
         setUpAnsAndQues();
     }
 
+    /**
+     * provide components for infinity mode
+     */
     public void toInfinityMode() {
         scoreDisplay.setText("Score: " + Score);
         clock.setVisible(false);
@@ -104,6 +122,10 @@ public class GameController2 implements Initializable {
         setUpAnsAndQues();
     }
 
+    /**
+     * provide components for blitz mode
+     * {@link #timeThread()} clock in blitz mode
+     */
     public void toBlitzMode() {
         scoreDisplay.setText("Score: " + Score);
         questIndex.setVisible(false);
@@ -115,6 +137,9 @@ public class GameController2 implements Initializable {
         }
     }
 
+    /**
+     * time counter of the blitz mode with 30 second interval
+     */
     public void timeThread() {
         BackgroundTask.perform(() -> {
             timeRemaining = 29.99999999f;
@@ -138,11 +163,16 @@ public class GameController2 implements Initializable {
         });
     }
 
+    /**
+     * generate answers and questions
+     */
     public void setUpAnsAndQues() {
+        //generate 400 question samples in other thread
         if (list.size() <= 4 * 10 && !gameMode.equals("Classic")) {
             BackgroundTask.perform(() -> list.addAll(sql.getRandomWords(1, 100 * 4)));
         }
 
+        //adding data to the answer box
         for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0:
@@ -160,11 +190,20 @@ public class GameController2 implements Initializable {
             }
         }
         list.subList(0, 3).clear();
+        //random the questions
         Random ran = new Random();
         answer = ran.nextInt(4);
         questionDisplay.setText("What is the meaning of \"" + list.get(answer).getKey() + "\"");
     }
 
+    /**
+     * check if the player have chosen the correct answer
+     *
+     * @param playerOption get the player option
+     *                     {@link #toClassicMode()} continue in classic mode
+     *                     {@link #toInfinityMode()} continue in infinity mode
+     *                     {@link #toBlitzMode()} continue in blitz mode
+     */
     public void checkCorrectness(int playerOption) {
         if (playerOption == answer) {
             Score++;
@@ -186,9 +225,13 @@ public class GameController2 implements Initializable {
         }
     }
 
+    /**
+     * method called once the game end.
+     */
     public void openEndScene() {
         ResultCard.setVisible(true);
         finalScore.setText(String.format("%d", Score));
+        //set function for two buttons in the ending scene
         backToMenu.setOnMouseClicked(e -> sc.changeView(GameController.class));
         continuePlay.setOnMouseClicked(e -> sc.changeView(GameController2.class));
     }

@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.Managers.Search.SearchManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.DictionaryUtil.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
@@ -21,6 +22,9 @@ import javafx.scene.text.Text;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * this controller where word's content is displayed.
+ */
 public class WordView extends SearchController {
     private static Label menuLabel;
     @FXML
@@ -43,24 +47,42 @@ public class WordView extends SearchController {
     private Text meaningDisplay;
     private boolean isFavoriteWord = false;
 
+    /**
+     * set value for the menuLabel which is the host label for the word user
+     * want to lookup
+     *
+     * @param label index label
+     */
     public static void setMenuLabel(Label label) {
         menuLabel = label;
     }
 
+    /**
+     * get media, search function and liking function button
+     */
     @Override
     protected void initialize() {
-        trie = SearchManager.searchPath;
+        appTrie = SearchManager.searchPath;
+        userTrie = SearchManager.userTrie;
         MediaHandler();
         Platform.runLater(() -> displayLabelContent(menuLabel));
         checkIfLiked(menuLabel.getText());
         getLikingFunction();
     }
 
+    /**
+     * call to {@link #displayLabelContent(Label)} to display the word
+     *
+     * @param label index label
+     */
     @Override
     protected void displayWordFromLabel(Label label) {
         displayLabelContent(label);
     }
 
+    /**
+     * get pronoun sound for word
+     */
     public void MediaHandler() {
         audio.setOnMouseClicked(event -> {
             try {
@@ -74,10 +96,13 @@ public class WordView extends SearchController {
         });
     }
 
+    /**
+     * check weather user have liked this word or not
+     *
+     * @param target the word target to find in a list
+     */
     public void checkIfLiked(String target) {
-        System.out.println(FavoriteController.FavoriteList);
         if (FavoriteController.FavoriteList.contains(target)) {
-            //System.out.println("call");
             addToFavorite.setFill(Color.rgb(142, 143, 250));
             isFavoriteWord = true;
             return;
@@ -86,22 +111,28 @@ public class WordView extends SearchController {
         addToFavorite.setFill(Color.rgb(225, 221, 221));
     }
 
+    /**
+     * add/undo the word to/from favorite list
+     */
     public void getLikingFunction() {
         addToFavorite.setOnMouseClicked(e -> {
             if (!isFavoriteWord) {
                 FavoriteController.FavoriteList.add(menuLabel.getText());
                 addToFavorite.setFill(Color.rgb(142, 143, 250));
                 isFavoriteWord = true;
-                System.out.println(FavoriteController.FavoriteList);
             } else {
                 FavoriteController.FavoriteList.remove(menuLabel.getText());
                 addToFavorite.setFill(Color.rgb(225, 221, 221));
                 isFavoriteWord = false;
-                System.out.println(FavoriteController.FavoriteList);
             }
         });
     }
 
+    /**
+     * display content of the word through the label
+     *
+     * @param label index label
+     */
     public void displayLabelContent(Label label) {
         menuLabel = label;
         typeContainer.setPrefWidth(1000);
@@ -112,11 +143,10 @@ public class WordView extends SearchController {
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
-        userBelongLabel.setVisible(SearchManager.getUserTrie().search(label.getText()));
-        //System.out.println(result);
+        userBelongLabel.setVisible(SystemManager.getManager(SearchManager.class).getUserTrie().search(label.getText()));
         boolean getFirst = true;
         for (var i : result.keySet()) {
-            Label autoFillList = new Label(i.toString());
+            Label autoFillList = new Label(i);
             if (getFirst) {
                 autoFillList.getStyleClass().add("tab-label");
                 DisplayMeaning(autoFillList.getText());
@@ -140,6 +170,12 @@ public class WordView extends SearchController {
         });
     }
 
+    /**
+     * display the meaning of the word
+     *
+     * @param type each type will have a meaning, this param will
+     *             identify which meaning is referred in order to display the meaning
+     */
     public void DisplayMeaning(String type) {
         for (javafx.scene.Node node : typeContainer.getChildren()) {
             if (node instanceof Label) {

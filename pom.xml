@@ -12,7 +12,7 @@
         <maven.compiler.target>21</maven.compiler.target>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.control.version>20.0.2</javafx.control.version>
+        <javafx.control.version>21</javafx.control.version>
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <javafx.fxml.version>20.0.2</javafx.fxml.version>
         <mainClass.Path>com.zeus.Main.Main</mainClass.Path>

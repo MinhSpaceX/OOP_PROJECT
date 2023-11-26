@@ -17,6 +17,9 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller of the scene that will host other scenes
+ */
 public class SceneContainer implements Initializable {
     public static SceneContainer sceneContainer;
     boolean MenuVisible = false;
@@ -53,6 +56,12 @@ public class SceneContainer implements Initializable {
     @FXML
     private Label shortUpdate;
 
+    /**
+     * This method is called by the FXMLLoader when initialization is complete.
+     *
+     * @param url            points to the FXML file that corresponds to the controller class.
+     * @param resourceBundle optional parameter.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sceneContainer = this;
@@ -62,10 +71,18 @@ public class SceneContainer implements Initializable {
         Logger.info("Container init -----------------");
     }
 
+    /**
+     * set the function for the menu button that will change to menu scene
+     *
+     * @param event handle the click of the button
+     */
     public void loadMenuScreen(ActionEvent event) {
         changeView(Menu.class);
     }
 
+    /**
+     * set slide animation for the menu sidebar
+     */
     public void sideNavSlide() {
         slider.setTranslateX(-170);
         menuButton.setOnMouseClicked(event -> {
@@ -87,11 +104,22 @@ public class SceneContainer implements Initializable {
         });
     }
 
+    /**
+     * change to game scene
+     *
+     * @param event event handler
+     */
     @FXML
     public void setGameView(ActionEvent event) {
         changeView(GameController.class);
     }
 
+    /**
+     * this method will change the view as user's desire
+     *
+     * @param tClass controller class of the scene that user want to change to.
+     * @param <T>    generic class T
+     */
     public <T> void changeView(Class<T> tClass) {
         String FXMLurl = null;
         try {
@@ -111,6 +139,9 @@ public class SceneContainer implements Initializable {
         Logger.info("View changed!");
     }
 
+    /**
+     * set function for the menu button
+     */
     public void setMenuButtonFunction() {
         shortSearch.setOnMouseClicked(e -> changeView(Menu.class));
         shortTranslate.setOnMouseClicked(e -> {
@@ -123,6 +154,12 @@ public class SceneContainer implements Initializable {
         shortTranslate.setOnMouseClicked(e -> changeView(Translate.class));
     }
 
+    /**
+     * set style for the chosen button
+     *
+     * @param tClass determine which class is user in
+     * @param <T>    generic class T
+     */
     private <T> void setChoosenIcon(Class<T> tClass) {
         clearHighlight();
         if (tClass.equals(Menu.class)) {
@@ -146,6 +183,9 @@ public class SceneContainer implements Initializable {
         }
     }
 
+    /**
+     * button style
+     */
     private void clearHighlight() {
         shortTranslate.setStyle("-fx-border-width: 0");
         shortHistory.setStyle("-fx-border-width: 0");

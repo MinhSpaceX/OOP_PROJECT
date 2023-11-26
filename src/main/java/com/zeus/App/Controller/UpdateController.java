@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * controller for the update scene
+ */
 public class UpdateController extends SearchController {
     private static Label updateLabel;
     private final List<SingleWord> singleWordList = new ArrayList<>();
@@ -48,28 +51,49 @@ public class UpdateController extends SearchController {
     private ScrollPane exampleContainer;
     @FXML
     private VBox exampleDisplay;
+    @FXML
+    private Button deleteButton;
     private boolean openMeaning = false;
     private boolean openExample = false;
     private String currentExample;
     private SingleWord oldSingleWord;
 
+    /**
+     * set the label that will deter which word is being displayed
+     *
+     * @param label index label
+     */
     public static void SetUpdateLabel(Label label) {
         updateLabel = label;
     }
 
+    /**
+     * set up trie, sqlite and function in the scene
+     * display word content in {@link #getSingleWord(Label)}
+     */
     @Override
     public void initialize() {
-        trie = SearchManager.userTrie;
+        appTrie = SearchManager.userTrie;
         sql = SystemManager.getManager(SQLite.class);
         setFunction();
         getSingleWord(updateLabel);
     }
 
+    /**
+     * call to {@link #getSingleWord(Label)} to display word content
+     *
+     * @param label index label
+     */
     @Override
     protected void displayWordFromLabel(Label label) {
         getSingleWord(label);
     }
 
+    /**
+     * get the single word info to display on the screen
+     *
+     * @param label index label
+     */
     public void getSingleWord(Label label) {
         refreshInfo();
         boolean getFirst = true;
@@ -101,6 +125,9 @@ public class UpdateController extends SearchController {
         getPronoun.setText(singleWordList.get(0).getPronoun());
     }
 
+    /**
+     * set function for other meaning and other example
+     */
     public void setFunction() {
         anotherMeaning.getStyleClass().add("other-meaning-label");
         anotherEx.getStyleClass().add("other-meaning-label");
@@ -129,6 +156,11 @@ public class UpdateController extends SearchController {
         });
     }
 
+    /**
+     * change to the desire meaning
+     *
+     * @param meaning the meaning that user want to see
+     */
     public void changeMeaningInfo(String meaning) {
         for (var i : singleWordList) {
             if (i.getMeaning().equals(meaning)) {
@@ -138,6 +170,11 @@ public class UpdateController extends SearchController {
         }
     }
 
+    /**
+     * display word content
+     *
+     * @param word word to display
+     */
     public void displaySingleWord(SingleWord word) {
         oldSingleWord = word;
         meaningContainer.setVisible(false);
@@ -166,6 +203,11 @@ public class UpdateController extends SearchController {
         }
     }
 
+    /**
+     * switch to the desired example
+     *
+     * @param engExample the english example will come with a translation in vietnamese
+     */
     public void switchExample(String engExample) {
         currentExample = engExample;
         for (var i : oldSingleWord.getExamples()) {
@@ -179,6 +221,12 @@ public class UpdateController extends SearchController {
         }
     }
 
+    /**
+     * this method will create a new example word for the word
+     *
+     * @param exampleKey deter the example that user want to change
+     * @return Single word.
+     */
     public SingleWord getNewSingleWord(String exampleKey) {
         Pair<String, String> newExamplePair = new Pair<>(getEngExample.getText(), getVieExample.getText());
         List<Pair<String, String>> newExampleList = oldSingleWord.getExamples() == null ? null : new ArrayList<>(oldSingleWord.getExamples());
@@ -189,11 +237,15 @@ public class UpdateController extends SearchController {
                 }
             }
         }
-        System.out.println(newExampleList);
         return new SingleWord(wordTargetDisplay.getText(), getPronoun.getText(),
                 getType.getText(), getMeaning.getText(), newExampleList);
     }
 
+    /**
+     * update the word to the user's database when click
+     *
+     * @param event event handler
+     */
     @FXML
     public void applyUserUpdate(ActionEvent event) {
         if (!getType.getText().isEmpty()) {
@@ -203,6 +255,19 @@ public class UpdateController extends SearchController {
         }
     }
 
+    @FXML
+    public void deleteWord(ActionEvent event){
+        System.out.println(updateLabel.getText());
+        sql.delete(updateLabel.getText().trim().toLowerCase());
+        History.historyList.remove(updateLabel.getText());
+        FavoriteController.FavoriteList.remove(updateLabel.getText());
+        wordTargetDisplay.setText("The word has been deleted!");
+        refreshInfo();
+    }
+
+    /**
+     * refresh input box
+     */
     public void refreshInfo() {
         getPronoun.clear();
         exampleDisplay.getChildren().clear();
@@ -217,6 +282,11 @@ public class UpdateController extends SearchController {
         singleWordList.clear();
     }
 
+    /**
+     * when clicked, change bakc to add scene
+     *
+     * @param event event handler
+     */
     @FXML
     public void backToAddScene(ActionEvent event) {
         SceneContainer sc = SceneContainer.sceneContainer;
