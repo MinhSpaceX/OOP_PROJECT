@@ -137,9 +137,9 @@ public class AddController implements Initializable {
         String NewMeaning = getMeaning.getText();
         String engEx = getEngExample.getText().trim();
         String viEx = getVieExample.getText().trim();
-        Pair<String, String> NewExamplePair = new Pair<>(engEx, viEx);
-        List<Pair<String, String>> NewExample = new ArrayList<>();
-        NewExample.add(NewExamplePair);
+        Pair<String, String> NewExamplePair = (engEx.isEmpty() || viEx.isEmpty()) ? null : new Pair<>(engEx, viEx);
+        List<Pair<String, String>> NewExample = NewExamplePair == null ? null : new ArrayList<>();
+        if (NewExample != null) NewExample.add(NewExamplePair);
         return new SingleWord(NewWordTarget, NewPronoun, NewType, NewMeaning, NewExample);
     }
 
