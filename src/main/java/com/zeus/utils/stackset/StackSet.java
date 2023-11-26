@@ -27,4 +27,12 @@ public class StackSet<T> extends ArrayList<T> {
         super.add(0, t);
         return true;
     }
+
+    public boolean addFromFile(T t) {
+        if (!set.add(t)) {
+            super.remove(t);
+        }
+        super.add(t);
+        return true;
+    }
 }

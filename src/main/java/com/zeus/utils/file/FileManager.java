@@ -119,7 +119,7 @@ public class FileManager {
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
             String line;
             while ((line = br.readLine()) != null) {
-                target.add(line);
+                target.addFromFile(line);
             }
             Logger.info("inserted");
         } catch (IOException e) {
