@@ -51,6 +51,8 @@ public class AddController implements Initializable {
     //this list contains search result.
     private List<String> searchPane = new ArrayList<>();
 
+    private boolean notfound = false;
+
     /**
      * This method is called by the FXMLLoader when initialization is complete.
      *
@@ -69,7 +71,9 @@ public class AddController implements Initializable {
                     searchResultDisplay.getChildren().get(0).requestFocus();
                 }
                 if (event.getCode() == KeyCode.ENTER && !searchResultDisplay.getChildren().isEmpty()) {
-                    changeToUpdateView((Label) searchResultDisplay.getChildren().get(0));
+                    if(!notfound) {
+                        changeToUpdateView((Label) searchResultDisplay.getChildren().get(0));
+                    }
                 }
             });
             searchResultDisplay.setOnKeyPressed(event -> {
@@ -122,8 +126,10 @@ public class AddController implements Initializable {
             Label label = new Label("Maybe you want to add this word :D");
             label.getStyleClass().add("not-found-style-update");
             searchResultDisplay.getChildren().add(label);
+            notfound = true;
             return;
         }
+        notfound = false;
         for(var i : searchPane){
             Label label = new Label(i);
             label.getStyleClass().add("result-display-label-style");
