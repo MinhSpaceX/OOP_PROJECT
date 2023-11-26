@@ -177,7 +177,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button fx:id="updateButton" layoutX="291.0" layoutY="9.0" mnemonicParsing="false" onAction="#applyUserUpdate" prefHeight="43.0" prefWidth="146.0" style="-fx-font-size: 15;" styleClass="update-button" text="Update">
+            <Button fx:id="updateButton" layoutX="258.0" layoutY="14.0" mnemonicParsing="false" onAction="#applyUserUpdate" prefHeight="34.0" prefWidth="76.0" style="-fx-font-size: 15;" styleClass="update-button" text="Update">
                <font>
                   <Font size="13.0" />
                </font></Button>
@@ -186,6 +186,16 @@
                   <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
                </padding>
             </VBox>
+            <Button fx:id="deleteButton" layoutX="362.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteWord" prefHeight="34.0" prefWidth="76.0" style="-fx-font-size: 15;" styleClass="update-button" text="Delete">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Button>
+            <Label layoutX="342.0" layoutY="22.0" text="Or" textFill="#8e8ffa">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <ScrollPane fx:id="meaningContainer" layoutX="84.0" layoutY="157.0" prefHeight="317.0" prefWidth="358.0" styleClass="scroll-pane-wordview" stylesheets="@../css/application.css" visible="false">

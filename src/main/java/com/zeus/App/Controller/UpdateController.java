@@ -51,6 +51,8 @@ public class UpdateController extends SearchController {
     private ScrollPane exampleContainer;
     @FXML
     private VBox exampleDisplay;
+    @FXML
+    private Button deleteButton;
     private boolean openMeaning = false;
     private boolean openExample = false;
     private String currentExample;
@@ -251,6 +253,16 @@ public class UpdateController extends SearchController {
             sql.updateWord(oldSingleWord, newSingleWord);
             getSingleWord(new Label(newSingleWord.getWordTarget()));
         }
+    }
+
+    @FXML
+    public void deleteWord(ActionEvent event){
+        System.out.println(updateLabel.getText());
+       /* sql.delete(updateLabel.getText());
+        History.historyList.remove(updateLabel.getText());
+        FavoriteController.FavoriteList.remove(updateLabel.getText());
+        wordTargetDisplay.setText("The word has been deleted!");
+        refreshInfo();*/
     }
 
     /**
