@@ -15,7 +15,8 @@ public class ImageIcon extends Manager {
 
     /**
      * Sets the configuration for handling icon-related properties.
-     * Uses the SystemManager to retrieve the configuration from the "Icon" category.
+     * Uses the SystemManager to retrieve the configuration
+     * from the "Icon" category.
      */
     @Override
     protected void setConfig() {

@@ -5,7 +5,8 @@ import com.zeus.utils.managerfactory.Manager;
 
 public class System extends Manager {
     /**
-     * Initializes the application by setting the main window using the configuration.
+     * Initializes the application by setting the main window
+     * using the configuration.
      */
     @Override
     public void init() {
@@ -13,7 +14,8 @@ public class System extends Manager {
     }
 
     /**
-     * Sets the configuration for the window using the "WindowConfig" configuration.
+     * Sets the configuration for the window using the
+     * "WindowConfig" configuration.
      */
     @Override
     protected void setConfig() {

@@ -29,8 +29,13 @@ public class SQLite extends Manager {
     }
 
     /**
-     * sets the pathToDatabase variable to the path of a file specified by the @param path.
-     * It then sets the url variable to a string that concatenates the pathToDatabase variable with the string "jdbc:sqlite:"
+     * Sets the pathToDatabase variable to the path of a file specified by the path.
+     * It then sets the url variable to a string that concatenates
+     * the pathToDatabase variable with the string "jdbc:sqlite:"
+     *
+     * @param path Path to database.
+     * @throws FileNotFoundException        if file not found.
+     * @throws UnsupportedEncodingException if not support encode.
      */
     private void setDatabase(String path) throws FileNotFoundException, UnsupportedEncodingException {
         pathToDatabase = FileManager.getPathFromFile(path);
@@ -39,6 +44,7 @@ public class SQLite extends Manager {
 
     /**
      * counts the number of rows in a table named WORD.
+     *
      * @return the result.
      */
     private int countRow() {
@@ -58,7 +64,6 @@ public class SQLite extends Manager {
     /**
      * Functions to execute when create a manager.
      */
-
     private void checkExist() {
         try (Connection conn = this.connect()) {
             Logger.info(String.format("Database status: EXIST. File path: '%s'.\n", pathToDatabase));
@@ -68,7 +73,8 @@ public class SQLite extends Manager {
     }
 
     /**
-     * establishes a connection to a database.
+     * Establishes a connection to a database.
+     *
      * @return the connection.
      */
     private Connection connect() {
@@ -84,7 +90,8 @@ public class SQLite extends Manager {
     }
 
     /**
-     * establishes a connection to a SQLite database located at the path.
+     * Establishes a connection to a SQLite database located at the path.
+     *
      * @param path the path of a SQLite database.
      * @return the connection.
      */
@@ -102,6 +109,7 @@ public class SQLite extends Manager {
 
     /**
      * Inserts data into the WORD, MEANING, and EXAMPLE tables based on the provided Word object.
+     *
      * @param word   The Word object to insert into the database.
      * @param wordID The encoded wordID associated with the Word object.
      * @param sW     The PreparedStatement for inserting data into the WORD table.
@@ -151,8 +159,10 @@ public class SQLite extends Manager {
 
     /**
      * insert a SingleWord object into SQL.
+     *
      * @param word the SingleWord object
-     * @return successfull or unsuccessfull insertion.
+     * @return true when succeed
+     * <p>false otherwise</p>
      */
     public boolean insert(SingleWord word) {
         SystemManager.getManager(SearchManager.class).getUserTrie().insert(word.getWordTarget());
@@ -228,8 +238,9 @@ public class SQLite extends Manager {
 
     /**
      * Creates a database and tables from the SQL queries specified in the provided file.
-     * @param filePath  The path to the file containing SQL queries.
-     * @param database  The name of the database to create.
+     *
+     * @param filePath The path to the file containing SQL queries.
+     * @param database The name of the database to create.
      */
     private void createDatabaseFromQuery(String filePath, String database) {
         try (Connection conn = this.connect(database);
@@ -255,6 +266,7 @@ public class SQLite extends Manager {
 
     /**
      * import data from a JSON file into SQLite.
+     *
      * @param jsonPath the file path of a JSON file.
      */
     private void importFromJson(String jsonPath) {
@@ -294,6 +306,7 @@ public class SQLite extends Manager {
 
     /**
      * retrieves a specified number of random word-meaning pairs from a database.
+     *
      * @param minWordLength Minimum length of the words to consider.
      * @param numberOfWords Number of random word-meaning pairs to retrieve.
      * @return the list of word-meaning pairs.
@@ -320,6 +333,7 @@ public class SQLite extends Manager {
 
     /**
      * Update a Word object into database.
+     *
      * @param oldWord The original word information to be updated.
      * @param newWord The new word information to replace the old information.
      */
@@ -375,7 +389,8 @@ public class SQLite extends Manager {
     }
 
     /**
-     * retrieve information about a word from the userDatabase based on its wordTarget.
+     * Retrieve information about a word from the userDatabase based on its wordTarget.
+     *
      * @param wordTarget The target word for which information is retrieved.
      * @return A map where the key is the word type, and the value is a list of SingleWord objects.
      */
@@ -415,6 +430,7 @@ public class SQLite extends Manager {
 
     /**
      * Retrieves information about a word from the database based on its target word.
+     *
      * @param wordTarget The target word for which information is retrieved.
      * @return A map where the key is the word type, and the value is a list of SingleWord objects.
      */
@@ -455,8 +471,9 @@ public class SQLite extends Manager {
     /**
      * Loads words from the user-specific database into two Trie structures.
      * Inserts words into both the searchTrie and userTrie for efficient word lookup.
+     *
      * @param searchTrie The Trie structure used for general word search functionality.
-     * @param userTrie The Trie structure specific to user-added words.
+     * @param userTrie   The Trie structure specific to user-added words.
      */
     public void loadTrieFromUserDb(Trie searchTrie, Trie userTrie) {
         try (Connection connection = this.connect(userDatabase);
@@ -480,6 +497,7 @@ public class SQLite extends Manager {
 
     /**
      * Deletes a word and its associated data from the user database.
+     *
      * @param wordTarget The target word to be deleted.
      */
     public void delete(String wordTarget) {
@@ -495,7 +513,7 @@ public class SQLite extends Manager {
     }
 
     /**
-     *Initializes the application, setting up database paths, URLs, and performing necessary checks.
+     * Initializes the application, setting up database paths, URLs, and performing necessary checks.
      * Also imports data from a JSON file specified in the configuration.
      */
     @Override

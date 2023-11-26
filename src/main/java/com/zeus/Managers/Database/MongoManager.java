@@ -24,7 +24,7 @@ public class MongoManager extends Manager {
     private Trie trie = null;
 
     /**
-     * take data from base then load to trie
+     * Take data from base then load to trie
      */
     private void fetchDatafromBase() {
         AtomicInteger count = new AtomicInteger();
@@ -50,7 +50,8 @@ public class MongoManager extends Manager {
     }
 
     /**
-     * take a Word from database with @param wordTarget.
+     * Take a Word from database with wordTarget.
+     *
      * @param wordTarget the wordtarget of a Word.
      * @return a word has the wordtarget is @param wordTarget.
      */
@@ -72,6 +73,7 @@ public class MongoManager extends Manager {
 
     /**
      * return trie loaded from MongoDB.
+     *
      * @return {@link #trie}.
      */
     public Trie ReturnTrie() {
@@ -79,7 +81,7 @@ public class MongoManager extends Manager {
     }
 
     /**
-     *initializes a MongoDB client and connects to a database named dictionary_metadata.
+     * initializes a MongoDB client and connects to a database named dictionary_metadata.
      * It then fetches a collection named dictionary from the database and creates a Trie object.
      * Then, it creates a pipeline and fetches data from the database using the pipeline.
      * Finally, operate {@link #fetchDatafromBase()}.

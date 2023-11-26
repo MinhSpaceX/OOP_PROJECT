@@ -27,6 +27,7 @@ public class FxmlManager extends Manager {
 
     /**
      * Retrieves the file path associated with the provided class type from the pathToFxml map.
+     *
      * @param classType The class type for which the file path is requested.
      * @param <T>       The generic type representing the class.
      * @return The file path corresponding to the class type, or null if not found.

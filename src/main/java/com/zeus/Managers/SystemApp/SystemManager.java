@@ -20,6 +20,7 @@ public class SystemManager extends Manager {
 
     /**
      * Retrieves a manager of the specified type from the manager map.
+     *
      * @param tClass The class type of the manager to be retrieved.
      * @param <T>    The type of the manager.
      * @return The manager of the specified type, or null if not found.
@@ -30,6 +31,7 @@ public class SystemManager extends Manager {
 
     /**
      * Adds a manager to the manager map, using its class as the key.
+     *
      * @param manager The manager to be added to the map.
      */
     private static void addToMap(Manager manager) {
@@ -38,6 +40,7 @@ public class SystemManager extends Manager {
 
     /**
      * Retrieves the global configuration factory instance.
+     *
      * @return The global configuration factory instance.
      */
     public static ConfigFactory getConfigFactory() {
@@ -46,6 +49,7 @@ public class SystemManager extends Manager {
 
     /**
      * Retrieves the list of all registered managers.
+     *
      * @return The list of all registered managers.
      */
     public static List<Manager> getManagerList() {
@@ -54,6 +58,7 @@ public class SystemManager extends Manager {
 
     /**
      * Adds a manager to the managerList, taking its priority into account.
+     *
      * @param manager The manager to be added to the managerList.
      */
     private static void addToList(Manager manager) {
@@ -63,6 +68,7 @@ public class SystemManager extends Manager {
 
     /**
      * Adds a manager to both the managerMap and the managerList.
+     *
      * @param manager The manager to be added to the collection.
      */
     public static void addToCollection(Manager manager) {

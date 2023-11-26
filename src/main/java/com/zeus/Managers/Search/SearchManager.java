@@ -19,6 +19,7 @@ public class SearchManager extends Manager {
 
     /**
      * Searches the user database using a Trie for autocompletion suggestions.
+     *
      * @param input The input string to search for.
      * @return A list of autocompletion suggestions based on the input.
      */
@@ -28,8 +29,10 @@ public class SearchManager extends Manager {
 
     /**
      * Retrieves word instances from database based on the target word.
+     *
      * @param wordTarget The target word to retrieve instances for.
-     * @return A map containing word instances grouped by type, including information from databases.
+     * @return A map containing word instances
+     * grouped by type, including information from databases.
      */
     public static Map<String, List<SingleWord>> getWordInstance(String wordTarget) {
         Map<String, List<SingleWord>> result = sqLite.getWordFromDb(wordTarget);
@@ -46,7 +49,18 @@ public class SearchManager extends Manager {
     }
 
     /**
+     * Searches for a word in the search path.
+     *
+     * @param word The word to search for.
+     * @return True if the word is found, false otherwise.
+     */
+    public static boolean search(String word) {
+        return searchPath.search(word.toLowerCase());
+    }
+
+    /**
      * Retrieves the Trie instance associated with user data.
+     *
      * @return The Trie instance containing user data.
      */
     public Trie getUserTrie() {
@@ -55,17 +69,11 @@ public class SearchManager extends Manager {
 
     /**
      * Retrieves the Trie instance associated with main data.
+     *
      * @return The Trie instance containing main data.
      */
-    public Trie getSearchPathTrie() {return searchPath;}
-
-    /**
-     * Searches for a word in the search path.
-     * @param word The word to search for.
-     * @return True if the word is found, false otherwise.
-     */
-    public static boolean search(String word) {
-        return searchPath.search(word.toLowerCase());
+    public Trie getSearchPathTrie() {
+        return searchPath;
     }
 
     /**
