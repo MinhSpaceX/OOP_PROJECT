@@ -22,18 +22,38 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the Favorite Scene.
+ */
 public class FavoriteController implements Initializable {
 
+    //this list contains user's favorite word
     public static StackSet<String> FavoriteList = new StackSet<>();
+    //this is a static reference for communication between controller.
     SceneContainer sc = SceneContainer.sceneContainer;
     @FXML
     private VBox FavoriteDisplay;
     @FXML
     private Button remove;
 
+    /**
+     * This method is called by the FXMLLoader when initialization is complete.
+     *
+     * @param url            points to the FXML file that corresponds to the controller class.
+     * @param resourceBundle optional parameter.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        displayFavorite();
+    }
+
+    /**
+     * this method display user's favorite words
+     */
     public void displayFavorite() {
         ArrayList<String> stringToRemove = new ArrayList<>();
         remove.setVisible(false);
+        //create word card for each word in the favorite list.
         for (String i : FavoriteList) {
             HBox hBox = new HBox(15);
             hBox.getStyleClass().add("hbox-style");
@@ -46,8 +66,8 @@ public class FavoriteController implements Initializable {
             Button button = new Button();
             try {
                 ImageView imageView = new ImageView(SystemManager.getManager(ImageIcon.class).getImage("volume"));
-                imageView.setFitWidth(80); // Đặt chiều rộng
-                imageView.setFitHeight(20); // Đặt chiều cao
+                imageView.setFitWidth(80); // set width
+                imageView.setFitHeight(20); // set height
                 imageView.setPreserveRatio(true);
                 button.setGraphic(imageView);
             } catch (Exception e) {
@@ -63,11 +83,12 @@ public class FavoriteController implements Initializable {
             });
             ObservableList<HBox> itemsToRemove = FXCollections.observableArrayList();
 
+            //get condition of the checkbox to know if the word is chosen or not
             for (var hbox : FavoriteDisplay.getChildren()) {
                 if (hbox instanceof HBox) {
                     HBox temp = (HBox) hbox;
                     ((CheckBox) temp.getChildren().get(0)).setOnAction(event -> {
-                        // Kiểm tra xem có ít nhất một CheckBox được chọn hay không
+                        // Check weather there are any selected checkbox
                         boolean atLeastOneSelected = false;
                         for (var hb : FavoriteDisplay.getChildren()) {
                             if (hb instanceof HBox) {
@@ -79,17 +100,18 @@ public class FavoriteController implements Initializable {
                                 }
                             }
                         }
-
+                        //add word that user want to remove into a list
                         if (((CheckBox) temp.getChildren().get(0)).isSelected()) {
                             itemsToRemove.add((HBox) hbox);
                             stringToRemove.add(((Label) temp.getChildren().get(1)).getText());
                         }
-
+                        //the remove only appear when there are at least one word selected
                         remove.setVisible(atLeastOneSelected);
                     });
                 }
             }
 
+            //set function for remove button
             remove.setOnMouseClicked(event -> {
                 FavoriteList.removeAll(stringToRemove);
                 FavoriteDisplay.getChildren().removeAll(itemsToRemove);
@@ -99,11 +121,17 @@ public class FavoriteController implements Initializable {
 
         }
 
-        //FavoriteDisplay.getChildren().addAll(listView);
     }
 
+    /**
+     * providing pronunciation sound when click on the media button
+     *
+     * @param button target the media button
+     * @param label  get the pronunciation sound of the word corresponding to this label.
+     */
     public void MediaHandler(Button button, Label label) {
         final MediaPlayer[] tempMedia = {null};
+        //run task in a new thread to avoid lagging.
         BackgroundTask.perform(() -> tempMedia[0] = APIHandler.getAudio(label.getText()));
         button.setOnMouseClicked(event -> {
             try {
@@ -117,8 +145,4 @@ public class FavoriteController implements Initializable {
         });
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        displayFavorite();
-    }
 }

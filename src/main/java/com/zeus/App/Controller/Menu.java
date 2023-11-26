@@ -7,8 +7,17 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
+/**
+ * Controller of the menu interface when user open the application
+ */
 public class Menu extends SearchController {
 
+    /**
+     * get the input from search bar then change to {@link WordView} with
+     * {@link #ChangeToWordView(Label)} method
+     *
+     * @param label index of the word that user want to search.
+     */
     @Override
     protected void displayWordFromLabel(Label label) {
         try {
@@ -18,12 +27,21 @@ public class Menu extends SearchController {
         }
     }
 
+    /**
+     * This method is called by the FXMLLoader when initialization is complete.
+     */
     @Override
     public void initialize() {
         trie = SearchManager.searchPath;
         Logger.info("Menu initialized.");
     }
 
+    /**
+     * this method will change to {@link WordView} whn called
+     *
+     * @param label index of the word to display
+     * @throws IOException get exception when change to word view.
+     */
     private void ChangeToWordView(Label label) throws IOException {
         SceneContainer sc = SceneContainer.sceneContainer;
         WordView.setMenuLabel(label);

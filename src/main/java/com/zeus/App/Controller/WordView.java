@@ -22,6 +22,9 @@ import javafx.scene.text.Text;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * this controller where word's content is displayed.
+ */
 public class WordView extends SearchController {
     private static Label menuLabel;
     @FXML
@@ -44,10 +47,19 @@ public class WordView extends SearchController {
     private Text meaningDisplay;
     private boolean isFavoriteWord = false;
 
+    /**
+     * set value for the menuLabel which is the host label for the word user
+     * want to lookup
+     *
+     * @param label index label
+     */
     public static void setMenuLabel(Label label) {
         menuLabel = label;
     }
 
+    /**
+     * get media, search function and liking function button
+     */
     @Override
     protected void initialize() {
         trie = SearchManager.searchPath;
@@ -57,11 +69,19 @@ public class WordView extends SearchController {
         getLikingFunction();
     }
 
+    /**
+     * call to {@link #displayWordFromLabel(Label)} to display the word
+     *
+     * @param label index label
+     */
     @Override
     protected void displayWordFromLabel(Label label) {
         displayLabelContent(label);
     }
 
+    /**
+     * get pronoun sound for word
+     */
     public void MediaHandler() {
         audio.setOnMouseClicked(event -> {
             try {
@@ -75,6 +95,11 @@ public class WordView extends SearchController {
         });
     }
 
+    /**
+     * check weather user have liked this word or not
+     *
+     * @param target the word target to find in a list
+     */
     public void checkIfLiked(String target) {
         if (FavoriteController.FavoriteList.contains(target)) {
             addToFavorite.setFill(Color.rgb(142, 143, 250));
@@ -85,6 +110,9 @@ public class WordView extends SearchController {
         addToFavorite.setFill(Color.rgb(225, 221, 221));
     }
 
+    /**
+     * add/undo the word to/from favorite list
+     */
     public void getLikingFunction() {
         addToFavorite.setOnMouseClicked(e -> {
             if (!isFavoriteWord) {
@@ -99,6 +127,11 @@ public class WordView extends SearchController {
         });
     }
 
+    /**
+     * display content of the word through the label
+     *
+     * @param label index label
+     */
     public void displayLabelContent(Label label) {
         menuLabel = label;
         typeContainer.setPrefWidth(1000);
@@ -136,6 +169,12 @@ public class WordView extends SearchController {
         });
     }
 
+    /**
+     * display the meaning of the word
+     *
+     * @param type each type will have a meaning, this param will
+     *             identify which meaning is referred in order to display the meaning
+     */
     public void DisplayMeaning(String type) {
         for (javafx.scene.Node node : typeContainer.getChildren()) {
             if (node instanceof Label) {
