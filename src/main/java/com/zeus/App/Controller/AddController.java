@@ -99,9 +99,6 @@ public class AddController implements Initializable {
             searchResultDisplay.getChildren().add(label);
             return;
         }
-        if(searchPane.size() == 2){
-            searchPane.remove(0);
-        }
         for(var i : searchPane){
             Label label = new Label(i);
             label.getStyleClass().add("result-display-label-style");

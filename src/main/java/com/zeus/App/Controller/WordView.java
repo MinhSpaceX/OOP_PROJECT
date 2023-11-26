@@ -1,6 +1,7 @@
 package com.zeus.App.Controller;
 
 import com.zeus.Managers.Search.SearchManager;
+import com.zeus.Managers.SystemApp.SystemManager;
 import com.zeus.utils.DictionaryUtil.SingleWord;
 import com.zeus.utils.api.APIHandler;
 import com.zeus.utils.background.BackgroundTask;
@@ -112,7 +113,7 @@ public class WordView extends SearchController {
         BackgroundTask.perform(() -> mediaPlayer = APIHandler.getAudio(label.getText()));
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
-        userBelongLabel.setVisible(SearchManager.getUserTrie().search(label.getText()));
+        userBelongLabel.setVisible(SystemManager.getManager(SearchManager.class).getUserTrie().search(label.getText()));
         //System.out.println(result);
         boolean getFirst = true;
         for (var i : result.keySet()) {

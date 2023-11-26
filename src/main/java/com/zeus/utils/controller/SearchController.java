@@ -88,9 +88,6 @@ public abstract class SearchController implements Initializable {
             resultDisplay.getChildren().add(label);
             return;
         }
-        if (autoFillList.size() == 2) {
-            autoFillList.remove(0);
-        }
         for (var i : autoFillList) {
             Label label = new Label(i);
             label.getStyleClass().add("label-style");

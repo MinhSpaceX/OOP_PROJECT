@@ -35,9 +35,11 @@ public class SearchManager extends Manager {
         return result;
     }
 
-    public static Trie getUserTrie() {
+    public Trie getUserTrie() {
         return userTrie;
     }
+
+    public Trie getSearchPathTrie() {return searchPath;}
 
     public static boolean search(String word) {
         return searchPath.search(word.toLowerCase());
