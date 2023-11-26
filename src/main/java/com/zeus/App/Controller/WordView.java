@@ -116,7 +116,7 @@ public class WordView extends SearchController {
         //System.out.println(result);
         boolean getFirst = true;
         for (var i : result.keySet()) {
-            Label autoFillList = new Label(i);
+            Label autoFillList = new Label(i.toString());
             if (getFirst) {
                 autoFillList.getStyleClass().add("tab-label");
                 DisplayMeaning(autoFillList.getText());

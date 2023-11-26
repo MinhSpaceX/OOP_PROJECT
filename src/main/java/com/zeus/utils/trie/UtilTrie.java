@@ -132,7 +132,7 @@ class UtilTrie {
     private void getWords(Node node, String word, List<String> list, int numberOfWords, int wordLength) {
         if (list.size() >= numberOfWords && numberOfWords != -1) return;
         if (node.isEndOfWord() && word.length() >= wordLength) {
-            if (word.matches("[a-z]+")) list.add(word);
+            list.add(word);
         }
         Set<Integer> keys = node.getChildren().keySet();
         for (Integer character : keys) {
