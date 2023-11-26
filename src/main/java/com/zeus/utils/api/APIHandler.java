@@ -67,7 +67,7 @@ public class APIHandler {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(response.body());
             for (JsonNode node : jsonNode.get("matches")) {
-                translates.add(node.get("translation").toString().replace("\\n", "\n"));
+                translates.add(node.get("translation").toString().replace("\\n", "\n").replace("\"", ""));
             }
             return translates;
         } catch (Exception e) {
