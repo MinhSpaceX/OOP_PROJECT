@@ -1,33 +1,45 @@
 package com.zeus.utils.config;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeus.utils.log.Logger;
 
+/**
+ * Config class.
+ */
 public class Config {
     /**
      * {@code @JsonProperty("target")} maps the target field in the Config class to the "target" property in JSON.
      */
     @JsonProperty("target")
-     String target = null;
+    String target = null;
     @JsonProperty("properties")
     Properties properties = null;
 
     /**
      * Get target.
+     *
      * @return target.
      */
     public String getTarget() {
         return target;
     }
 
+    /**
+     * Get {@link Properties}.
+     *
+     * @return {@link Properties}.
+     */
     public Properties getProperties() {
         return properties;
     }
 
     /**
-     * Get properties.
-     * @return properties.
+     * Get property with given target.
+     *
+     * @param property  The target to get,
+     * @param typeClass Class of the property.
+     * @param <T>       Type of class.
+     * @return The property.
      */
     public <T> T getProperty(String property, Class<T> typeClass) {
         Object o = properties.getProperties().get(property);

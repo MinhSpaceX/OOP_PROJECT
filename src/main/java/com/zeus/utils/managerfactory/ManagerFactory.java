@@ -10,7 +10,18 @@ import com.zeus.utils.log.Logger;
 
 import java.util.function.Consumer;
 
+/**
+ * Class to handle managers.
+ */
 public class ManagerFactory {
+    /**
+     * Create manager.
+     *
+     * @param tClass Manager class.
+     * @param <T>    type of manager.
+     * @return Manager instance after created.
+     * @throws NullPointerException Exception if cannot create new manager.
+     */
     public static <T extends Manager> T createManager(Class<T> tClass) throws NullPointerException {
         try {
             return tClass.getDeclaredConstructor().newInstance();
@@ -20,6 +31,9 @@ public class ManagerFactory {
         throw new NullPointerException();
     }
 
+    /**
+     * Initialize necessary managers for the application.
+     */
     public static void necessary() {
         try {
             SystemManager.loadAllConfig();
@@ -35,6 +49,11 @@ public class ManagerFactory {
         }
     }
 
+    /**
+     * Initialize all existing manager in {@link SystemManager#getManagerList()}.
+     *
+     * @param consumer Tasks to do with each manager in the list.
+     */
     public static void initAllManager(Consumer<Manager> consumer) {
         try {
             for (Manager manager : SystemManager.getManagerList()) {

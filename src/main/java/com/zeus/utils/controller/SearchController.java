@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Template Controller with default search bar
+ * and a VBox to display results of autofill.
+ */
 public abstract class SearchController implements Initializable {
     @FXML
     protected TextField searchBar;
@@ -24,6 +28,12 @@ public abstract class SearchController implements Initializable {
     protected List<String> autoFillList;
     protected Trie trie;
 
+    /**
+     * Initialize search bar and display field.
+     *
+     * @param url            URl
+     * @param resourceBundle ResourceBundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         resultDisplay.setOnKeyPressed(event -> {
@@ -65,6 +75,11 @@ public abstract class SearchController implements Initializable {
         initialize();
     }
 
+    /**
+     * Display result of auto fill.
+     *
+     * @param input The word to auto fill.
+     */
     protected void displayAutoFill(String input) {
         autoFillList = SystemManager.getManager(SearchManager.class).autoFill(input, trie).stream().distinct().collect(Collectors.toList());
         if (autoFillList.isEmpty()) {
@@ -95,7 +110,15 @@ public abstract class SearchController implements Initializable {
         }
     }
 
+    /**
+     * Display the word informations from chosen word.
+     *
+     * @param label The lable represent the word chosen.
+     */
     protected abstract void displayWordFromLabel(Label label);
 
+    /**
+     * Initialize needed variables or execute methods.
+     */
     protected abstract void initialize();
 }

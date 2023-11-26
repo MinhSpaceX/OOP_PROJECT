@@ -17,7 +17,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handle file related tasks.
+ */
 public class FileManager {
+    /**
+     * Get absolute path from the relative path given.
+     *
+     * @param file Relative file's path.
+     * @return Absolute path.
+     * @throws UnsupportedEncodingException When not supported encoding.
+     * @throws FileNotFoundException        When file not found.
+     */
     public static String getPathFromFile(String file) throws UnsupportedEncodingException, FileNotFoundException {
         File dir = new File(FileManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         file = dir.getParent() + file;
@@ -29,6 +40,13 @@ public class FileManager {
         return file;
     }
 
+    /**
+     * Use {@link #getPathFromFile(String)} to get absolute path
+     * then create new {@link File} object.
+     *
+     * @param filePath Relative file's path.
+     * @return {@link File} after get.
+     */
     public static File getFileFromPath(String filePath) {
         try {
             return new File(getPathFromFile(filePath));
@@ -64,6 +82,12 @@ public class FileManager {
         return null;
     }
 
+    /**
+     * Deserialize the given file into list of {@link Word}.
+     *
+     * @param filePath File path to Json file contains words.
+     * @return List of {@link Word}.
+     */
     public static List<Word> deserializeFromFile(String filePath) {
         List<Word> words = new ArrayList<>();
         ObjectMapper o = new ObjectMapper();
@@ -84,14 +108,18 @@ public class FileManager {
         return null;
     }
 
+    /**
+     * Insert file contents into {@link StackSet} object.
+     *
+     * @param url    File's path.
+     * @param target {@link StackSet} object.
+     */
     public static void insertFromFile(String url, StackSet<String> target) {
         try (InputStream is = new FileInputStream(getPathFromFile(url));
              BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
-
             String line;
-
             while ((line = br.readLine()) != null) {
-                target.addFromFile(line);
+                target.add(line);
             }
             Logger.info("inserted");
         } catch (IOException e) {
@@ -99,6 +127,12 @@ public class FileManager {
         }
     }
 
+    /**
+     * Export the {@link StackSet}'s contents to file,
+     *
+     * @param wordTarget Word target.
+     * @param url        File's path.
+     */
     public static void dictionaryExportToFile(StackSet<String> wordTarget, String url) {
         try (FileWriter fw = new FileWriter(FileManager.getPathFromFile(url));
              BufferedWriter bw = new BufferedWriter(fw)) {
