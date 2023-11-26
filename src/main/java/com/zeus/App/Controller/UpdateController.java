@@ -189,7 +189,6 @@ public class UpdateController extends SearchController {
                 }
             }
         }
-        System.out.println(newExampleList);
         return new SingleWord(wordTargetDisplay.getText(), getPronoun.getText(),
                 getType.getText(), getMeaning.getText(), newExampleList);
     }

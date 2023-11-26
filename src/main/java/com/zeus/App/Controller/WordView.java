@@ -76,9 +76,7 @@ public class WordView extends SearchController {
     }
 
     public void checkIfLiked(String target) {
-        System.out.println(FavoriteController.FavoriteList);
         if (FavoriteController.FavoriteList.contains(target)) {
-            //System.out.println("call");
             addToFavorite.setFill(Color.rgb(142, 143, 250));
             isFavoriteWord = true;
             return;
@@ -93,12 +91,10 @@ public class WordView extends SearchController {
                 FavoriteController.FavoriteList.add(menuLabel.getText());
                 addToFavorite.setFill(Color.rgb(142, 143, 250));
                 isFavoriteWord = true;
-                System.out.println(FavoriteController.FavoriteList);
             } else {
                 FavoriteController.FavoriteList.remove(menuLabel.getText());
                 addToFavorite.setFill(Color.rgb(225, 221, 221));
                 isFavoriteWord = false;
-                System.out.println(FavoriteController.FavoriteList);
             }
         });
     }
@@ -114,7 +110,6 @@ public class WordView extends SearchController {
         wordTargetDisplay.setText(label.getText());
         result = SearchManager.getWordInstance(label.getText());
         userBelongLabel.setVisible(SystemManager.getManager(SearchManager.class).getUserTrie().search(label.getText()));
-        //System.out.println(result);
         boolean getFirst = true;
         for (var i : result.keySet()) {
             Label autoFillList = new Label(i.toString());

@@ -69,7 +69,6 @@ public class GameController2 implements Initializable {
         sql = SystemManager.getManager(SQLite.class);
         list = sql.getRandomWords(1, 4 * 8);
         BackgroundTask.perform(() -> list.addAll(sql.getRandomWords(1, 100 * 4)));
-        System.out.println(sql);
         backToGameMenu.setOnMouseClicked(e -> sc.changeView(GameController.class));
         setGameMode();
     }

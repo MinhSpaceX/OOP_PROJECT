@@ -42,7 +42,7 @@ public class SQLite extends Manager {
                 return result.getInt(1);
             }
         } catch (SQLException e) {
-            System.out.printf("ERROR: %s.\n", e.getMessage());
+            Logger.printStackTrace(e);
         }
         return -1;
     }
