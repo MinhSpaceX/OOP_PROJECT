@@ -417,6 +417,8 @@ public class SQLite extends Manager {
              PreparedStatement deleteQuery = connection.prepareStatement("DELETE FROM WORD WHERE wordID = ?")) {
             deleteQuery.setString(1, Encoder.encode(wordTarget));
             deleteQuery.executeUpdate();
+            SearchManager.searchPath.delete(wordTarget);
+            SearchManager.userTrie.delete(wordTarget);
         } catch (Exception e) {
             Logger.printStackTrace(e);
         }
