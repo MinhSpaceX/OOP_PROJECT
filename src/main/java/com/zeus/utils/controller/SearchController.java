@@ -12,8 +12,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -26,7 +25,8 @@ public abstract class SearchController implements Initializable {
     @FXML
     protected VBox resultDisplay;
     protected List<String> autoFillList;
-    protected Trie trie;
+    protected Trie appTrie;
+    protected Trie userTrie;
 
     /**
      * Initialize search bar and display field.
@@ -49,7 +49,7 @@ public abstract class SearchController implements Initializable {
                 resultDisplay.getChildren().get(0).requestFocus();
             }
 
-            if (event.getCode() == KeyCode.ENTER && !autoFillList.isEmpty()) {
+            if (event.getCode() == KeyCode.ENTER && autoFillList != null && !autoFillList.isEmpty()) {
                 try {
                     resultDisplay.setVisible(false);
                     searchBar.clear();
@@ -81,7 +81,14 @@ public abstract class SearchController implements Initializable {
      * @param input The word to auto fill.
      */
     protected void displayAutoFill(String input) {
-        autoFillList = SystemManager.getManager(SearchManager.class).autoFill(input, trie).stream().distinct().collect(Collectors.toList());
+        autoFillList = SystemManager.getManager(SearchManager.class).autoFill(input, appTrie).stream().distinct().collect(Collectors.toList());
+        if (userTrie != null) autoFillList.addAll(SystemManager.getManager(SearchManager.class).autoFill(input, userTrie).stream().distinct().collect(Collectors.toList()));
+        autoFillList.sort(null);
+        Set<String> tempSet = new HashSet<>(autoFillList);
+        autoFillList.clear();
+        autoFillList.addAll(tempSet);
+        autoFillList.sort(null);
+        if (autoFillList.size() > 7) autoFillList = autoFillList.subList(0, 7);
         if (autoFillList.isEmpty()) {
             Label label = new Label("Hmm...what word is this?");
             label.getStyleClass().add("not-found-style");

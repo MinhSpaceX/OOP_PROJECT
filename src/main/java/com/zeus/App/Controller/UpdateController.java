@@ -73,7 +73,7 @@ public class UpdateController extends SearchController {
      */
     @Override
     public void initialize() {
-        trie = SearchManager.userTrie;
+        appTrie = SearchManager.userTrie;
         sql = SystemManager.getManager(SQLite.class);
         setFunction();
         getSingleWord(updateLabel);
@@ -258,11 +258,11 @@ public class UpdateController extends SearchController {
     @FXML
     public void deleteWord(ActionEvent event){
         System.out.println(updateLabel.getText());
-       /* sql.delete(updateLabel.getText());
+        sql.delete(updateLabel.getText().trim().toLowerCase());
         History.historyList.remove(updateLabel.getText());
         FavoriteController.FavoriteList.remove(updateLabel.getText());
         wordTargetDisplay.setText("The word has been deleted!");
-        refreshInfo();*/
+        refreshInfo();
     }
 
     /**

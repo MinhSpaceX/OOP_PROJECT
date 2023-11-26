@@ -37,7 +37,8 @@ public class Trie extends UtilTrie {
             Logger.warn("UtilTrie is empty.");
             return false;
         }
-        if (delete(root, word, 0)) {
+        delete(root, word.toLowerCase(), 0);
+        if (!search(word)) {
             Logger.info("Delete successfully.");
             return true;
         }

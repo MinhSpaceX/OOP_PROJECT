@@ -7,7 +7,8 @@ import com.zeus.Managers.SystemApp.SystemManager;
 
 public class Main {
     public static void main(String[] args) {
-        // Shutdown function when the program end.
+        // Shutdown function when the program
+        // am end.
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             SystemManager.getManager(SystemManager.class).terminate();
             Logger.info("GOODBYE");

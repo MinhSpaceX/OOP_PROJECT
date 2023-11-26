@@ -165,8 +165,6 @@ public class SQLite extends Manager {
      * <p>false otherwise</p>
      */
     public boolean insert(SingleWord word) {
-        SystemManager.getManager(SearchManager.class).getUserTrie().insert(word.getWordTarget());
-        SystemManager.getManager(SearchManager.class).getSearchPathTrie().insert(word.getWordTarget());
         boolean success = true;
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
@@ -229,6 +227,7 @@ public class SQLite extends Manager {
                 }
             }
             Logger.info("Insert successful.");
+            SystemManager.getManager(SearchManager.class).getUserTrie().insert(word.getWordTarget());
         } catch (Exception e) {
             Logger.printStackTrace(e);
             success = false;
@@ -485,7 +484,6 @@ public class SQLite extends Manager {
             while (resultSet.next()) {
                 String word = resultSet.getString(1);
                 userTrie.insert(word);
-                searchTrie.insert(word);
             }
             while (resultSet1.next()) {
                 searchTrie.insert(resultSet1.getString(1));
@@ -505,7 +503,7 @@ public class SQLite extends Manager {
              PreparedStatement deleteQuery = connection.prepareStatement("DELETE FROM WORD WHERE wordID = ?")) {
             deleteQuery.setString(1, Encoder.encode(wordTarget));
             deleteQuery.executeUpdate();
-            SearchManager.searchPath.delete(wordTarget);
+            SearchManager.userTrie.print();
             SearchManager.userTrie.delete(wordTarget);
         } catch (Exception e) {
             Logger.printStackTrace(e);

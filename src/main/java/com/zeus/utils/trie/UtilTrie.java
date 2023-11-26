@@ -2,6 +2,7 @@ package com.zeus.utils.trie;
 
 import com.zeus.utils.DictionaryUtil.Word;
 import com.zeus.utils.log.Logger;
+import org.apache.commons.logging.Log;
 
 import java.util.*;
 
@@ -133,18 +134,25 @@ class UtilTrie {
      */
     protected boolean delete(Node node, String word, int depth) {
         if (node == null) {
-            Logger.warn("Delete word cancelled. Word does not exist!");
+            Logger.warn("Delete word cancelled. Word does not exist! (Null)");
             return false;
         }
-        if (word.length() - 1 == depth) {
+        if (word.length() == depth) {
             if (!node.isEndOfWord()) {
                 Logger.warn("Delete word cancelled. Word does not exist!");
                 return false;
             }
             return node.getChildren().isEmpty();
         }
-        if (delete(node.getChildren().get((int) word.charAt(depth)), word, depth + 1)) {
-            node.getChildren().remove((int) word.charAt(depth));
+        Set<Integer> keys = node.getChildren().keySet();
+        for (Integer i : keys) {
+            //System.out.println("Contain " + node.getChildren().get(i));
+            if (i.compareTo((int) word.charAt(depth)) == 0) {
+                if (delete(node.getChildren().get(i), word, depth + 1)) {
+                    node.getChildren().remove(i);
+                }
+                break;
+            }
         }
         return false;
     }
@@ -156,7 +164,9 @@ class UtilTrie {
      * @param word The string accumulated through recur.
      */
     protected void print(Node node, String word) {
+        //System.out.println("Print: " + node);
         if (node.isEndOfWord()) {
+            System.out.println(node);
             System.out.println(word);
         }
         Set<Integer> keys = node.getChildren().keySet();

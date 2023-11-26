@@ -62,7 +62,8 @@ public class WordView extends SearchController {
      */
     @Override
     protected void initialize() {
-        trie = SearchManager.searchPath;
+        appTrie = SearchManager.searchPath;
+        userTrie = SearchManager.userTrie;
         MediaHandler();
         Platform.runLater(() -> displayLabelContent(menuLabel));
         checkIfLiked(menuLabel.getText());

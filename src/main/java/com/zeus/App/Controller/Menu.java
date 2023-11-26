@@ -32,7 +32,8 @@ public class Menu extends SearchController {
      */
     @Override
     public void initialize() {
-        trie = SearchManager.searchPath;
+        appTrie = SearchManager.searchPath;
+        userTrie = SearchManager.userTrie;
         Logger.info("Menu initialized.");
     }
 

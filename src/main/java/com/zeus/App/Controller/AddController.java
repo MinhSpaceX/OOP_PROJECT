@@ -71,7 +71,7 @@ public class AddController implements Initializable {
                     searchResultDisplay.getChildren().get(0).requestFocus();
                 }
                 if (event.getCode() == KeyCode.ENTER && !searchResultDisplay.getChildren().isEmpty()) {
-                    if(!notfound) {
+                    if(!notfound && !searchBar.getText().isEmpty()) {
                         changeToUpdateView((Label) searchResultDisplay.getChildren().get(0));
                     }
                 }
