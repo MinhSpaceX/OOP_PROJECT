@@ -125,7 +125,8 @@ public class SQLite extends Manager {
     }
 
     public boolean insert(SingleWord word) {
-        SearchManager.getUserTrie().insert(word.getWordTarget());
+        SystemManager.getManager(SearchManager.class).getUserTrie().insert(word.getWordTarget());
+        SystemManager.getManager(SearchManager.class).getSearchPathTrie().insert(word.getWordTarget());
         boolean success = true;
         String queryWord = "INSERT INTO WORD(wordID, target, pronoun) SELECT ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM WORD WHERE wordID = ?)";
         String queryMeaning = "INSERT INTO MEANING(wordID, meaningID, target, type) VALUES(?, ?, ?, ?)";
@@ -407,6 +408,16 @@ public class SQLite extends Manager {
                 searchTrie.insert(resultSet1.getString(1));
             }
         } catch (SQLException e) {
+            Logger.printStackTrace(e);
+        }
+    }
+
+    public void delete(String wordTarget) {
+        try (Connection connection = this.connect(userDatabase);
+             PreparedStatement deleteQuery = connection.prepareStatement("DELETE FROM WORD WHERE wordID = ?")) {
+            deleteQuery.setString(1, Encoder.encode(wordTarget));
+            deleteQuery.executeUpdate();
+        } catch (Exception e) {
             Logger.printStackTrace(e);
         }
     }
