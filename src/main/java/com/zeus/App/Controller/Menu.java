@@ -40,9 +40,8 @@ public class Menu extends SearchController {
      * this method will change to {@link WordView} whn called
      *
      * @param label index of the word to display
-     * @throws IOException get exception when change to word view.
      */
-    private void ChangeToWordView(Label label) throws IOException {
+    private void ChangeToWordView(Label label) {
         SceneContainer sc = SceneContainer.sceneContainer;
         WordView.setMenuLabel(label);
         sc.changeView(WordView.class);

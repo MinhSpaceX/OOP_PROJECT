@@ -223,7 +223,7 @@ public class UpdateController extends SearchController {
      * this method will create a new example word for the word
      *
      * @param exampleKey deter the example that user want to change
-     * @return
+     * @return Single word.
      */
     public SingleWord getNewSingleWord(String exampleKey) {
         Pair<String, String> newExamplePair = new Pair<>(getEngExample.getText(), getVieExample.getText());

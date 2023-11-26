@@ -70,7 +70,7 @@ public class WordView extends SearchController {
     }
 
     /**
-     * call to {@link #displayWordFromLabel(Label)} to display the word
+     * call to {@link #displayLabelContent(Label)} to display the word
      *
      * @param label index label
      */
@@ -145,7 +145,7 @@ public class WordView extends SearchController {
         userBelongLabel.setVisible(SystemManager.getManager(SearchManager.class).getUserTrie().search(label.getText()));
         boolean getFirst = true;
         for (var i : result.keySet()) {
-            Label autoFillList = new Label(i.toString());
+            Label autoFillList = new Label(i);
             if (getFirst) {
                 autoFillList.getStyleClass().add("tab-label");
                 DisplayMeaning(autoFillList.getText());
