@@ -57,7 +57,7 @@ public class Translate implements Initializable {
         erase.setOnMouseClicked(e -> {
             word.clear();
             result.clear();
-            result.setVisible(false);
         });
+        result.setEditable(false);
     }
 }
