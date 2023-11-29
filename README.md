@@ -8,11 +8,11 @@
 Dự án là bài tập lớn cho môn ***Lập trình hướng đối tượng (OOP)***, sử dụng [Java](https://www.java.com/en/) là ngôn ngữ lập trình chủ đạo, kế thừa các nguyền tắc lập trình hướng đối tượng;
 hỗ trợ bới thư viện đồ họa [JavaFx](https://openjfx.io/) cùng các hệ quản trị cơ sở dữ liệu: [SQLite](https://www.sqlite.org/index.html), [MongoDB](https://www.mongodb.com/cloud/atlas/lp/try4?utm_source=bing&utm_campaign=search_bs_pl_evergreen_atlas_core_prosp-brand_gic-null_apac-vn_ps-all_desktop_eng_lead&utm_term=mongodb&utm_medium=cpc_paid_search&utm_ad=e&utm_ad_campaign_id=415204534&adgroup=1211662283600116&msclkid=7fcce7fb2f4d10f5f26f829c253dd61f). 
 ## MEMBERS
-| Student ID | Name | Oasis | Role | Task |
+| Student ID | Name | Oasis | Role | Tasks |
 |----------|:--------:|----------|----------|----------|
 | 22024540 | Nguyễn Đức Minh | https://oasis.uet.vnu.edu.vn/#/profile/3682 | Trưởng nhóm | Quản lí dự án, xây dựng kỹ thuật, hỗ trợ lập trình
-| 22024558   | Lương Gia Khánh | https://oasis.uet.vnu.edu.vn/#/profile/3626 | Thành viên | Thiết kế, kết nối giao diện
-| 22024566   | Phan Đức Hùng | https://oasis.uet.vnu.edu.vn/#/profile/3635 | Thành viên | Thiết kế, kết nối giao diện
+| 22024558   | Lương Gia Khánh | https://oasis.uet.vnu.edu.vn/#/profile/3626 | Thành viên | Thiết kế, kết nối giao diện, hỗ trợ tài liệu.
+| 22024566   | Phan Đức Hùng | https://oasis.uet.vnu.edu.vn/#/profile/3635 | Thành viên | Thiết kế, kết nối giao diện, hỗ trợ tài liệu.
 ## GIỚI THIỆU
 Các chức năng cơ bản:
 
