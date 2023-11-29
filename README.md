@@ -13,7 +13,7 @@ hỗ trợ bới thư viện đồ họa [JavaFx](https://openjfx.io/) cùng cá
 | 22024540 | Nguyễn Đức Minh | https://oasis.uet.vnu.edu.vn/#/profile/3682 | Trưởng nhóm
 | 22024558   | Lương Gia Khánh | https://oasis.uet.vnu.edu.vn/#/profile/3626 | Thành viên
 | 22024566   | Phan Đức Hùng | https://oasis.uet.vnu.edu.vn/#/profile/3635 | Thành viên
-## Giới thiệu
+## GIỚI THIỆU
 Các chức năng cơ bản:
 
 **1. Tra cứu từ vựng**
