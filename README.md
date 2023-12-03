@@ -18,8 +18,12 @@ Các chức năng cơ bản:
 
 **1. Tra cứu từ vựng**
   - Tìm kiếm nghĩa, phát âm, loại từ và các ví dụ liên quan của một từ tiếng Anh mà bạn muốn
+     <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/c28dfdc1-6d76-4cac-85f3-39c808187f15" alt="LogoImage" height="327.5" width="491.5">
+     
+    - Giao diện hiển thị từ thông minh:
     
-    ``(TODO: thêm GIF về chức năng tìm kiếm)``
+    <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/ede5216e-a1eb-41fd-9072-b3737d338ab7" alt="LogoImage" height="327.5" width="491.5">
+    
 
   - Hỗ trợ giọng đọc, giúp bạn trong việc học phát âm
     
@@ -28,25 +32,41 @@ Các chức năng cơ bản:
 **2. Chức năng phiên dịch**
   - Dịch câu hoặc văn bản từ tiếng Anh sang tiếng Việt
 
-    ``(TODO: thêm GIF về chức năng dịch``
+    <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/5ac6751a-56fb-412d-adaf-625bb8d28c7e" alt="LogoImage" height="327.5" width="491.5">
 
 **3. Lưu vào lịch sử**
   - Các từ bạn đã tìm kiếm sẽ được lưu vào mục lịch sử tra cứu
 
-    ``(TODO: thêm GIF về chức năng lịch sử``
+    <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/6cd41fc6-b666-4835-804c-dfdf138398e9" alt="LogoImage" height="327.5" width="491.5">
 
 **4. Danh sách từ yêu thích**
   - Lưu lại các từ mà bạn muốn vào danh sách yêu thích, không sợ quên những từ quan trọng.
 
-    ``(TODO: thêm GIF về chức năng lịch sử``
-    
+    <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/5f6df2e2-58c0-4c9a-942f-64c33c2e3d5a" alt="LogoImage" height="327.5" width="491.5">
+
+    <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/4dfd57ac-25c4-4db3-9dfa-cbb1653675c4" alt="LogoImage" height="327.5" width="491.5">
+
+
 **5. Trò chơi**
   - Trò chơi trắc nghiệm đơn giản với 3 chế độ: Classic, Infinity và Blitz. Giúp việc ôn lại kiến thức hiệu quả hơn.
 
-    ``(TODO: thêm GIF về chức năng lịch sử``
+    <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/208c7653-bb70-4ab4-ab4f-ffd17834f8d0" alt="LogoImage" height="327.5" width="491.5">
 
-## TẢI VỀ
-Ứng dụng có thể được tải về ở đây:
+    - Demo chế dộ chơi Blitz
+      
+     <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/9101f705-8945-4305-8b62-c48f5ba9893c" alt="LogoImage" height="327.5" width="491.5">
+
+**6. Cập nhật từ điển**
+  - Tạo ra từ điển của riêng bạn qua các công cụ thêm, sửa xóa từ:
+    - Thêm từ mới:
+      
+      <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/599e35d1-8353-49b1-b2fe-5d51130dba6e" alt="LogoImage" height="327.5" width="491.5">
+
+    - Cập nhật và xóa từ mới thêm khỏi dữ liệu
+
+      <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/2fa24ebb-87f9-4732-ab97-abf170cf20a5" alt="LogoImage" height="327.5" width="491.5">
+
+## Ứng dụng có thể được tải về ở đây:
 ``(TODO: thêm file jar để tải về ứng dụng``
 
 ## PHÂN TÍCH CHƯƠNG TRÌNH:
