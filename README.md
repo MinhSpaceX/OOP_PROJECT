@@ -75,7 +75,7 @@ Các chức năng cơ bản:
   
   ![Cây kế thừa](https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/2770b883-b5e5-49ed-9eb0-6f720b6aab17)
   
-- Nếu bạn muốn tìm hiểu sâu hơn và muốn đóng góp vào dự án thì hãy xem qua **API documentation**.
+- Nếu bạn muốn tìm hiểu sâu hơn và muốn đóng góp vào dự án thì hãy xem qua **Document**.
 
   ``(TODO: thêm documentation cho ứng dụng``
 
