@@ -26,8 +26,9 @@ Các chức năng cơ bản:
     
 
   - Hỗ trợ giọng đọc, giúp bạn trong việc học phát âm
-    
-    ``(TODO: thêm Video về chức năng đọc)``
+
+    https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/e31b2b0d-4d54-47c2-9483-339f58056af6
+
     
 **2. Chức năng phiên dịch**
   - Dịch câu hoặc văn bản từ tiếng Anh sang tiếng Việt
