@@ -52,7 +52,7 @@ Các chức năng cơ bản:
 
     <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/208c7653-bb70-4ab4-ab4f-ffd17834f8d0" alt="LogoImage" height="327.5" width="491.5">
 
-    - Demo chế dộ chơi Blitz
+    - Demo chế độ chơi Blitz
       
      <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/9101f705-8945-4305-8b62-c48f5ba9893c" alt="LogoImage" height="327.5" width="491.5">
 
