@@ -68,7 +68,10 @@ Các chức năng cơ bản:
       <img src="https://github.com/MinhSpaceX/OOP_PROJECT/assets/127011768/2fa24ebb-87f9-4732-ab97-abf170cf20a5" alt="LogoImage" height="327.5" width="491.5">
 
 ## Ứng dụng có thể được tải về ở đây:
-``(TODO: thêm file jar để tải về ứng dụng``
+  [Link drive tải app](https://drive.google.com/file/d/1qDj4CnoNjo2rY3RwdkxQSxDZQn2uTYZQ/view?usp=sharing)
+
+  ``Tải file zip về giải nén rồi chạy file jar``
+
 
 ## PHÂN TÍCH CHƯƠNG TRÌNH:
 - Cây kế thừa: Sơ đồ mô phòng các lớp kế thừa trong ứng dụng:
